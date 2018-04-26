@@ -1,0 +1,34 @@
+<h2 class="SectionHeader">Quiz Attempt</h2>
+
+
+<%= form_for @changeset, user_attempt_path(@conn,:update,@attempt), fn f ->  %>
+  <%= hidden_input f, :id %>
+  <%= hidden_input f, :closed %>
+  <%= hidden_input f, :closes %>
+  <%= hidden_input f, :grade %>
+  <%= hidden_input f, :open %>
+  <%= hidden_input f, :quiz_id %>
+  <%= hidden_input f, :user_Id %>
+
+
+  <ol class="list-group">
+    <%= inputs_for f, :responses, fn r -> %>
+      <li class="list-group-item">
+        <% q = @quiz.questions |> Enum.find(&(&1.id == r.data.question_id)) %>
+        <%= hidden_input r, :question_id %>
+        <%= raw q.content %>
+        <ul class="list-group">
+        <%= for a <- q.answers do %>
+          <li class="list-group-item">
+            <%= radio_button r, :answer_id, a.id %>
+            <%= a.answer %>
+          </li>
+        <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ol>
+
+<br />
+<%= submit "Submit Answers", class: "btn btn-primary btn-block" %>
+<% end %>

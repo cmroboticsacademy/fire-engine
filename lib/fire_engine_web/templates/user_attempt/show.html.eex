@@ -1,0 +1,22 @@
+<h2 class="SectionHeader">My Responses</h2>
+
+<hr>
+<br>
+
+
+<table class="table table-bordered">
+  <%= for response <- @responses do %>
+    <tr>
+      <td>
+        <b>
+        <%= response.question%>
+        </b>
+      </td>
+      <td>
+        <%= response.answer%>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "Save Quiz", to: user_attempt_path(@conn,:save, @attempt),method: "put", class: "btn btn-primary btn-block" %>

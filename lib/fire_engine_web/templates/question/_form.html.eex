@@ -1,0 +1,57 @@
+<%= form_for @changeset, @path, fn f -> %>
+  <div class="form-group">
+    <label>Queston</label>
+    <%= text_input f, :content, placeholder: "What is the question?", class: "form-control"%>
+    <%= error_tag f, :content %>
+  </div>
+  <div class="form-group">
+    <label>Question Type</label>
+    <%= textarea f, :type, placeholder: "Type of Question", class: "form-control"%>
+    <%= error_tag f, :type %>
+  </div>
+  <div class="form-group">
+    <label>Points</label>
+    <%= number_input f, :points, value: "1.0", class: "form-control"%>
+    <%= error_tag f, :points %>
+  </div>
+
+
+
+  <ul class="list-group answers">
+    <li class="list-group-item answer_0">
+
+      <%= inputs_for f, :answers, fn a -> %>
+        <div id="question_0_answer_<%=a.index%>">
+          <div class="row">
+            <div col="1"  style="padding-top:5px;"><a href="javascript:void(0);" onclick="deleteAnswer(this, 0, <%=a.index%>)"><i class="fas fa-times-circle"></a></i></div>
+            <div class="col 9">
+            <%= text_input a, :answer, class: "form-control", placeholder: "Answer" %>
+            </div>
+            <div class="form-check col 2">
+            <%= label a, :weight %>
+            <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "0"%>
+            </div>
+          </div>
+      <% end %>
+    </li>
+
+    </ul>
+
+    <a href="javascript:void(0);" class="btn btn-default btn-circle addAnswer" onclick="addAnswerQuestionForm(this)">
+    <i class="fa fa-plus"></i>
+    Add Answer
+    </a>
+
+
+    <span>
+    <%=submit "Save Quiz",[class: "btn btn-primary btn-block"]%>
+    </span>
+
+
+
+
+    </div>
+
+
+
+<% end %>

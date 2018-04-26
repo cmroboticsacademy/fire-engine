@@ -1,0 +1,16 @@
+<h2 class="SectionHeader"><%= @question.content %></h2>
+<p><%= link "< Return to Questions", to: question_path(@conn, :index) %> </p>
+
+<ul class="list-group">
+    <li class="list-group-item">
+      <%=@question.content%>
+      <ul class="list-group">
+        <%= for answer <- @question.answers do %>
+        <li>
+          <%= answer.answer %>
+          <%= answer.weight %>
+        </li>
+        <% end %>
+      </ul>
+    </li>
+</ul>

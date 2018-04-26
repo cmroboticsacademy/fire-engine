@@ -1,0 +1,4 @@
+<h2 class="SectionHeader">New Quiz</h2>
+
+
+<%=render FireEngineWeb.QuizView, "_form.html", changeset: @changeset, path: quiz_path(@conn, :create)%>

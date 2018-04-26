@@ -1,0 +1,4 @@
+<h2 class="SectionHeader">New Question</h2>
+
+
+<%=render FireEngineWeb.QuestionView, "_form.html", changeset: @changeset, path: question_path(@conn, :create)%>

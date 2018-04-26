@@ -1,0 +1,30 @@
+/* This file is for your main application css. */
+
+#admin-main {
+  padding-left: 310px;
+  padding-right: 10px;
+}
+
+#pageHeading {
+  font-weight: lighter;
+  color: red;
+}
+
+.materialize-textarea {
+  word-wrap: break-word;
+}
+
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+}
+
+.SectionHeader {
+  color: blue;
+  font-weight: 100;
+  font-stretch: semi-expanded;
+  font-size: 40px;
+  text-align: center;
+}

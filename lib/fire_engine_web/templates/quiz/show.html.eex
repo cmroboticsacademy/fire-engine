@@ -1,0 +1,68 @@
+<h2 class="SectionHeader"><%= @quiz.name %></h2>
+<p><%= link "< Return to Quizzes", to: quiz_path(@conn, :index) %> </p>
+
+<hr />
+
+
+<p>
+  <strong>
+    Description:
+  </strong>
+  <%= @quiz.description %>
+</p>
+
+<p>
+  <strong>
+    Questions Per Page:
+  </strong>
+  <%= @quiz.questions_per_page %>
+</p>
+
+<p>
+  <strong>
+    Randomize Questions:
+  </strong>
+  <%= @quiz.randomize_questions %>
+</p>
+
+<p>
+  <strong>
+    Time Closed
+  </strong>
+  <%= @quiz.time_closed %>
+</p>
+
+<p>
+  <strong>
+    Time Open
+  </strong>
+  <%= @quiz.time_open %>
+</p>
+
+<p>
+  <strong>
+    Auto Submit
+  </strong>
+  <%= @quiz.auto_submit %>
+</p>
+
+<h2 class="SectionHeader">Questions</h2>
+
+<hr />
+
+
+<ul class="list-group">
+<%= for question <- @quiz.questions do %>
+    <li class="list-group-item">
+      <%=question.content%>
+      <ul class="list-group">
+        <%= for answer <- question.answers do %>
+        <li>
+          <%= answer.answer %>
+          <%= answer.weight %>
+        </li>
+        <% end %>
+      </ul>
+    </li>
+<% end %>
+</ul>
