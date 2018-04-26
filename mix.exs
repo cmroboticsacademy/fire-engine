@@ -36,6 +36,7 @@ defmodule FireEngine.Mixfile do
       {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:timex, "~> 3.2"},
+      {:scrivener_list, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:mariaex, ">= 0.0.0"},
       {:ueberauth, "~> 0.2"},

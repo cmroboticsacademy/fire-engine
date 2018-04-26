@@ -37,9 +37,9 @@ defmodule FireEngineWeb.UserAttemptController do
 
   end
 
-  def edit(conn,%{"id" => attempt_id, "quiz_id" => quiz_id} = params) do
-    quiz = Assessments.get_quiz_with_questions(quiz_id)
-    attempt = Assessments.get_attempt_with_responses(attempt_id)
+  def edit(conn,%{"id" => attempt_id, "quiz_id" => quiz_id, "page" => page} = params) do
+    quiz = Assessments.get_quiz_with_questions(quiz_id, page)
+    attempt = Assessments.get_attempt_with_responses(attempt_id, page)
 
     changeset = Assessments.change_attempt(attempt)
     render(conn, "edit.html", quiz: quiz, changeset: changeset, attempt: attempt)

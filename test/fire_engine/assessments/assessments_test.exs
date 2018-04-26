@@ -27,7 +27,21 @@ defmodule FireEngine.AssessmentsTest do
       assert Assessments.quiz_total_points(quiz.id) == question.points
     end
 
-    test "get_quiz_with_questions_paginated/2 returns only the questions from the page requested" do
+    test "get_quiz_with_questions/2 returns {quiz, questions}" do
+      quiz = quiz_fixture()
+      questions = for q <- (1..4) do
+        question_fixture(%{content: "question#{q}", type: "multi"})
+      end
+      for q <- questions do
+        Assessments.create_quiz_question(%{quiz_id: quiz.id, question_id: q.id})
+      end
+      quiz_questions = Assessments.get_quiz_with_questions(quiz.id, 1)
+      assert {quiz_return, questions_return} = quiz_questions
+      assert quiz_return == quiz_return
+
+    end
+
+    test "get_quiz_with_questions/2 returns only the questions from the page requested" do
       quiz = quiz_fixture()
       questions = for q <- (1..4) do
         question_fixture(%{content: "question#{q}", type: "multi"})
@@ -39,8 +53,8 @@ defmodule FireEngine.AssessmentsTest do
 
       quiz_questions = Assessments.get_quiz_with_questions(quiz.id).questions
 
-      paginated_questions_pg1 = Assessments.get_quiz_with_questions_paginated(quiz.id,0)
-      paginated_questions_pg2 = Assessments.get_quiz_with_questions_paginated(quiz.id,1)
+      {_quiz, paginated_questions_pg1} = Assessments.get_quiz_with_questions(quiz.id,1)
+      {_quiz, paginated_questions_pg2} = Assessments.get_quiz_with_questions(quiz.id,2)
 
       assert paginated_questions_pg1 != paginated_questions_pg2
       assert paginated_questions_pg1 |> Enum.count == 2
@@ -298,6 +312,43 @@ defmodule FireEngine.AssessmentsTest do
       attempt = attempt_fixture(%{quiz_id: quiz.id})
       assert Assessments.get_attempt!(attempt.id) == attempt
     end
+
+    test "get_attempt_with_responses/2 returns {attempt, responses}" do
+      quiz = quiz_fixture()
+      questions = for q <- (1..4) do
+        question_fixture(%{content: "question#{q}", type: "multi"})
+      end
+
+      for q <- questions do
+        Assessments.create_quiz_question(%{quiz_id: quiz.id, question_id: q.id})
+      end
+
+      {:ok, attempt} = Assessments.create_attempt(Map.merge(@valid_attrs, %{quiz_id: quiz.id}))
+
+      {r_attempt, r_response} = Assessments.get_attempt_with_responses(attempt.id, 1)
+
+    end
+
+    test "get_attempt_with_responses/2 returns paginated responses" do
+      quiz = quiz_fixture()
+      questions = for q <- (1..4) do
+        question_fixture(%{content: "question#{q}", type: "multi"})
+      end
+
+      for q <- questions do
+        Assessments.create_quiz_question(%{quiz_id: quiz.id, question_id: q.id})
+      end
+
+      {:ok, attempt} = Assessments.create_attempt(Map.merge(@valid_attrs, %{quiz_id: quiz.id}))
+      {r_attempt, r_response1} = Assessments.get_attempt_with_responses(attempt.id, 1)
+      {r_attempt, r_response2} = Assessments.get_attempt_with_responses(attempt.id, 2)
+
+      assert r_response1 != r_response2
+      assert r_response1 |> Enum.count == 2
+      assert r_response2 |> Enum.count == 2
+
+    end
+
 
     test "create_attempt/1 with valid data creates a attempt" do
       quiz = quiz_fixture()

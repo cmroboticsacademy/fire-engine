@@ -304,7 +304,6 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
 
     end
 
-
   end
 
 

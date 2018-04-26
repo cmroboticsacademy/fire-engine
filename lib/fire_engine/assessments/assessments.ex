@@ -21,6 +21,13 @@ defmodule FireEngine.Assessments do
     Repo.get(Quiz, id) |> Repo.preload(questions: :answers)
   end
 
+  def get_quiz_with_questions(id,page) do
+    quiz = Repo.get(Quiz, id) |> Repo.preload(questions: :answers)
+    questions = quiz.questions
+    |> Scrivener.paginate(%Scrivener.Config{page_number: page, page_size: quiz.questions_per_page})
+    {quiz, questions}
+  end
+
 
   @doc """
   Returns quiz with questions and user responses included.
@@ -34,14 +41,6 @@ defmodule FireEngine.Assessments do
   def get_quiz_with_responses(id) do
     FireEngine.Repo.get(Quiz,id) |> Repo.preload(questions: [answers: :responses])
   end
-
-  def get_quiz_with_questions_paginated(quiz_id,page) do
-    quiz = FireEngine.Repo.get(Quiz,quiz_id) |> Repo.preload(questions: :answers)
-    questions = quiz.questions |> Enum.chunk_every(quiz.questions_per_page) |> Enum.at(page) 
-    questions
-  end
-
-
 
   def quiz_total_points(quiz_id) do
     query = from qz in Quiz,
@@ -439,6 +438,15 @@ defmodule FireEngine.Assessments do
 
     """
     def get_attempt_with_responses(id), do: Repo.get!(Attempt, id) |> Repo.preload(:responses)
+
+
+    def get_attempt_with_responses(id, page) do
+       attempt = Repo.get!(Attempt, id) |> Repo.preload(:responses)
+       quiz = Repo.get!(Quiz,attempt.quiz_id)
+       responses = attempt.responses |> Scrivener.paginate(%Scrivener.Config{page_number: page, page_size: quiz.questions_per_page})
+
+       {attempt, responses}
+    end
 
 
 
