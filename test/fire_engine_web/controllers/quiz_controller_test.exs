@@ -5,8 +5,8 @@ defmodule FireEngineWeb.QuizControllerTest do
   alias FireEngine.Assessments
   alias FireEngine.Assessments.Quiz
 
-  @create_attrs %{attempts_allowed: 42, description: "some description", name: "some name", questions_per_page: 42, randomize_questions: true, real_time_feedback: true, show_correct_answer: true, single_attempt_per_question: true, time_closed: ~N[2010-04-17 14:00:00.000000], time_open: ~N[2010-04-17 14:00:00.000000]}
-  @update_attrs %{attempts_allowed: 43, description: "some updated description", name: "some updated name", questions_per_page: 43, randomize_questions: false, real_time_feedback: false, show_correct_answer: false, single_attempt_per_question: false, time_closed: ~N[2011-05-18 15:01:01.000000], time_open: ~N[2011-05-18 15:01:01.000000]}
+  @create_attrs %{attempts_allowed: 42, description: "some description", name: "some name", questions_per_page: 1, randomize_questions: true, real_time_feedback: true, show_correct_answer: true, single_attempt_per_question: true, time_closed: ~N[2010-04-17 14:00:00.000000], time_open: ~N[2010-04-17 14:00:00.000000]}
+  @update_attrs %{attempts_allowed: 43, description: "some updated description", name: "some updated name", questions_per_page: 1, randomize_questions: false, real_time_feedback: false, show_correct_answer: false, single_attempt_per_question: false, time_closed: ~N[2011-05-18 15:01:01.000000], time_open: ~N[2011-05-18 15:01:01.000000]}
   @invalid_attrs %{attempts_allowed: nil, description: nil, name: nil, questions_per_page: nil, randomize_questions: nil, real_time_feedback: nil, show_correct_answer: nil, single_attempt_per_question: nil, time_closed: nil, time_open: nil}
   @admin_user %{id: 123,email: "some email", username: "some user", roles: [%{name: "admin"}]}
 

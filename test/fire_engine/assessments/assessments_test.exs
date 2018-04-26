@@ -63,7 +63,7 @@ defmodule FireEngine.AssessmentsTest do
       assert quiz.attempts_allowed == 42
       assert quiz.description == "some description"
       assert quiz.name == "some name"
-      assert quiz.questions_per_page == 42
+      assert quiz.questions_per_page == 2
       assert quiz.randomize_questions == true
       assert quiz.time_closed == ~N[2010-04-17 14:00:00.000000]
       assert quiz.time_open == ~N[2010-04-17 14:00:00.000000]
