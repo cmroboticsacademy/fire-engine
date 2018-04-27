@@ -32,14 +32,23 @@
     <%= checkbox f, :auto_submit %>
   </div>
   <div class="date-select">
+    <%= label f, :time_window %>
+    <%= checkbox f, :time_window %>
+  <br />
     <%= label f, :time_open %>
     <%= datetime_select f, :time_open %>
   <br />
     <%= label f, :time_closed %>
     <%= datetime_select f, :time_closed %>
   <br />
-    <%= label f, :time_window %>
-    <%= checkbox f, :time_window %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :time_limit %>
+    <%= checkbox f, :time_limit %>
+  <br />
+    <%= label f, :time_limit_minutes %>
+    <%= number_input f, :time_limit_minutes, placeholder: "i.e. 5", class: "form-control" %>
   </div>
 
   <h2 class="SectionHeader">Questions</h2>
