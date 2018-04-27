@@ -14,19 +14,59 @@
   word-wrap: break-word;
 }
 
-
-@media only screen and (max-width : 992px) {
-  header, main, footer {
-    padding-left: 0;
-  }
-}
-
 .SectionHeader {
   color: blue;
   font-weight: 100;
   font-stretch: semi-expanded;
   font-size: 40px;
   text-align: center;
+}
+
+/* ====== Quiz Cards ====== */
+
+.quiz-card > .card-header > .quiz-name {
+  margin: 0;
+  text-align: center;
+}
+
+.quiz-card > .card-body > .quiz-description {
+  margin: 0;
+}
+
+.quiz-card > .list-group {
+  font-size: 12px;
+}
+
+.quiz-card > .list-group > .list-group-item {
+  padding: 5px 10px;
+  border: 1px dotted lightgray;
+}
+
+.quiz-card > .list-group > .list-group-item > .quiz-detail {
+  font-weight: lighter;
+  margin: 0;
+}
+
+.quiz-card > .list-group > .list-group-item > .quiz-detail > .detail {
+  float: right;
+  font-weight: bold;
+}
+
+.quiz-card > .card-footer {
+  border: none;
+  padding: 0;
+}
+
+.quiz-card > .card-footer > .btn {
+  border-radius: 0;
+}
+
+/* ====== MEDIA QUERIES ====== */
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
 }
 
 
