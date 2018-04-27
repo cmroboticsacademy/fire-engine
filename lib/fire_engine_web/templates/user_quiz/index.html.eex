@@ -1,26 +1,62 @@
-<div class="row">
+<div class="quizzes-page row">
     <%= for quiz <- @fe_quizzes do %>
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-header"><h5><i class="fas fa-file-alt"></i> <%= quiz.name %></h5></div>
+
+      <!-- Column container -->
+      <div class="col-sm-12 col-md-6 col-lg-4">
+
+        <!-- Card container -->
+        <div class=" quiz-card card border-dark mb-3">
+
+          <!-- Card header -->
+          <div class="card-header">
+            <h6 class="quiz-name"><i class="fas fa-file-alt"></i> <%= quiz.name %></h6>
+          </div>
+
+          <!-- Card body -->
           <div class="card-body">
-            <p><%= quiz.description %></p>
+            <p class="quiz-description"><%= quiz.description %></p>
           </div>
+
+          <!-- Quiz details list -->
           <ul class="list-group list-group-flush">
+
+            <!-- Attempts made -->
             <li class="list-group-item">
-              <p class="small">
-                <strong>Attempts allowed:</strong> <%= quiz.attempts_allowed %><br />
-                <strong>Attempts made:</strong> <%= quiz.attempt_count %><br />
-                <strong>Best Score:</strong> <%= quiz.best_score %><br />
-                <strong>Lowest Score:</strong> <%= quiz.lowest_score %><br />
-                <strong>Avg Score:</strong> <%= quiz.avg_score %><br />
-                <strong>Questions Per Page:</strong> <%= quiz.questions_per_page %><br />
-              </p>
+              <p class="quiz-detail">Attempts Made<span class="detail"><%= quiz.attempt_count %></span></p>
             </li>
+
+            <!-- Attempts allows -->
+            <li class="list-group-item">
+              <p class="quiz-detail">Attempts Allowed<span class="detail"><%= quiz.attempts_allowed %></span></p>
+            </li>
+
+            <!-- Best score -->
+            <li class="list-group-item">
+              <p class="quiz-detail">Best Score<span class="detail"><%= quiz.best_score %></span></p>
+            </li>
+
+            <!-- Worst score -->
+            <li class="list-group-item">
+              <p class="quiz-detail">Worst Score<span class="detail"><%= quiz.lowest_score %></span></p>
+            </li>
+
+            <!-- Average score -->
+            <li class="list-group-item">
+              <p class="quiz-detail">Avg Score<span class="detail"><%= quiz.avg_score %></span></p>
+            </li>
+
+            <!-- Questions per page -->
+            <li class="list-group-item">
+              <p class="quiz-detail">Questions / Page<span class="detail"><%= quiz.questions_per_page %></span></p>
+            </li>
+
           </ul>
+
+          <!-- Card footer -->
           <div class="card-footer">
-            <%= link "Attempt Quiz", to: user_attempt_path(@conn,:create, quiz_id: quiz.id, user_id: @conn.assigns[:user].id), method: "post", class: "btn btn-primary"%>
+            <%= link "Attempt Quiz", to: user_attempt_path(@conn,:create, quiz_id: quiz.id, user_id: @conn.assigns[:user].id), method: "post", class: "btn btn-link btn-lg btn-block"%>
           </div>
+
         </div>
       </div>
     <% end %>
