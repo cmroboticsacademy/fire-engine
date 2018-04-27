@@ -19,7 +19,7 @@ defmodule FireEngine.AccountsTest do
     end
 
     test "list_fe_users/0 returns all fe_users" do
-      user = user_fixture()
+      user_fixture()
       assert Accounts.list_fe_users()
     end
 
@@ -91,7 +91,7 @@ defmodule FireEngine.AccountsTest do
     end
 
     test "create_role/1 with valid data creates a role" do
-      assert {:ok, %Role{} = role} = Accounts.create_role(@valid_attrs)
+      assert {:ok, %Role{}} = Accounts.create_role(@valid_attrs)
     end
 
     test "create_role/1 with invalid data returns error changeset" do

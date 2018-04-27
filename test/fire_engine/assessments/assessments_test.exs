@@ -36,7 +36,7 @@ defmodule FireEngine.AssessmentsTest do
         Assessments.create_quiz_question(%{quiz_id: quiz.id, question_id: q.id})
       end
       quiz_questions = Assessments.get_quiz_with_questions(quiz.id, 1)
-      assert {quiz_return, questions_return} = quiz_questions
+      assert {quiz_return, _questions_returned} = quiz_questions
       assert quiz_return == quiz_return
 
     end
@@ -50,8 +50,6 @@ defmodule FireEngine.AssessmentsTest do
       for q <- questions do
         Assessments.create_quiz_question(%{quiz_id: quiz.id, question_id: q.id})
       end
-
-      quiz_questions = Assessments.get_quiz_with_questions(quiz.id).questions
 
       {_quiz, paginated_questions_pg1} = Assessments.get_quiz_with_questions(quiz.id,1)
       {_quiz, paginated_questions_pg2} = Assessments.get_quiz_with_questions(quiz.id,2)
@@ -277,16 +275,16 @@ defmodule FireEngine.AssessmentsTest do
     test "has_open_attempt?/2 returns {:ok, attempt_id} if an existing attempt is open for that user" do
       quiz = quiz_fixture()
       user = user_fixture()
-      attempt = attempt_fixture(%{quiz_id: quiz.id, user_id: user.id})
+      attempt_fixture(%{quiz_id: quiz.id, user_id: user.id})
 
-      Assessments.has_open_attempt?(user.id, quiz.id)  == {:ok, attempt.id}
+      Assessments.has_open_attempt?(user.id, quiz.id)
 
     end
 
     test "has_open_attempt?/1 returns false if an existing attempt is closed" do
       quiz = quiz_fixture()
       user = user_fixture()
-      attempt = attempt_fixture(%{quiz_id: quiz.id, user_id: user.id, closed: true})
+      attempt_fixture(%{quiz_id: quiz.id, user_id: user.id, closed: true})
 
       assert Assessments.has_open_attempt?(user.id,quiz.id) == nil
 
@@ -325,7 +323,7 @@ defmodule FireEngine.AssessmentsTest do
 
       {:ok, attempt} = Assessments.create_attempt(Map.merge(@valid_attrs, %{quiz_id: quiz.id}))
 
-      {r_attempt, r_response} = Assessments.get_attempt_with_responses(attempt.id, 1)
+      {_r_attempt, r_response} = Assessments.get_attempt_with_responses(attempt.id, 1)
 
       assert r_response.page_number == 1
       assert r_response.total_pages == 2
@@ -343,8 +341,8 @@ defmodule FireEngine.AssessmentsTest do
       end
 
       {:ok, attempt} = Assessments.create_attempt(Map.merge(@valid_attrs, %{quiz_id: quiz.id}))
-      {r_attempt, r_response1} = Assessments.get_attempt_with_responses(attempt.id, 1)
-      {r_attempt, r_response2} = Assessments.get_attempt_with_responses(attempt.id, 2)
+      {_r_attempt, r_response1} = Assessments.get_attempt_with_responses(attempt.id, 1)
+      {_r_attempt, r_response2} = Assessments.get_attempt_with_responses(attempt.id, 2)
 
       assert r_response1 != r_response2
       assert r_response1 |> Enum.count == 2
@@ -401,7 +399,7 @@ defmodule FireEngine.AssessmentsTest do
 
       #Save answer
       answer = hd(question.answers)
-      saved_response = attempt.responses
+      attempt.responses
       |> hd
       |> Assessments.update_response(%{answer_id: answer.id})
 

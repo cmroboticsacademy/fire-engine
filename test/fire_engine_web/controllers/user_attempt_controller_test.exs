@@ -4,8 +4,6 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
   use Timex
 
   alias FireEngine.Assessments
-  alias FireEngine.Accounts
-  alias FireEngine.Repo
 
   @admin_user %{id: 123,email: "some email", username: "some user", roles: [%{name: "admin"}]}
   @quiz %{attempts_allowed: 2, description: "some updated description", name: "some updated name", questions_per_page: 1, randomize_questions: false, time_closed: ~N[2011-06-18 15:01:01.000000], time_open: ~N[2011-05-18 15:01:01.000000]}
@@ -57,7 +55,7 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
   end
 
   def authenticate!(conn,user) do
-    conn = conn
+    conn
     |> init_test_session(user_id: user.id)
     |> assign(:user,user.id)
   end
@@ -149,7 +147,7 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
       {:ok, existing_attempt} = Assessments.create_attempt %{quiz_id: quiz.id, user_id: user.id}
 
       d = Duration.from_minutes(25)
-      {:ok, existing_attempt} = Assessments.update_attempt(existing_attempt, %{start_time: Timex.subtract(existing_attempt.start_time,d)})
+      Assessments.update_attempt(existing_attempt, %{start_time: Timex.subtract(existing_attempt.start_time,d)})
 
       conn = authenticate!(conn, user)
       |> post(user_attempt_path(conn, :create, quiz_id: quiz.id, user_id: user.id))
@@ -323,17 +321,12 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
 
       conn = authenticate!(conn,user)
              |> get(user_attempt_path(conn, :edit, attempt.id, quiz_id: quiz.id, page: 3))
-      match_route = "/u/attempts/#{attempt.id}"
-      match_route = redir_path = redirected_to(conn, 302)
+      _match_route = "/u/attempts/#{attempt.id}"
+      _match_route = redir_path = redirected_to(conn, 302)
       conn = get(recycle(conn), redir_path)
       assert html_response(conn, 200) =~ "Save Quiz"
     end
 
   end
 
-
-  defp create_quiz(_) do
-    quiz = fixture(:quiz)
-    {:ok, quiz: quiz}
-  end
 end

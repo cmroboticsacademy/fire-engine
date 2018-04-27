@@ -25,6 +25,7 @@ defmodule FireEngineWeb.QuizControllerTest do
     conn = conn
     |> init_test_session(user_id: user.id)
     |> assign(:user,user.id)
+    conn
   end
 
 
