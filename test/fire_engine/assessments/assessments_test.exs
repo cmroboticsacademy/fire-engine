@@ -327,6 +327,9 @@ defmodule FireEngine.AssessmentsTest do
 
       {r_attempt, r_response} = Assessments.get_attempt_with_responses(attempt.id, 1)
 
+      assert r_response.page_number == 1
+      assert r_response.total_pages == 2
+
     end
 
     test "get_attempt_with_responses/2 returns paginated responses" do

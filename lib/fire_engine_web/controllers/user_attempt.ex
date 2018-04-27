@@ -22,11 +22,11 @@ defmodule FireEngineWeb.UserAttemptController do
 
       case open_attempt do
         {:ok, attempt_id} ->
-          conn |> redirect(to: user_attempt_path(conn, :edit, attempt_id, quiz_id: quiz))
+          conn |> redirect(to: user_attempt_path(conn, :edit, attempt_id, quiz_id: quiz, page: 1))
         nil ->
           with {:ok, %Attempt{} = attempt} <- Assessments.create_attempt(attrs) do
             conn
-            |> redirect(to: user_attempt_path(conn, :edit, attempt, quiz_id: quiz))
+            |> redirect(to: user_attempt_path(conn, :edit, attempt, quiz_id: quiz, page: 1))
           end
       end
     else
@@ -38,19 +38,31 @@ defmodule FireEngineWeb.UserAttemptController do
   end
 
   def edit(conn,%{"id" => attempt_id, "quiz_id" => quiz_id, "page" => page} = params) do
-    quiz = Assessments.get_quiz_with_questions(quiz_id, page)
-    attempt = Assessments.get_attempt_with_responses(attempt_id, page)
 
+
+    page = String.to_integer(page)
+    {quiz,questions} = Assessments.get_quiz_with_questions(quiz_id, page)
+    attempt = Assessments.get_attempt_with_responses(attempt_id)
     changeset = Assessments.change_attempt(attempt)
-    render(conn, "edit.html", quiz: quiz, changeset: changeset, attempt: attempt)
+
+    case last_page?(questions) do
+      false ->
+        render(conn, "edit.html", quiz: quiz, changeset: changeset, attempt: attempt, questions: questions)
+      true ->
+        conn
+        |> redirect(to: user_attempt_path(conn, :show, attempt))
+    end
+
   end
 
-  def update(conn,%{"attempt" => attempt} = params) do
+  def update(conn,%{"attempt" => attempt, "page" => page, "quiz_id" => quiz_id} = params) do
      {:ok, new_attempt} = Assessments.get_attempt!(attempt["id"])
      |> Assessments.update_attempt(attempt)
 
+     next_page = String.to_integer(page) + 1
+
      conn
-     |> redirect(to: user_attempt_path(conn,:show, new_attempt))
+     |> redirect(to: user_attempt_path(conn,:edit, new_attempt, quiz_id: quiz_id, page: next_page))
   end
 
   def save(conn, %{"id" => attempt_id}) do
@@ -79,6 +91,15 @@ defmodule FireEngineWeb.UserAttemptController do
 
     Assessments.update_attempt(attempt, %{point_percent: score, point_total: earned_points, points_available: total_points})
     conn
+  end
+
+  defp last_page?(%Scrivener.Page{page_number: page_number, total_pages: total_pages}) do
+    cond do
+      page_number > total_pages ->
+        true
+      true ->
+        false
+    end
   end
 
 

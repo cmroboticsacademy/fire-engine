@@ -1,7 +1,7 @@
 <h2 class="SectionHeader">Quiz Attempt</h2>
 
 
-<%= form_for @changeset, user_attempt_path(@conn,:update,@attempt), fn f ->  %>
+<%= form_for @changeset, user_attempt_path(@conn,:update,@attempt, page: @conn.query_params["page"], quiz_id: @quiz.id), fn f ->  %>
   <%= hidden_input f, :id %>
   <%= hidden_input f, :closed %>
   <%= hidden_input f, :closes %>
@@ -13,8 +13,9 @@
 
   <ol class="list-group">
     <%= inputs_for f, :responses, fn r -> %>
+      <%= if Enum.map(@questions,&(&1.id)) |> Enum.member?(r.data.question_id) do %>
       <li class="list-group-item">
-        <% q = @quiz.questions |> Enum.find(&(&1.id == r.data.question_id)) %>
+        <% q = @questions |> Enum.find(&(&1.id == r.data.question_id)) %>
         <%= hidden_input r, :question_id %>
         <%= raw q.content %>
         <ul class="list-group">
@@ -26,6 +27,7 @@
         <% end %>
         </ul>
       </li>
+      <% end %>
     <% end %>
   </ol>
 

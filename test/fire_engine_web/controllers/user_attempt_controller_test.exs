@@ -297,11 +297,36 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
       {:ok,attempt} = Assessments.create_attempt %{quiz_id: quiz.id, user_id: user.id}
 
       conn = authenticate!(conn, user)
-      |> get(user_attempt_path(conn, :edit, attempt.id, quiz_id: quiz.id))
+      |> get(user_attempt_path(conn, :edit, attempt.id, quiz_id: quiz.id, page: 1))
 
-      assert conn.assigns.quiz.questions |> Enum.count == 1
-      assert html_response(conn, 200) =~ "Next Question"
+      refute html_response(conn, 200) =~ List.last(questions).content
+      assert html_response(conn, 200) =~ List.first(questions).content
 
+      conn = get(conn,user_attempt_path(conn, :edit, attempt.id, quiz_id: quiz.id, page: 2))
+
+      refute html_response(conn, 200) =~ List.first(questions).content
+      assert html_response(conn, 200) =~ List.last(questions).content
+
+    end
+
+    test "Requesting a page that is not available redirects to the quiz submission page", %{conn: conn} do
+      #setup
+      user = fixture(:admin_user)
+      questions = fixture(:questions)
+      quiz = fixture(:quiz)
+      for q <- questions do
+        Assessments.create_quiz_question(%{quiz_id: quiz.id, question_id: q.id})
+      end
+      quiz = Assessments.get_quiz!(quiz.id)
+      #create attempt
+      {:ok,attempt} = Assessments.create_attempt %{quiz_id: quiz.id, user_id: user.id}
+
+      conn = authenticate!(conn,user)
+             |> get(user_attempt_path(conn, :edit, attempt.id, quiz_id: quiz.id, page: 3))
+      match_route = "/u/attempts/#{attempt.id}"
+      match_route = redir_path = redirected_to(conn, 302)
+      conn = get(recycle(conn), redir_path)
+      assert html_response(conn, 200) =~ "Save Quiz"
     end
 
   end

@@ -441,10 +441,11 @@ defmodule FireEngine.Assessments do
 
 
     def get_attempt_with_responses(id, page) do
-       attempt = Repo.get!(Attempt, id) |> Repo.preload(:responses)
+       attempt = Repo.get!(Attempt, id)
+                 |> Repo.preload(:responses)
        quiz = Repo.get!(Quiz,attempt.quiz_id)
-       responses = attempt.responses |> Scrivener.paginate(%Scrivener.Config{page_number: page, page_size: quiz.questions_per_page})
-
+       responses = attempt.responses
+                   |> Scrivener.paginate(%Scrivener.Config{page_number: page, page_size: quiz.questions_per_page})
        {attempt, responses}
     end
 
