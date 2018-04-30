@@ -733,4 +733,292 @@ defmodule FireEngine.Assessments do
   end
 
 
+
+  alias FireEngine.Assessments.Category
+
+  @doc """
+  Returns the list of fe_categories.
+
+  ## Examples
+
+      iex> list_fe_categories()
+      [%Category{}, ...]
+
+  """
+  def list_fe_categories do
+    Repo.all(Category)
+  end
+
+  @doc """
+  Gets a single category.
+
+  Raises `Ecto.NoResultsError` if the Category does not exist.
+
+  ## Examples
+
+      iex> get_category!(123)
+      %Category{}
+
+      iex> get_category!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_category!(id), do: Repo.get!(Category, id)
+
+  @doc """
+  Creates a category.
+
+  ## Examples
+
+      iex> create_category(%{field: value})
+      {:ok, %Category{}}
+
+      iex> create_category(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_category(attrs \\ %{}) do
+    %Category{}
+    |> Category.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a category.
+
+  ## Examples
+
+      iex> update_category(category, %{field: new_value})
+      {:ok, %Category{}}
+
+      iex> update_category(category, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_category(%Category{} = category, attrs) do
+    category
+    |> Category.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Category.
+
+  ## Examples
+
+      iex> delete_category(category)
+      {:ok, %Category{}}
+
+      iex> delete_category(category)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_category(%Category{} = category) do
+    Repo.delete(category)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking category changes.
+
+  ## Examples
+
+      iex> change_category(category)
+      %Ecto.Changeset{source: %Category{}}
+
+  """
+  def change_category(%Category{} = category) do
+    Category.changeset(category, %{})
+  end
+
+  alias FireEngine.Assessments.Tag
+
+  @doc """
+  Returns the list of fe_tags.
+
+  ## Examples
+
+      iex> list_fe_tags()
+      [%Tag{}, ...]
+
+  """
+  def list_fe_tags do
+    Repo.all(Tag)
+  end
+
+  @doc """
+  Gets a single tag.
+
+  Raises `Ecto.NoResultsError` if the Tag does not exist.
+
+  ## Examples
+
+      iex> get_tag!(123)
+      %Tag{}
+
+      iex> get_tag!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_tag!(id), do: Repo.get!(Tag, id)
+
+  @doc """
+  Creates a tag.
+
+  ## Examples
+
+      iex> create_tag(%{field: value})
+      {:ok, %Tag{}}
+
+      iex> create_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_tag(attrs \\ %{}) do
+    %Tag{}
+    |> Tag.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a tag.
+
+  ## Examples
+
+      iex> update_tag(tag, %{field: new_value})
+      {:ok, %Tag{}}
+
+      iex> update_tag(tag, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_tag(%Tag{} = tag, attrs) do
+    tag
+    |> Tag.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Tag.
+
+  ## Examples
+
+      iex> delete_tag(tag)
+      {:ok, %Tag{}}
+
+      iex> delete_tag(tag)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_tag(%Tag{} = tag) do
+    Repo.delete(tag)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking tag changes.
+
+  ## Examples
+
+      iex> change_tag(tag)
+      %Ecto.Changeset{source: %Tag{}}
+
+  """
+  def change_tag(%Tag{} = tag) do
+    Tag.changeset(tag, %{})
+  end
+
+  alias FireEngine.Assessments.QuestionTag
+
+  @doc """
+  Returns the list of fe_question_tags.
+
+  ## Examples
+
+      iex> list_fe_question_tags()
+      [%QuestionTag{}, ...]
+
+  """
+  def list_fe_question_tags do
+    Repo.all(QuestionTag)
+  end
+
+  @doc """
+  Gets a single question_tag.
+
+  Raises `Ecto.NoResultsError` if the Question tag does not exist.
+
+  ## Examples
+
+      iex> get_question_tag!(123)
+      %QuestionTag{}
+
+      iex> get_question_tag!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_question_tag!(id), do: Repo.get!(QuestionTag, id)
+
+  @doc """
+  Creates a question_tag.
+
+  ## Examples
+
+      iex> create_question_tag(%{field: value})
+      {:ok, %QuestionTag{}}
+
+      iex> create_question_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_question_tag(attrs \\ %{}) do
+    %QuestionTag{}
+    |> QuestionTag.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a question_tag.
+
+  ## Examples
+
+      iex> update_question_tag(question_tag, %{field: new_value})
+      {:ok, %QuestionTag{}}
+
+      iex> update_question_tag(question_tag, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_question_tag(%QuestionTag{} = question_tag, attrs) do
+    question_tag
+    |> QuestionTag.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a QuestionTag.
+
+  ## Examples
+
+      iex> delete_question_tag(question_tag)
+      {:ok, %QuestionTag{}}
+
+      iex> delete_question_tag(question_tag)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_question_tag(%QuestionTag{} = question_tag) do
+    Repo.delete(question_tag)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking question_tag changes.
+
+  ## Examples
+
+      iex> change_question_tag(question_tag)
+      %Ecto.Changeset{source: %QuestionTag{}}
+
+  """
+  def change_question_tag(%QuestionTag{} = question_tag) do
+    QuestionTag.changeset(question_tag, %{})
+  end
 end

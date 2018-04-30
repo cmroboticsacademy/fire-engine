@@ -138,6 +138,25 @@ defmodule FireEngine.AssessmentsTest do
       assert Assessments.list_fe_questions() == [question]
     end
 
+    test "question.category returns category" do
+      category = category_fixture()
+      question = question_fixture(%{content: "content", points: 1, type: "type", category_id: category.id})
+
+      question = Repo.get(Assessments.Question,question.id)|> Repo.preload(:category)
+
+      assert question.category == category
+
+    end
+
+    test "question.tags returns many tags" do
+      tag = tag_fixture()
+      question = question_fixture()
+      Assessments.create_question_tag(%{tag_id: tag.id, question_id: question.id})
+      question = Repo.get(Assessments.Question, question.id) |> Repo.preload(:tags)
+
+      assert question.tags |> Enum.count == 1
+    end
+
     test "get_question!/1 returns the question with given id" do
       question = question_fixture()
       assert Assessments.get_question!(question.id) == question
@@ -408,5 +427,164 @@ defmodule FireEngine.AssessmentsTest do
     end
   end
 
+
+
+  describe "fe_categories" do
+    alias FireEngine.Assessments.Category
+
+    @valid_attrs %{name: "some name", parent_id: 42}
+    @update_attrs %{name: "some updated name", parent_id: 43}
+    @invalid_attrs %{name: nil, parent_id: nil}
+
+    def category_fixture(attrs \\ %{}) do
+      {:ok, category} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Assessments.create_category()
+
+      category
+    end
+
+    test "list_fe_categories/0 returns all fe_categories" do
+      category = category_fixture()
+      assert Assessments.list_fe_categories() == [category]
+    end
+
+    test "get_category!/1 returns the category with given id" do
+      category = category_fixture()
+      assert Assessments.get_category!(category.id) == category
+    end
+
+    test "category.parent returns parent category" do
+      category_p = category_fixture(%{name: "parent"})
+      category_c = category_fixture(%{name: "child", parent_id: category_p.id})
+
+      category_c = Repo.get(Category, category_c.id) |> Repo.preload(:parent)
+      assert category_c.parent == category_p
+    end
+
+    test "category.children returns many children categories" do
+      category_p = category_fixture(%{name: "parent"})
+      category_fixture(%{name: "child", parent_id: category_p.id})
+
+      category_p = Repo.get(Category, category_p.id) |> Repo.preload(:children)
+      assert category_p.children |> Enum.count == 1
+    end
+
+    test "category.questions returns many questions" do
+      category = category_fixture()
+      _question = question_fixture(%{content: "some question", type: "some type", points: 1.0, category_id: category.id})
+
+      category = Repo.get(Assessments.Category, category.id) |> Repo.preload(:questions)
+
+      assert category.questions |> Enum.count == 1
+
+
+    end
+
+    test "create_category/1 with valid data creates a category" do
+      assert {:ok, %Category{} = category} = Assessments.create_category(@valid_attrs)
+      assert category.name == "some name"
+      assert category.parent_id == 42
+    end
+
+    test "create_category/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Assessments.create_category(@invalid_attrs)
+    end
+
+    test "update_category/2 with valid data updates the category" do
+      category = category_fixture()
+      assert {:ok, category} = Assessments.update_category(category, @update_attrs)
+      assert %Category{} = category
+      assert category.name == "some updated name"
+      assert category.parent_id == 43
+    end
+
+    test "update_category/2 with invalid data returns error changeset" do
+      category = category_fixture()
+      assert {:error, %Ecto.Changeset{}} = Assessments.update_category(category, @invalid_attrs)
+      assert category == Assessments.get_category!(category.id)
+    end
+
+    test "delete_category/1 deletes the category" do
+      category = category_fixture()
+      assert {:ok, %Category{}} = Assessments.delete_category(category)
+      assert_raise Ecto.NoResultsError, fn -> Assessments.get_category!(category.id) end
+    end
+
+    test "change_category/1 returns a category changeset" do
+      category = category_fixture()
+      assert %Ecto.Changeset{} = Assessments.change_category(category)
+    end
+  end
+
+  describe "fe_tags" do
+    alias FireEngine.Assessments.Tag
+
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
+
+    def tag_fixture(attrs \\ %{}) do
+      {:ok, tag} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Assessments.create_tag()
+
+      tag
+    end
+
+    test "list_fe_tags/0 returns all fe_tags" do
+      tag = tag_fixture()
+      assert Assessments.list_fe_tags() == [tag]
+    end
+
+    test "get_tag!/1 returns the tag with given id" do
+      tag = tag_fixture()
+      assert Assessments.get_tag!(tag.id) == tag
+    end
+
+    test "tag.questions returns many questions" do
+      question = question_fixture()
+      tag = tag_fixture()
+      Assessments.create_question_tag(%{question_id: question.id, tag_id: tag.id})
+
+      tag = Repo.get(Assessments.Tag, tag.id) |> Repo.preload(:questions)
+      assert tag.questions |> Enum.count == 1
+    end
+
+    test "create_tag/1 with valid data creates a tag" do
+      assert {:ok, %Tag{} = tag} = Assessments.create_tag(@valid_attrs)
+      assert tag.name == "some name"
+    end
+
+    test "create_tag/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Assessments.create_tag(@invalid_attrs)
+    end
+
+    test "update_tag/2 with valid data updates the tag" do
+      tag = tag_fixture()
+      assert {:ok, tag} = Assessments.update_tag(tag, @update_attrs)
+      assert %Tag{} = tag
+      assert tag.name == "some updated name"
+    end
+
+    test "update_tag/2 with invalid data returns error changeset" do
+      tag = tag_fixture()
+      assert {:error, %Ecto.Changeset{}} = Assessments.update_tag(tag, @invalid_attrs)
+      assert tag == Assessments.get_tag!(tag.id)
+    end
+
+    test "delete_tag/1 deletes the tag" do
+      tag = tag_fixture()
+      assert {:ok, %Tag{}} = Assessments.delete_tag(tag)
+      assert_raise Ecto.NoResultsError, fn -> Assessments.get_tag!(tag.id) end
+    end
+
+    test "change_tag/1 returns a tag changeset" do
+      tag = tag_fixture()
+      assert %Ecto.Changeset{} = Assessments.change_tag(tag)
+    end
+  end
 
 end
