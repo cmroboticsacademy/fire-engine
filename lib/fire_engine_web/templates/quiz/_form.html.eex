@@ -1,55 +1,74 @@
+
 <%= form_for @changeset, @path, fn f -> %>
-  <div class="form-group">
-    <label>Name</label>
-    <%= text_input f, :name, placeholder: "Name this quiz", class: "form-control"%>
-    <%= error_tag f, :name %>
-  </div>
-  <div class="form-group">
-    <label>Description</label>
-    <%= textarea f, :description, placeholder: "Describe this quiz", class: "form-control"%>
-    <%= error_tag f, :description %>
-  </div>
-  <div class="form-group">
-    <div class="row">
-    <div class="col-2">
+<div class="quiz-form row">
+
+  <div class="form-group col-sm-12">
+    <div class="form-group-item">
+      <label>Name</label>
+      <%= text_input f, :name, placeholder: "Enter Quiz Name", class: "form-control"%>
+      <%= error_tag f, :name %>
+    </div>
+
+    <div class="form-group-item">
+      <label>Description</label>
+      <%= textarea f, :description, placeholder: "Enter Short Description", class: "form-control"%>
+      <%= error_tag f, :description %>
+    </div>
+
+    <div class="form-group-item">
       <label>Attempts Allowed</label>
       <%= number_input f, :attempts_allowed, placeholder: "i.e. 2", class: "form-control" %>
       <%= error_tag f, :attempts_allowed %>
     </div>
-    <div class="col-2">
-      <label>Questions Per Page</label>
+
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4">
+    <div class="form-group-item">
+      <%= checkbox f, :time_limit %>
+      <%= label f, :time_limit, "Attempt Time Limit"%>
+    </div>
+
+    <div class="form-group-item">
+      <%= checkbox f, :auto_submit %>
+      <%= label f, :auto_submit, "Auto-Submissions"%>
+    </div>
+
+    <div class="form-group-item">
+      <%= checkbox f, :randomize_questions %>
+      <%= label f, :randomize_questions, "Randomize Questions"%>
+    </div>
+
+    <div class="form-group-item">
+      <%= checkbox f, :time_window %>
+      <%= label f, :time_window, "Quiz Time Window"%>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-8">
+    <div class="form-group-item">
+      <%= label f, :questions_per_page, "Questions / Page"%>
       <%= number_input f, :questions_per_page, placeholder: "i.e. 5", class: "form-control" %>
       <%= error_tag f, :questions_per_page %>
     </div>
+
+    <div class="time-limit form-group-item">
+      <%= label f, :time_limit_minutes, "Time Limit (mins) / Attempt" %>
+      <%= number_input f, :time_limit_minutes, placeholder: "i.e. 10", class: "form-control" %>
+    </div>
+
+    <div class="time-window-item form-group-item">
+      <%= label f, :time_open, "Quiz Time Open (Year / Month / Day - Hour : Minute)" %><br>
+      <%= datetime_select f, :time_open %>
+    </div>
+
+    <div class="time-window-item form-group-item">
+      <%= label f, :time_closed, "Quiz Time Closed (Year / Month / Day - Hour : Minute)" %><br>
+      <%= datetime_select f, :time_closed %>
     </div>
   </div>
-  <div class="form-check">
-    <%= label f, :randomize_questions %>
-    <%= checkbox f, :randomize_questions %>
-  </div>
-  <div class="form-check">
-    <%= label f, :auto_submit %>
-    <%= checkbox f, :auto_submit %>
-  </div>
-  <div class="date-select">
-    <%= label f, :time_window %>
-    <%= checkbox f, :time_window %>
-  <br />
-    <%= label f, :time_open %>
-    <%= datetime_select f, :time_open %>
-  <br />
-    <%= label f, :time_closed %>
-    <%= datetime_select f, :time_closed %>
-  <br />
-  </div>
 
-  <div class="form-group">
-    <%= label f, :time_limit %>
-    <%= checkbox f, :time_limit %>
-  <br />
-    <%= label f, :time_limit_minutes %>
-    <%= number_input f, :time_limit_minutes, placeholder: "i.e. 5", class: "form-control" %>
-  </div>
+  <hr>
 
   <h2 class="SectionHeader">Questions</h2>
   <hr />
@@ -81,7 +100,7 @@
                 <div class="col 9">
                 <%= text_input a, :answer, class: "form-control", placeholder: "Answer" %>
                 </div>
-                <div class="form-check col 2">
+                <div class=" col 2">
                 <%= label a, :weight %>
                 <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "0"%>
                 </div>
@@ -122,7 +141,5 @@
   </div>
 
   </div>
-
-
 
 <% end %>

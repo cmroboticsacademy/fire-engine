@@ -61,6 +61,23 @@
   border-radius: 0;
 }
 
+/* ====== Forms ====== */
+
+.form-group {
+  padding: 15px;
+}
+
+.form-group > .form-group-item > label {
+  font-weight: bold;
+  margin: 0;
+}
+
+.form-group > .form-group-item > input,
+.form-group > .form-group-item > select,
+.form-group > .form-group-item > textarea {
+  margin-bottom: 15px;
+}
+
 /* ====== MEDIA QUERIES ====== */
 
 @media only screen and (max-width : 992px) {

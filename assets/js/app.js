@@ -110,3 +110,60 @@ window.deleteAnswer = (obj, q, a) => {
   $(obj).closest("#question_"+q+"_answer_"+a).prev("input").remove()
   $(obj).closest("#question_"+q+"_answer_"+a).remove()
 }
+
+// ============ Quiz Forms Scripts ============ //
+// ============ Quiz Forms Scripts ============ //
+
+function toggleTimeLimit() {
+  var timeLimitCheck = $('#quiz_time_limit');
+  var timeLimitInput = $('#quiz_time_limit_minutes');
+
+  if (timeLimitCheck.is(':checked')) {
+    timeLimitInput.prop('disabled', false);
+  } else {
+    timeLimitInput.prop('disabled', true);
+  };
+};
+
+function toggleTimeWindow() {
+  var timeWindowCheck = $('#quiz_time_window');
+  var timeOpenSelectors = $('[id^=quiz_time_open]');
+  var timeClosedSelectors = $('[id^=quiz_time_closed]');
+
+  if (timeWindowCheck.is(':checked')) {
+    timeOpenSelectors.each(function() {
+      $(this).prop('disabled', false);
+    });
+
+    timeClosedSelectors.each(function() {
+      $(this).prop('disabled', false);
+    });
+
+  } else {
+    timeOpenSelectors.each(function() {
+      $(this).prop('disabled', true);
+    });
+
+    timeClosedSelectors.each(function() {
+      $(this).prop('disabled', true);
+    });
+  };
+};
+
+
+$(document).ready(function() {
+  var isQuizForm = $('.quiz-form').length;
+
+  if (isQuizForm) {
+    toggleTimeLimit();
+    toggleTimeWindow();
+  };
+});
+
+$(document).on('click', '#quiz_time_limit', function() {
+  toggleTimeLimit();
+});
+
+$(document).on('click', '#quiz_time_window', function() {
+  toggleTimeWindow()
+});
