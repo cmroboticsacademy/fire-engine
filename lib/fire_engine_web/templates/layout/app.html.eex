@@ -42,6 +42,7 @@
                 <div class="dropdown-menu" aria-labelledby="admin-dropdown">
                   <%=link "Question Bank", to: question_path(@conn, :index),class: "dropdown-item" %>
                   <%=link "Quiz Bank", to: quiz_path(@conn, :index), class: "dropdown-item" %>
+                  <%=link "Question Categories", to: category_path(@conn, :index), class: "dropdown-item" %>
                 </div>
               </li>
             <% end %>
