@@ -31,6 +31,7 @@ defmodule FireEngineWeb.Router do
     resources "/admin/quizzes", QuizController
     resources "/admin/questions", QuestionController
     resources "/admin/categories", CategoryController
+    resources "/admin/tags", TagController
   end
 
   # Other scopes may use custom stacks.
