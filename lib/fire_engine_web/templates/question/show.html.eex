@@ -3,13 +3,23 @@
 
 <ul class="list-group">
     <li class="list-group-item">
-      <%=@question.content%>
+      <b>Question: </b><%=@question.content%>
+      <br >
+      <b>Category: </b><%=get_category @question.category_id%>
       <ul class="list-group">
         <%= for answer <- @question.answers do %>
         <li>
           <%= answer.answer %>
           <%= answer.weight %>
         </li>
+        <% end %>
+      </ul>
+      <ul class="list-group">
+        <%= for tag <- @question.tags do %>
+        <div class="col">
+          <span class="badge badge-pill badge-secondary"> <%= tag.name %></span>
+        </div>
+        <br />
         <% end %>
       </ul>
     </li>

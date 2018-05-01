@@ -130,7 +130,7 @@ defmodule FireEngine.AssessmentsTest do
         |> Enum.into(@valid_attrs)
         |> Assessments.create_question()
 
-      question |> Repo.preload(:answers)
+      question |> Repo.preload([:answers, :tags])
     end
 
     test "list_fe_questions/0 returns all fe_questions" do

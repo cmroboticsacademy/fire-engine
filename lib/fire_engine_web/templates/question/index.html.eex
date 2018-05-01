@@ -9,16 +9,24 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th scope="col">Category</th>
         <th scope="col">#</th>
         <th scope="col">Question:</th>
         <th scope="col">Question Type</th>
         <th scope="col">Actions</th>
+        <th scope="col">Tags</th>
       </tr>
       <%= for question <- @fe_questions do %>
         <tr>
+          <td><%= get_category question.category_id %>
           <td scope="row"><%= question.id %></td>
           <td><%= question.content %>
           <td><%= question.type %>
+          <td>
+            <%=for t <- question.tags do %>
+            <span class="badge badge-secondary"><%=t.name%></span>
+            <% end %>
+          </td>
           <td>
             <%=link to: question_path(@conn,:edit,question) do %>
               <i class="fas fa-edit"></i> Edit
@@ -26,7 +34,7 @@
             <%=link to: question_path(@conn,:delete,question), method: :delete do %>
               <i class="fas fa-delete"></i> Delete
             <% end %>
-        </td>
+          </td>
         </tr>
       <% end %>
   </table>

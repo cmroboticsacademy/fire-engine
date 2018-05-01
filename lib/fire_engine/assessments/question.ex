@@ -25,5 +25,6 @@ defmodule FireEngine.Assessments.Question do
     |> cast(attrs, [:content, :type, :points, :category_id])
     |> validate_required([:content])
     |> cast_assoc(:answers)
+    |> cast_assoc(:tags)
   end
 end

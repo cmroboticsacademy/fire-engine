@@ -175,7 +175,7 @@ defmodule FireEngine.Assessments do
 
   """
   def list_fe_questions do
-    Repo.all(Question) |> Repo.preload(:answers)
+    Repo.all(Question) |> Repo.preload([:answers,:tags])
   end
 
   @doc """
@@ -192,7 +192,7 @@ defmodule FireEngine.Assessments do
       ** (Ecto.NoResultsError)
 
   """
-  def get_question!(id), do: Repo.get!(Question, id) |> Repo.preload(:answers)
+  def get_question!(id), do: Repo.get!(Question, id) |> Repo.preload([:answers,:tags])
 
   @doc """
   Creates a question.
@@ -1021,5 +1021,5 @@ defmodule FireEngine.Assessments do
   def change_question_tag(%QuestionTag{} = question_tag) do
     QuestionTag.changeset(question_tag, %{})
   end
-  
+
 end

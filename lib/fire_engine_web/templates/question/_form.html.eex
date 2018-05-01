@@ -10,6 +10,11 @@
     <%= error_tag f, :type %>
   </div>
   <div class="form-group">
+    <label>Category</label>
+    <%= select f, :category_id, list_categories(), class: "form-control"%>
+    <%= error_tag f, :points %>
+  </div>
+  <div class="form-group">
     <label>Points</label>
     <%= number_input f, :points, value: "1.0", class: "form-control"%>
     <%= error_tag f, :points %>
@@ -37,9 +42,38 @@
 
     </ul>
 
+
     <a href="javascript:void(0);" class="btn btn-default btn-circle addAnswer" onclick="addAnswerQuestionForm(this)">
     <i class="fa fa-plus"></i>
     Add Answer
+    </a>
+
+    <br/>
+
+
+
+    <ul class="list-group tags">
+      <li class="list-group-item tag_0">
+
+        <%= inputs_for f, :tags, fn t -> %>
+          <div id="question_0_tag_<%=t.index%>">
+            <div class="row">
+              <div col="1"  style="padding-top:5px;"><a href="javascript:void(0);" onclick="deleteTag(this, 0, <%=t.index%>)"><i class="fas fa-times-circle"></a></i></div>
+              <div class="col 9">
+              <%= text_input t, :name, class: "form-control", placeholder: "Tag" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </li>
+
+      </ul>
+
+
+
+    <a href="javascript:void(0);" class="btn btn-default btn-circle addTag" onclick="addTagQuestionForm(this)">
+    <i class="fa fa-plus"></i>
+    Add Tag
     </a>
 
 
