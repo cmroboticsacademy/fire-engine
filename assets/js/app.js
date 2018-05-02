@@ -97,33 +97,15 @@ window.addAnswerQuestionForm = (obj) => {
 
 }
 
-window.addTagQuestionForm = (obj) => {
-  var questionTags = $('.list-group-item.tag_0')
-  var questionTagsIndex = questionTags.children().length
-
-  questionTags.append(`
-    <div id="question_0_tag_${questionTagsIndex}" class="row">
-      <div col="1"  style="padding-top:5px;"><a href="javascript:void(0);" onclick="deleteTag(this, 0, ${questionTagsIndex})"><i class="fas fa-times-circle"></a></i></div>
-      <div class="col 9">
-        <input class="form-control" id="question_tags_${questionTagsIndex}_name" name="question[tags][${questionTagsIndex}][name]" placeholder="Tag" type="text">          </div>
-      </li>
-
-    </ul
-    `)
-
-}
-
-
-
 window.deleteQuestion = (obj, index) => {
   console.log(index)
   $(obj).closest("#question_"+index).prev().remove()
   $(obj).closest("#question_"+index).remove()
 }
 
-window.deleteTag = (obj, q, a) => {
-  $(obj).closest("#question_"+q+"_tag_"+a).prev("input").remove()
-  $(obj).closest("#question_"+q+"_tag_"+a).remove()
+window.deleteAnswer = (obj, q, a) => {
+  $(obj).closest("#question_"+q+"_answer_"+a).prev("input").remove()
+  $(obj).closest("#question_"+q+"_answer_"+a).remove()
 }
 
 // ============ Quiz Forms Scripts ============ //

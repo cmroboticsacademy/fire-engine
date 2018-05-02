@@ -1,0 +1,12 @@
+<li class="list-group-item tag_0">
+  <%= inputs_for @form, :tags, fn t -> %>
+    <div id="question_0_tag_<%=t.index%>">
+      <div class="row">
+        <div col="1"  style="padding-top:5px;"><a href="javascript:void(0);" onclick="deleteTag(this, 0, <%=t.index%>)"><i class="fas fa-times-circle"></a></i></div>
+        <div class="col 9">
+        <%= text_input t, :name, class: "form-control", placeholder: "Tag" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</li>

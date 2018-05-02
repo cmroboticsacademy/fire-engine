@@ -1681,22 +1681,15 @@ window.addAnswerQuestionForm = function (obj) {
   questionAnswers.append("\n    <div id=\"question_0_answer_" + questionAnswersIndex + "\" class=\"row\">\n      <div col=\"1\"  style=\"padding-top:5px;\"><a href=\"javascript:void(0);\" onclick=\"deleteAnswer(this, 0, " + questionAnswersIndex + ")\"><i class=\"fas fa-times-circle\"></a></i></div>\n      <div class=\"col 9\">\n        <input class=\"form-control\" id=\"question_answers_" + questionAnswersIndex + "_answer\" name=\"question[answers][" + questionAnswersIndex + "][answer]\" placeholder=\"Answer\" type=\"text\">              </div>\n        <div class=\"form-check col 2\">\n          <label for=\"question_answers_" + questionAnswersIndex + "_weight\">Weight</label>              <input name=\"question[answers][" + questionAnswersIndex + "][weight]\" value=\"false\" type=\"hidden\"><input id=\"question_answers_[" + questionAnswersIndex + "]_weight\" name=\"question[answers][" + questionAnswersIndex + "][weight]\" value=\"0\" type=\"number\" step=\"0.25\" value=\"0\" max=\"1.0\" min=\"-1.0\">\n          </div>\n        </div>\n      </li>\n\n    </ul\n    ");
 };
 
-window.addTagQuestionForm = function (obj) {
-  var questionTags = $('.list-group-item.tag_0');
-  var questionTagsIndex = questionTags.children().length;
-
-  questionTags.append("\n    <div id=\"question_0_tag_" + questionTagsIndex + "\" class=\"row\">\n      <div col=\"1\"  style=\"padding-top:5px;\"><a href=\"javascript:void(0);\" onclick=\"deleteTag(this, 0, " + questionTagsIndex + ")\"><i class=\"fas fa-times-circle\"></a></i></div>\n      <div class=\"col 9\">\n        <input class=\"form-control\" id=\"question_tags_" + questionTagsIndex + "_name\" name=\"question[tags][" + questionTagsIndex + "][name]\" placeholder=\"Tag\" type=\"text\">          </div>\n      </li>\n\n    </ul\n    ");
-};
-
 window.deleteQuestion = function (obj, index) {
   console.log(index);
   $(obj).closest("#question_" + index).prev().remove();
   $(obj).closest("#question_" + index).remove();
 };
 
-window.deleteTag = function (obj, q, a) {
-  $(obj).closest("#question_" + q + "_tag_" + a).prev("input").remove();
-  $(obj).closest("#question_" + q + "_tag_" + a).remove();
+window.deleteAnswer = function (obj, q, a) {
+  $(obj).closest("#question_" + q + "_answer_" + a).prev("input").remove();
+  $(obj).closest("#question_" + q + "_answer_" + a).remove();
 };
 
 // ============ Quiz Forms Scripts ============ //
