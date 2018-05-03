@@ -1655,12 +1655,11 @@ $(".alert").alert(); // Brunch automatically concatenates all files in your
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 
-
 window.addQuestion = function () {
   var questionListGroup = $(".list-group.questions");
   var questionIndex = questionListGroup.children().length;
 
-  questionListGroup.append("<li class=\"list-group-item question_" + questionIndex + "\">\n  <div id=\"question_" + questionIndex + "\">\n    <div class=\"row\">\n      <div col=\"1\"  style=\"padding-top:5px;\"><a href=\"javascript:void(0);\" onclick=\"deleteQuestion(this, " + questionIndex + ")\"><i class=\"fas fa-trash\"></a></i></div>\n    <div class=\"col 5\">\n      <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_content\" name=\"quiz[questions][" + questionIndex + "][content]\" placeholder=\"Question\" type=\"text\">        </div>\n      <div class=\"col 6\">\n        <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_type\" name=\"quiz[questions][" + questionIndex + "][type]\" placeholder=\"Type\" type=\"text\">        </div>\n      </div>\n\n      <ul class=\"list-group answers\">\n        <li class=\"list-group-item answer_0\">\n          <div id=\"question_" + questionIndex + "_answer_0\" class=\"row\">\n            <div col=\"1\"  style=\"padding-top:5px;\"><a href=\"javascript:void(0);\" onclick=\"deleteAnswer(this, " + questionIndex + ", 0)\"><i class=\"fas fa-times-circle\"></a></i></div>\n            <div class=\"col 9\">\n              <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_answers_0_answer\" name=\"quiz[questions][" + questionIndex + "][answers][0][answer]\" placeholder=\"Answer\" type=\"text\">              </div>\n              <div class=\"form-check col 2\">\n                <label for=\"quiz_questions_" + questionIndex + "_answers_0_weight\">Weight</label>              <input name=\"quiz[questions][" + questionIndex + "][answers][0][weight]\" value=\"false\" type=\"hidden\"><input id=\"quiz_questions_" + questionIndex + "_answers_0_weight\" name=\"quiz[questions][" + questionIndex + "][answers][0][weight]\" type=\"number\" step=\"0.25\" value=\"0\" max=\"1.0\" min=\"-1.0\">\n                </div>\n              </div>\n            </li>\n\n            </ul>\n\n            <a href=\"javascript:void(0);\" class=\"btn btn-default btn-circle addAnswer\" onclick=\"addAnswer(this)\"><svg class=\"svg-inline--fa fa-plus fa-w-14\" aria-hidden=\"true\" data-prefix=\"fa\" data-icon=\"plus\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M448 294.2v-76.4c0-13.3-10.7-24-24-24H286.2V56c0-13.3-10.7-24-24-24h-76.4c-13.3 0-24 10.7-24 24v137.8H24c-13.3 0-24 10.7-24 24v76.4c0 13.3 10.7 24 24 24h137.8V456c0 13.3 10.7 24 24 24h76.4c13.3 0 24-10.7 24-24V318.2H424c13.3 0 24-10.7 24-24z\"></path></svg><!-- <i class=\"fa fa-plus\"></i> --> Add Answer</a></div>\n\n        </li>");
+  questionListGroup.append("\n    <li class=\"list-group-item question_" + questionIndex + "\">\n      <div id=\"question_" + questionIndex + "\">\n        <div class=\"row\">\n          <div col=\"1\"  style=\"padding-top:5px;\">\n            <a href=\"javascript:void(0);\" onclick=\"deleteQuestion(this, " + questionIndex + ")\">\n              <i class=\"fas fa-trash\"></i>\n            </a>\n          </div>\n\n          <div class=\"col 5\">\n            <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_content\" name=\"quiz[questions][" + questionIndex + "][content]\" placeholder=\"Question\" type=\"text\">\n          </div>\n\n          <div class=\"col 6\">\n            <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_type\" name=\"quiz[questions][" + questionIndex + "][type]\" placeholder=\"Type\" type=\"text\">\n          </div>\n        </div>\n\n        <ul class=\"list-group answers\">\n          <li class=\"list-group-item answer_0\">\n\n            <div id=\"question_" + questionIndex + "_answer_0\" class=\"row\">\n              <div col=\"1\"  style=\"padding-top:5px;\">\n                <a href=\"javascript:void(0);\" onclick=\"deleteAnswer(this, " + questionIndex + ", 0)\">\n                  <i class=\"fas fa-times-circle\"></i>\n                </a>\n              </div>\n\n              <div class=\"col 9\">\n                <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_answers_0_answer\" name=\"quiz[questions][" + questionIndex + "][answers][0][answer]\" placeholder=\"Answer\" type=\"text\">\n              </div>\n\n              <div class=\"form-check col 2\">\n                <label for=\"quiz_questions_" + questionIndex + "_answers_0_weight\">Weight</label>\n\n                <input name=\"quiz[questions][" + questionIndex + "][answers][0][weight]\" value=\"false\" type=\"hidden\">\n\n                <input id=\"quiz_questions_" + questionIndex + "_answers_0_weight\" name=\"quiz[questions][" + questionIndex + "][answers][0][weight]\" type=\"number\" step=\"0.25\" value=\"0\" max=\"1.0\" min=\"-1.0\">\n              </div>\n            </div>\n          </li>\n        </ul>\n      </div>\n\n      <a href=\"javascript:void(0);\" class=\"btn btn-default btn-circle addAnswer\" onclick=\"addAnswer(this)\"><svg class=\"svg-inline--fa fa-plus fa-w-14\" aria-hidden=\"true\" data-prefix=\"fa\" data-icon=\"plus\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M448 294.2v-76.4c0-13.3-10.7-24-24-24H286.2V56c0-13.3-10.7-24-24-24h-76.4c-13.3 0-24 10.7-24 24v137.8H24c-13.3 0-24 10.7-24 24v76.4c0 13.3 10.7 24 24 24h137.8V456c0 13.3 10.7 24 24 24h76.4c13.3 0 24-10.7 24-24V318.2H424c13.3 0 24-10.7 24-24z\"></path></svg><!-- <i class=\"fa fa-plus\"></i> --> Add Answer</a></div>\n\n    </li>");
 };
 
 window.addAnswer = function (obj) {
@@ -1730,6 +1729,125 @@ function toggleTimeWindow() {
   };
 };
 
+function removeQuestion(questionId) {};
+
+// ============ Main Creating Questions ============ //
+// ============ Main Creating Questions ============ //
+
+function createQuestion() {
+  var questionListContainer = $('.question-list');
+
+  var questionIndex = getQuestionCount();
+  var newQuestionId = 'question_' + questionIndex;
+  var newQuestionText = 'Question ' + questionIndex;
+  var newQuestionCardContainer = '<div class="question-card card border-primary" id="' + newQuestionId + '"></div>';
+
+  var cardHeaderContainer = '<div class="card-header"></div>';
+  var cardHeaderText = '<b class="float-left">' + newQuestionText + '</b>';
+  var removeBtnContainer = '<div class="text-right"></div>';
+  var removeButton = '<button class="btn btn-danger remove-question-btn" questionId="' + questionIndex + '"><i class="fas fa-times"></i> Remove Question</button>';
+  var questionEditor = '<textarea class="form-control" id="editorquiz_questions_' + questionIndex + '" name="quiz[questions][' + questionIndex + '][content]" placeholder="Enter Question Here"></textarea>';
+
+  var cardBodyContainer = '<div class="question-options card-body"></div>';
+  var cardBodyText = '<b>Question Weight / Type</b>';
+  var rowContainer = '<div class="row"></div>';
+  var columnContainer = '<div class="col-4"></div>';
+  var questionWeightInput = '<input class="form-control" id="quiz_questions_' + questionIndex + '_points" name="quiz[questions][' + questionIndex + '][points]" placeholder="Points" type="number" value="1.0">';
+  var questionTypeInput = '<input class="form-control" id="quiz_questions_' + questionIndex + '_type" name="quiz[questions][' + questionIndex + '][type]" placeholder="Question Type" type="text">';
+  var addAnswerButton = '<button class="btn btn-outline-primary btn-block add-answer-btn" questionId="' + questionIndex + '"><i class="fas fa-plus"></i> Add Answer</button>';
+
+  var cardFooterContainer = '<div class="question-answer-list card-footer"><div>';
+  var cardFooterText = '<b>Answer Text / Weight</b>';
+
+  // Create New Navigation Item
+  createQuestionNavItem(newQuestionId, newQuestionText);
+
+  // Appends
+  questionListContainer.append(newQuestionCardContainer);
+  $('.question-card').last().append(cardHeaderContainer);
+  $('.card-header').last().append(cardHeaderText);
+  $('.card-header').last().append(removeBtnContainer);
+  $('.text-right').last().append(removeButton);
+  $('.card-header').last().append(questionEditor);
+
+  $('.question-card').last().append(cardBodyContainer);
+  $('.card-body').last().append(cardBodyText);
+  $('.card-body').last().append(rowContainer);
+  $('.row').last().append(columnContainer);
+  $('.col-4').last().append(questionWeightInput);
+  $('.row').last().append(columnContainer);
+  $('.col-4').last().append(questionTypeInput);
+  $('.row').last().append(columnContainer);
+  $('.col-4').last().append(addAnswerButton);
+
+  $('.question-card').last().append(cardFooterContainer);
+  $('.card-footer').last().append(cardFooterText);
+
+  // Create an intial answer choice
+  createAnswers(questionIndex);
+};
+
+function getQuestionCount() {
+  var questionListContainer = $('.question-list').children();
+  var questionCount = questionListContainer.filter('div').length;
+
+  return questionCount;
+};
+
+function createQuestionNavItem(questionId, questionText) {
+  var navContainer = $('#question-scrollspy-nav');
+  var navItem = '<a href="#' + questionId + '" class="list-group-item list-group-item-action">' + questionText + '</a>';
+
+  navContainer.append(navItem);
+};
+
+function createAnswers(questionId) {
+  var selector = '#question_' + questionId;
+  var answerListContainer = $(selector).find('.question-answer-list');
+  var answerIndex = getAnswerCount(questionId);
+  var newAnswerId = 'question_' + questionId + '_answer_' + answerIndex;
+  var newAnswerSelector = '#' + newAnswerId;
+
+  console.log(answerIndex);
+
+  var newAnswerContainer = '<div id="' + newAnswerId + '" class="row"></div>';
+  var rowContainer = '<div class="row"></div>';
+  var largeColumnContainer = '<div class="col-8"></div>';
+  var smallColumnContainer = '<div class="col-3"></div>';
+  var tinyColumnContainer = '<div class="col-1"></div>';
+
+  var textInputId = 'quiz_questions_' + questionId + '_answers_' + answerIndex + '_answer';
+  var textInputName = 'quiz[questions][' + questionId + '][answers][' + answerIndex + '][answer]';
+  var weightInputId = 'quiz_questions_' + questionId + '_answers_' + answerIndex + '_weight';
+  var weightInputName = 'quiz[questions][' + questionId + '][answers][' + answerIndex + '][weight]';
+  var answerTextInput = '<input class="form-control" id="' + textInputId + '" name="' + textInputName + '" placeholder="Enter Answer" type="text">';
+  var answerWeightInput = '<input id="' + weightInputId + '" max="1.0" min="-1.0" name="' + weightInputName + '" placeholder="0" step="0.25" type="number" value="1.0" class="form-control">';
+
+  var removeAnswerBtn = '<button class="btn btn-outline-danger btn-block remove-answer-btn" questionId="' + questionId + '" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
+
+  // Appends
+  answerListContainer.last().append(newAnswerContainer);
+  $(newAnswerSelector).last().append(largeColumnContainer);
+  $(newAnswerSelector).find('.col-8').last().append(answerTextInput);
+  $(newAnswerSelector).last().append(smallColumnContainer);
+  $(newAnswerSelector).find('.col-3').last().append(answerWeightInput);
+  $(newAnswerSelector).last().append(tinyColumnContainer);
+  $(newAnswerSelector).find('.col-1').last().append(removeAnswerBtn);
+};
+
+function getAnswerCount(questionId) {
+  var selector = '#question_' + questionId;
+  var answerSelector = 'question_' + questionId + '_answer';
+  var answerListContainer = $(selector).find('.question-answer-list').children();
+  var answerCount = answerListContainer.filter('div').length;
+
+  // console.log(answerCount);
+  return answerCount;
+};
+
+// ============ Main Init ============ //
+// ============ Main Init ============ //
+
 $(document).ready(function () {
   var isQuizForm = $('.quiz-form').length;
 
@@ -1739,12 +1857,24 @@ $(document).ready(function () {
   };
 });
 
+// ============ Click Events ============ //
+// ============ Click Events ============ //
+
 $(document).on('click', '#quiz_time_limit', function () {
   toggleTimeLimit();
 });
 
 $(document).on('click', '#quiz_time_window', function () {
   toggleTimeWindow();
+});
+
+$(document).on('click', '#new-question-btn', function () {
+  createQuestion();
+});
+
+$(document).on('click', '.add-answer-btn', function () {
+  var questionId = $(this).attr('questionId');
+  createAnswers(questionId);
 });
 
 });

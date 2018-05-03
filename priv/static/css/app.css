@@ -78,6 +78,47 @@
   margin-bottom: 15px;
 }
 
+/* ====== Quiz Question Cards ====== */
+
+#question-scrollspy-nav {
+  padding-top: 20px;
+}
+
+#question-scrollspy-nav > .list-group-item-header,
+#question-scrollspy-nav > .list-group-item-action {
+  padding: 10px;
+}
+
+.question-list {
+  height: 100%;
+  overflow-y: scroll;
+  position: relative;
+}
+
+.question-card {
+  margin-bottom: 50px;
+}
+
+.question-card > .question-options,
+.question-card > .question-answer-list  {
+  padding: 10px 30px 10px 30px;
+}
+
+.question-card > .question-options > .row > [class^="col-"],
+.question-card > .question-answer-list > .row > [class^="col-"] {
+  padding: 5px;
+}
+
+.remove-question-btn {
+  border-radius: 0;
+}
+
+.tiny-label {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
 /* ====== MEDIA QUERIES ====== */
 
 @media only screen and (max-width : 992px) {

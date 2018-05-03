@@ -59,6 +59,11 @@ defmodule FireEngineWeb.QuizController do
         |> put_flash(:info, "Updated #{quiz.name}")
         |> redirect(to: quiz_path(conn,:show, quiz))
       {:error, changeset} ->
+
+        IO.puts "=================="
+        IO.inspect changeset
+        IO.puts "=================="
+        
         conn
         |> put_flash(:error, "Correct Your Submission")
         |> render("edit.html", changeset: changeset, quiz: quiz)
