@@ -13,6 +13,7 @@ defmodule FireEngine.Assessments.Question do
     has_many :answers, FireEngine.Assessments.Answer, on_delete: :delete_all, on_replace: :delete
     has_many :responses, FireEngine.Assessments.Response, on_delete: :delete_all
     many_to_many :tags, FireEngine.Assessments.Tag, join_through: "fe_question_tags", on_delete: :delete_all, on_replace: :delete
+    has_many :question_tags, FireEngine.Assessments.QuestionTag, on_delete: :delete_all, on_replace: :delete
     belongs_to :category, FireEngine.Assessments.Category
 
 
@@ -25,6 +26,6 @@ defmodule FireEngine.Assessments.Question do
     |> cast(attrs, [:content, :type, :points, :category_id])
     |> validate_required([:content])
     |> cast_assoc(:answers)
-    |> cast_assoc(:tags)
+    |> cast_assoc(:question_tags)
   end
 end

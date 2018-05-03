@@ -14,7 +14,7 @@ defmodule FireEngine.Assessments.QuestionTag do
   @doc false
   def changeset(%QuestionTag{} = question_tag, attrs) do
     question_tag
-    |> cast(attrs, [:question_id, :tag_id])
-    |> validate_required([:question_id, :tag_id])
+    |> cast(attrs, [:question_id,:tag_id])
+    |> validate_required([:tag_id])
   end
 end

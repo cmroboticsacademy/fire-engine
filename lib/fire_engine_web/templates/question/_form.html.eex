@@ -20,11 +20,28 @@
     <%= error_tag f, :points %>
   </div>
 
+  <!-- <ul class="list-group tags">
+    <p> Add Tags </p>
+    <%= inputs_for f, :tags, fn t -> %>
+      <li class="list-group-item">
+        <%= checkbox t, :tag_id, value: t.id %>
+        <%= label t, t.data.name %>
+      </li>
+    <% end %>
+  </ul> -->
+
+  <div class="form-group">
+    <label>Tags</label>
+    <%= multiple_select(f,:question_tags,Enum.map(@tags,&({&1.name, &1.id})), selected: Enum.map(@question.tags, &(&1.id)), class: "form-control")%>
+  </div>
+
+
+
+  <br/>
 
 
   <ul class="list-group answers">
     <li class="list-group-item answer_0">
-
       <%= inputs_for f, :answers, fn a -> %>
         <div id="question_0_answer_<%=a.index%>">
           <div class="row">

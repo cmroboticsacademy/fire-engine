@@ -130,7 +130,7 @@ defmodule FireEngine.AssessmentsTest do
         |> Enum.into(@valid_attrs)
         |> Assessments.create_question()
 
-      question |> Repo.preload([:answers, :tags])
+      question |> Repo.preload([:answers, :tags, :question_tags])
     end
 
     test "list_fe_questions/0 returns all fe_questions" do
@@ -151,8 +151,9 @@ defmodule FireEngine.AssessmentsTest do
     test "question.tags returns many tags" do
       tag = tag_fixture()
       question = question_fixture()
+      Assessments.update_question(question, %{question_tags: %{tag_id: tag.id, question_id: question.id}})
       Assessments.create_question_tag(%{tag_id: tag.id, question_id: question.id})
-      question = Repo.get(Assessments.Question, question.id) |> Repo.preload(:tags)
+      question = Repo.get(Assessments.Question, question.id) |> Repo.preload([:tags, :question_tags])
 
       assert question.tags |> Enum.count == 1
     end

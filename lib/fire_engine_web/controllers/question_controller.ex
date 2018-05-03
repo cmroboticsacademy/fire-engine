@@ -26,7 +26,8 @@ defmodule FireEngineWeb.QuestionController do
   def edit(conn, %{"id" => question_id}) do
     question = Assessments.get_question!(question_id)
     changeset = Assessments.change_question(question)
-    render conn, "edit.html", changeset: changeset, question: question
+    tags = Assessments.list_fe_tags()
+    render conn, "edit.html", changeset: changeset, question: question, tags: tags
   end
 
   def create(conn, %{"question" => question_params}) do
@@ -44,10 +45,14 @@ defmodule FireEngineWeb.QuestionController do
   end
 
   def update(conn, %{"id" => id, "question" => question_params}) do
+    question_params = question_params
+    |> Map.put("question_tags", question_params["question_tags"] |> Enum.map(&(%{"tag_id" => &1})))
+
     question = Assessments.get_question!(id)
 
     with {:ok, %Question{} = question} <- Assessments.update_question(question, question_params) do
-      render(conn, "show.html", question: question)
+      question_updated = Assessments.get_question!(question.id)
+      render(conn, "show.html", question: question_updated)
     end
   end
 
