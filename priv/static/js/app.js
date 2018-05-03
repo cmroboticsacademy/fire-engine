@@ -1738,6 +1738,13 @@ function createQuestion() {
   var questionListContainer = $('.question-list');
 
   var questionIndex = getQuestionCount();
+  var alreadyExist = checkExistingQuestionIndex(questionIndex);
+
+  // ========= check if question index already exist..
+  if (alreadyExist) {
+    questionIndex = getNextIndex(questionIndex);
+  };
+
   var newQuestionId = 'question_' + questionIndex;
   var newQuestionText = 'Question ' + questionIndex;
   var newQuestionCardContainer = '<div class="question-card card border-primary" id="' + newQuestionId + '"></div>';
@@ -1794,6 +1801,27 @@ function getQuestionCount() {
   return questionCount;
 };
 
+function checkExistingQuestionIndex(questionIndex) {
+  var selector = '#question_' + questionIndex;
+  var found = $(selector);
+
+  if (found.length > 0) {
+    return true;
+  } else {
+    return false;
+  };
+};
+
+function getNextIndex(questionIndex) {
+  var nextIndex = questionIndex + 1;
+  // Recursively get the next index, what?
+  if (checkExistingQuestionIndex(nextIndex)) {
+    return getNextIndex(nextIndex);
+  } else {
+    return nextIndex;
+  };
+};
+
 function createQuestionNavItem(questionIndex, questionId, questionText) {
   var navContainer = $('#question-scrollspy-nav');
   var navItem = '<a href="#' + questionId + '" class="list-group-item list-group-item-action" questionId="' + questionIndex + '">' + questionText + '</a>';
@@ -1808,7 +1836,7 @@ function createAnswers(questionId) {
   var newAnswerId = 'question_' + questionId + '_answer_' + answerIndex;
   var newAnswerSelector = '#' + newAnswerId;
 
-  console.log(answerIndex);
+  // console.log(answerIndex);
 
   var newAnswerContainer = '<div id="' + newAnswerId + '" class="row"></div>';
   var rowContainer = '<div class="row"></div>';
