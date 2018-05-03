@@ -181,9 +181,9 @@ function createQuestion() {
   var questionIndex = getQuestionCount();
   var alreadyExist = checkExistingQuestionIndex(questionIndex);
 
-  // ========= check if question index already exist..
+  // Check if question index already exist..
   if (alreadyExist) {
-    questionIndex = getNextIndex(questionIndex);
+    questionIndex = getNextQuestionIndex(questionIndex);
   };
 
   var newQuestionId = 'question_' + questionIndex;
@@ -253,11 +253,11 @@ function checkExistingQuestionIndex(questionIndex) {
   };
 };
 
-function getNextIndex(questionIndex) {
+function getNextQuestionIndex(questionIndex) {
   var nextIndex = questionIndex + 1;
   // Recursively get the next index, what?
   if (checkExistingQuestionIndex(nextIndex)) {
-    return getNextIndex(nextIndex);
+    return getNextQuestionIndex(nextIndex);
   } else {
     return nextIndex;
   };
@@ -274,6 +274,13 @@ function createAnswers(questionId) {
   var selector = '#question_' + questionId;
   var answerListContainer = $(selector).find('.question-answer-list');
   var answerIndex = getAnswerCount(questionId);
+  var alreadyExist = checkExistingAnswerIndex(questionId, answerIndex);
+
+  // Check if question index already exist..
+  if (alreadyExist) {
+    answerIndex = getNextAnswerIndex(questionId, answerIndex);
+  };
+
   var newAnswerId = 'question_' + questionId + '_answer_' + answerIndex;
   var newAnswerSelector = '#' + newAnswerId;
 
@@ -314,6 +321,29 @@ function getAnswerCount(questionId) {
   return answerCount;
 };
 
+function checkExistingAnswerIndex(questionIndex, answerIndex) {
+  var selector = '#question_' + questionIndex + '_answer_' + answerIndex;
+  var found = $(selector);
+
+  // console.log(found);
+  if (found.length > 0) {
+    return true;
+  } else {
+    return false;
+  };
+};
+
+function getNextAnswerIndex(questionIndex, answerIndex) {
+  var nextIndex = answerIndex + 1;
+
+  // Recursively get the next index, what?
+  if (checkExistingAnswerIndex(questionIndex, nextIndex)) {
+    return getNextAnswerIndex(questionIndex, nextIndex);
+  } else {
+    return nextIndex;
+  };
+};
+
 function removeQuestion(questionId) {
   var selector = '#question_' + questionId;
   var navSelector = '[questionid="' + questionId + '"]'
@@ -329,7 +359,15 @@ function removeQuestion(questionId) {
 };
 
 function removeAnswer(questionId, answerId) {
+  var selector = '#question_' + questionId + '_answer_' + answerId;
+  var answerContainer = $(selector);
+  var inputSelector = answerContainer.prev('input');
 
+  console.log(answerContainer);
+  console.log(inputSelector);
+
+  answerContainer.remove();
+  inputSelector.remove();
 };
 
 // ============ Main Init ============ //
@@ -368,3 +406,10 @@ $(document).on('click', '.remove-question-btn', function() {
     var questionId = $(this).attr('questionId');
     removeQuestion(questionId);
 });
+
+$(document).on('click', '.remove-answer-btn', function() {
+  var questionId = $(this).attr('questionId');
+  var answerId = $(this).attr('answerId');
+
+  removeAnswer(questionId, answerId);
+})
