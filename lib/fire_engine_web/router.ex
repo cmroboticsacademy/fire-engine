@@ -37,7 +37,11 @@ defmodule FireEngineWeb.Router do
   # Other scopes may use custom stacks.
     scope "/api/v1", FireEngineWeb do
       pipe_through :api
+
+      resources "user_attempts", Api.V1.UserAttemptController
+      resources "quizzes", Api.V1.UserQuizController
       get "/not_authorized", PageController, :notauthorized
       get "/authenticate", AuthController, :authenticate
+
     end
 end
