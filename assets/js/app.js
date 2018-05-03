@@ -201,7 +201,7 @@ function createQuestion() {
   var cardFooterText = '<b>Answer Text / Weight</b>';
 
   // Create New Navigation Item
-  createQuestionNavItem(newQuestionId, newQuestionText);
+  createQuestionNavItem(questionIndex, newQuestionId, newQuestionText);
 
   // Appends
   questionListContainer.append(newQuestionCardContainer);
@@ -235,9 +235,9 @@ function getQuestionCount() {
   return questionCount;
 };
 
-function createQuestionNavItem(questionId, questionText) {
+function createQuestionNavItem(questionIndex, questionId, questionText) {
   var navContainer = $('#question-scrollspy-nav');
-  var navItem = '<a href="#' + questionId + '" class="list-group-item list-group-item-action">' + questionText + '</a>';
+  var navItem = '<a href="#' + questionId + '" class="list-group-item list-group-item-action" questionId="' + questionIndex + '">' + questionText + '</a>';
 
   navContainer.append(navItem);
 };
@@ -286,6 +286,24 @@ function getAnswerCount(questionId) {
   return answerCount;
 };
 
+function removeQuestion(questionId) {
+  var selector = '#question_' + questionId;
+  var navSelector = '[questionid="' + questionId + '"]'
+  var questionContainer = $(selector);
+  var questionInputItem = $(questionContainer).prev('input');
+  var questionNavItem = $('#question-scrollspy-nav').find(navSelector);
+  var questionNavInputItem = $(questionNavItem).prev('input');
+
+  questionContainer.remove();
+  questionInputItem.remove();
+  questionNavItem.remove();
+  questionNavInputItem.remove();
+};
+
+function removeAnswer(questionId, answerId) {
+
+};
+
 // ============ Main Init ============ //
 // ============ Main Init ============ //
 
@@ -309,11 +327,16 @@ $(document).on('click', '#quiz_time_window', function() {
   toggleTimeWindow()
 });
 
-$(document).on('click', '#new-question-btn', function() {
+$(document).on('click', '.add-question-btn', function() {
   createQuestion();
 });
 
 $(document).on('click', '.add-answer-btn', function() {
   var questionId = $(this).attr('questionId');
   createAnswers(questionId);
-})
+});
+
+$(document).on('click', '.remove-question-btn', function() {
+    var questionId = $(this).attr('questionId');
+    removeQuestion(questionId);
+});

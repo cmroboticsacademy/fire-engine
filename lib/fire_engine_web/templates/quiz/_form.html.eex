@@ -71,7 +71,7 @@
     <div class="form-group col-sm-12">
       <h1 class="text-center">
         Questions
-        <button type="button" class="btn btn-primary" id="new-question-btn">+ Add Question</button>
+        <button type="button" class="btn btn-primary add-question-btn">+ Add Question</button>
       </h1>
     </div>
 
@@ -83,11 +83,11 @@
       <div class="list-group sticky-top" id="question-scrollspy-nav">
         <div class="list-group-item list-group-item-header text-center">
           <h5>Questions</h5>
-          <button type="button" class="btn btn-outline-primary btn-block" id="new-question-btn">+ Add Question</button>
+          <button type="button" class="btn btn-outline-primary btn-block add-question-btn">+ Add Question</button>
         </div>
 
         <%= inputs_for f, :questions, fn q -> %>
-          <a href="#question_<%= q.index %>" class="list-group-item list-group-item-action">
+          <a href="#question_<%= q.index %>" class="list-group-item list-group-item-action" questionId="<%= q.index %>">
             Question <%=q.index%>
           </a>
         <% end %>
@@ -164,64 +164,6 @@
         <% end %>
 
       </div>
-
-      <!-- <ul id="question-group" class="list-group questions">
-        <li class="list-group-item question_0">
-          <%= inputs_for f, :questions, fn q -> %>
-            <div id="question_<%=q.index%>">
-              <div class="row">
-                <div col="1"  style="padding-top:5px;">
-                  <a href="javascript:void(0);" onclick="deleteQuestion(this, <%=q.index%>)">
-                    <i class="fas fa-trash"></i>
-                  </a>
-                </div>
-
-                <div class="col 5">
-                  <%= textarea q, :content, id: "editor#{q.id}", class: "form-control", placeholder: "Question" %>
-                  <script>CKEDITOR.replace( "editor<%= q.id %>" );</script>
-                </div>
-
-                <div class="col 6">
-                  <%= select q, :type,["Multiple Choice","True/False"] ,class: "form-control", placeholder: "Type" %>
-                </div>
-
-                <div class="col 1">
-                  <%= number_input q, :points, class: "form-control", placeholder: "Points" %>
-                </div>
-              </div>
-
-              <ul class="list-group answers">
-                <li class="list-group-item answer_0">
-                  <%= inputs_for q, :answers, fn a -> %>
-                    <div id="question_<%=q.index%>_answer_<%=a.index%>" class="row">
-                      <div col="1"  style="padding-top:5px;">
-                        <a href="javascript:void(0);" onclick="deleteAnswer(this, <%=q.index%>, <%=a.index%>)">
-                          <i class="fas fa-times-circle"></i>
-                        </a>
-                      </div>
-
-                      <div class="col 9">
-                        <%= text_input a, :answer, class: "form-control", placeholder: "Answer" %>
-                      </div>
-
-                      <div class="col 2">
-                        <%= label a, :weight %>
-                        <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "0"%>
-                      </div>
-                    </div>
-                  <% end %>
-                </li>
-              </ul>
-
-              <a href="javascript:void(0);" class="btn btn-default btn-circle addAnswer" onclick="addAnswer(this)">
-                <i class="fa fa-plus"></i>
-                Add Answer
-              </a>
-            </div>
-          <% end %>
-        </li>
-      </ul> -->
-
     </div>
 
     <div class="form-group col-sm-12">
