@@ -1641,7 +1641,12 @@ require.register("js/app.js", function(exports, require, module) {
 
 require("phoenix_html");
 
-$(".alert").alert(); // Brunch automatically concatenates all files in your
+$(".alert").alert();
+
+// ============ Quiz Forms Scripts ============ //
+// ============ Quiz Forms Scripts ============ //
+
+// Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
 // config.paths.watched in "brunch-config.js".
 //
@@ -1654,45 +1659,6 @@ $(".alert").alert(); // Brunch automatically concatenates all files in your
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-
-window.addQuestion = function () {
-  var questionListGroup = $(".list-group.questions");
-  var questionIndex = questionListGroup.children().length;
-
-  questionListGroup.append("\n    <li class=\"list-group-item question_" + questionIndex + "\">\n      <div id=\"question_" + questionIndex + "\">\n        <div class=\"row\">\n          <div col=\"1\"  style=\"padding-top:5px;\">\n            <a href=\"javascript:void(0);\" onclick=\"deleteQuestion(this, " + questionIndex + ")\">\n              <i class=\"fas fa-trash\"></i>\n            </a>\n          </div>\n\n          <div class=\"col 5\">\n            <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_content\" name=\"quiz[questions][" + questionIndex + "][content]\" placeholder=\"Question\" type=\"text\">\n          </div>\n\n          <div class=\"col 6\">\n            <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_type\" name=\"quiz[questions][" + questionIndex + "][type]\" placeholder=\"Type\" type=\"text\">\n          </div>\n        </div>\n\n        <ul class=\"list-group answers\">\n          <li class=\"list-group-item answer_0\">\n\n            <div id=\"question_" + questionIndex + "_answer_0\" class=\"row\">\n              <div col=\"1\"  style=\"padding-top:5px;\">\n                <a href=\"javascript:void(0);\" onclick=\"deleteAnswer(this, " + questionIndex + ", 0)\">\n                  <i class=\"fas fa-times-circle\"></i>\n                </a>\n              </div>\n\n              <div class=\"col 9\">\n                <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_answers_0_answer\" name=\"quiz[questions][" + questionIndex + "][answers][0][answer]\" placeholder=\"Answer\" type=\"text\">\n              </div>\n\n              <div class=\"form-check col 2\">\n                <label for=\"quiz_questions_" + questionIndex + "_answers_0_weight\">Weight</label>\n\n                <input name=\"quiz[questions][" + questionIndex + "][answers][0][weight]\" value=\"false\" type=\"hidden\">\n\n                <input id=\"quiz_questions_" + questionIndex + "_answers_0_weight\" name=\"quiz[questions][" + questionIndex + "][answers][0][weight]\" type=\"number\" step=\"0.25\" value=\"0\" max=\"1.0\" min=\"-1.0\">\n              </div>\n            </div>\n          </li>\n        </ul>\n      </div>\n\n      <a href=\"javascript:void(0);\" class=\"btn btn-default btn-circle addAnswer\" onclick=\"addAnswer(this)\"><svg class=\"svg-inline--fa fa-plus fa-w-14\" aria-hidden=\"true\" data-prefix=\"fa\" data-icon=\"plus\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\" data-fa-i2svg=\"\"><path fill=\"currentColor\" d=\"M448 294.2v-76.4c0-13.3-10.7-24-24-24H286.2V56c0-13.3-10.7-24-24-24h-76.4c-13.3 0-24 10.7-24 24v137.8H24c-13.3 0-24 10.7-24 24v76.4c0 13.3 10.7 24 24 24h137.8V456c0 13.3 10.7 24 24 24h76.4c13.3 0 24-10.7 24-24V318.2H424c13.3 0 24-10.7 24-24z\"></path></svg><!-- <i class=\"fa fa-plus\"></i> --> Add Answer</a></div>\n\n    </li>");
-};
-
-window.addAnswer = function (obj) {
-  var questionIndex = obj.parentElement.parentElement.className.split(" ")[1].split("_")[1];
-  var question = $(".list-group-item.question_" + questionIndex);
-  var questionAnswers = question.find('.list-group-item');
-  var questionAnswersIndex = questionAnswers.children().length;
-
-  console.log("questionAnswers", questionAnswers);
-
-  questionAnswers.append("\n    <div id=\"question_" + questionIndex + "_answer_" + questionAnswersIndex + "\" class=\"row\">\n      <div col=\"1\"  style=\"padding-top:5px;\"><a href=\"javascript:void(0);\" onclick=\"deleteAnswer(this, " + questionIndex + ", " + questionAnswersIndex + ")\"><i class=\"fas fa-times-circle\"></a></i></div>\n      <div class=\"col 9\">\n        <input class=\"form-control\" id=\"quiz_questions_" + questionIndex + "_answers_" + questionAnswersIndex + "_answer\" name=\"quiz[questions][" + questionIndex + "][answers][" + questionAnswersIndex + "][answer]\" placeholder=\"Answer\" type=\"text\">              </div>\n        <div class=\"form-check col 2\">\n          <label for=\"quiz_questions_" + questionIndex + "_answers_" + questionAnswersIndex + "_weight\">Weight</label>              <input name=\"quiz[questions][" + questionIndex + "][answers][" + questionAnswersIndex + "][weight]\" value=\"false\" type=\"hidden\"><input id=\"quiz_questions_" + questionIndex + "_answers_0_weight\" name=\"quiz[questions][" + questionIndex + "][answers][" + questionAnswersIndex + "][weight]\" value=\"0\" type=\"number\" step=\"0.25\" value=\"0\" max=\"1.0\" min=\"-1.0\">\n          </div>\n        </div>\n      </li>\n\n    </ul>\n    ");
-};
-
-window.addAnswerQuestionForm = function (obj) {
-  var questionAnswers = $('.list-group-item.answer_0');
-  var questionAnswersIndex = questionAnswers.children().length;
-
-  questionAnswers.append("\n    <div id=\"question_0_answer_" + questionAnswersIndex + "\" class=\"row\">\n      <div col=\"1\"  style=\"padding-top:5px;\"><a href=\"javascript:void(0);\" onclick=\"deleteAnswer(this, 0, " + questionAnswersIndex + ")\"><i class=\"fas fa-times-circle\"></a></i></div>\n      <div class=\"col 9\">\n        <input class=\"form-control\" id=\"question_answers_" + questionAnswersIndex + "_answer\" name=\"question[answers][" + questionAnswersIndex + "][answer]\" placeholder=\"Answer\" type=\"text\">              </div>\n        <div class=\"form-check col 2\">\n          <label for=\"question_answers_" + questionAnswersIndex + "_weight\">Weight</label>              <input name=\"question[answers][" + questionAnswersIndex + "][weight]\" value=\"false\" type=\"hidden\"><input id=\"question_answers_[" + questionAnswersIndex + "]_weight\" name=\"question[answers][" + questionAnswersIndex + "][weight]\" value=\"0\" type=\"number\" step=\"0.25\" value=\"0\" max=\"1.0\" min=\"-1.0\">\n          </div>\n        </div>\n      </li>\n\n    </ul\n    ");
-};
-
-window.deleteQuestion = function (obj, index) {
-  console.log(index);
-  $(obj).closest("#question_" + index).prev().remove();
-  $(obj).closest("#question_" + index).remove();
-};
-
-window.deleteAnswer = function (obj, q, a) {
-  $(obj).closest("#question_" + q + "_answer_" + a).prev("input").remove();
-  $(obj).closest("#question_" + q + "_answer_" + a).remove();
-};
-
-// ============ Quiz Forms Scripts ============ //
-// ============ Quiz Forms Scripts ============ //
 
 function toggleTimeLimit() {
   var timeLimitCheck = $('#quiz_time_limit');
