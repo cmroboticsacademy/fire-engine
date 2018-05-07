@@ -18,6 +18,7 @@ defmodule FireEngine.Assessments.Quiz do
     field :time_limit, :boolean, default: false
     field :time_limit_minutes, :integer
 
+    has_many :quiz_questions, FireEngine.Assessments.QuizQuestion
     many_to_many :questions, FireEngine.Assessments.Question, join_through: "fe_quiz_questions", on_delete: :delete_all, on_replace: :delete
     has_many :attempts, FireEngine.Assessments.Attempt, on_delete: :delete_all
 

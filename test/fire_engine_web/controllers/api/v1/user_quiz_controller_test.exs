@@ -24,6 +24,5 @@ defmodule FireEngine.UserQuizControllerTest do
         "questions_per_page" => quiz.questions_per_page
         }]
     }
-
   end
 end
