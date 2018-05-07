@@ -10,12 +10,13 @@
     <thead class="thead-light">
       <tr>
         <th scope="col" class="text-left">Quiz Name</th>
-        <!-- <th scope="col">Description</th> -->
-        <th scope="col"># of Attempts</th>
+        <th scope="col"># of Attempts Allowed</th>
         <th scope="col"># of Questions</th>
-        <th scope="col">Question / Page</th>
-        <th scope="col">Auto-submit</th>
+
+        <th scope="col">Attempt Time Limit</th>
+        <th scope="col">Auto Submissions</th>
         <th scope="col">Randomized Questions</th>
+        <th scope="col">Quiz Time Window</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -23,13 +24,17 @@
     <tbody>
       <%= for quiz <- @fe_quizzes do %>
         <tr>
-          <th scope="row">
-            <%= link quiz.name, to: quiz_path(@conn,:show, quiz) %>
-          </th>
-          <!-- <td><%= quiz.description %></td> -->
+          <th scope="row"><%= link quiz.name, to: quiz_path(@conn,:show, quiz) %></th>
           <td><%= quiz.attempts_allowed %></td>
           <td><%= Enum.count(quiz.questions)%></td>
-          <td><%= quiz.questions_per_page %></td>
+          <td>
+            <%= if quiz.time_limit do %>
+              <i class="fas fa-circle"></i>
+            <% else %>
+              <i class="far fa-circle"></i>
+            <% end %>
+          </td>
+
           <td>
             <%= if quiz.auto_submit do %>
               <i class="fas fa-circle"></i>
@@ -37,6 +42,7 @@
               <i class="far fa-circle"></i>
             <% end %>
           </td>
+
           <td>
             <%= if quiz.randomize_questions do %>
               <i class="fas fa-circle"></i>
@@ -44,6 +50,15 @@
               <i class="far fa-circle"></i>
             <% end %>
           </td>
+
+          <td>
+            <%= if quiz.time_window do %>
+              <i class="fas fa-circle"></i>
+            <% else %>
+              <i class="far fa-circle"></i>
+            <% end %>
+          </td>
+
           <td>
             <div class="btn-group">
               <%= link to: quiz_path(@conn, :edit, quiz), class: "btn btn-primary btn-block m-0" do %>
@@ -58,6 +73,6 @@
         </tr>
       <% end %>
     </tbody>
+
   </table>
-  
 </div>

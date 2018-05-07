@@ -1,68 +1,105 @@
-<h2 class="SectionHeader"><%= @quiz.name %></h2>
-<p><%= link "< Return to Quizzes", to: quiz_path(@conn, :index) %> </p>
+<h1 class="section-header text-center">
+  <%= link to: quiz_path(@conn, :index), class: "btn btn-primary float-left" do %>
+    <i class="fas fa-arrow-left"></i> Go Back
+  <% end %>
+  <%= link to: quiz_path(@conn, :edit, @quiz), class: "btn btn-outline-primary ml-1 float-left" do %>
+    <i class="fas fa-edit"></i> Edit Quiz
+  <% end %>
 
-<hr />
+  <%= link to: quiz_path(@conn, :delete, @quiz), method: :delete, class: "btn btn-outline-danger ml-1 float-left" do %>
+    <i class="fas fa-trash"></i> Delete Quiz
+  <% end %>
+  <span class="float-right mb-3"><%= @quiz.name %></span>
+</h1>
 
+<div class="clearfix"></div>
 
-<p>
-  <strong>
-    Description:
-  </strong>
-  <%= @quiz.description %>
-</p>
+<table class="table">
+  <tbody>
+    <tr>
+      <th col="row">Description</th>
+      <td class="text-right"><%= @quiz.description %></td>
+    </tr>
 
-<p>
-  <strong>
-    Questions Per Page:
-  </strong>
-  <%= @quiz.questions_per_page %>
-</p>
+    <tr>
+      <th col="row">Attempts Allowed</th>
+      <td class="text-right"><%= @quiz.attempts_allowed %></td>
+    </tr>
 
-<p>
-  <strong>
-    Randomize Questions:
-  </strong>
-  <%= @quiz.randomize_questions %>
-</p>
+    <tr>
+      <th col="row">Attempt Time Limit?</th>
+      <td class="text-right"><%= @quiz.time_limit %></td>
+    </tr>
 
-<p>
-  <strong>
-    Time Closed
-  </strong>
-  <%= @quiz.time_closed %>
-</p>
+    <%= if @quiz.time_limit do %>
+    <tr>
+      <th col="row">
+        <i class="fas fa-angle-right"></i>
+        Time per Attempt (minutes)
+      </th>
+      <td class="text-right"><%= @quiz.time_limit_minutes %></td>
+    </tr>
+    <% end %>
 
-<p>
-  <strong>
-    Time Open
-  </strong>
-  <%= @quiz.time_open %>
-</p>
+    <tr>
+      <th col="row">Auto Submissions?</th>
+      <td class="text-right"><%= @quiz.auto_submit %></td>
+    </tr>
 
-<p>
-  <strong>
-    Auto Submit
-  </strong>
-  <%= @quiz.auto_submit %>
-</p>
+    <tr>
+      <th col="row">Randomize Questions?</th>
+      <td class="text-right"><%= @quiz.randomize_questions %></td>
+    </tr>
 
-<h2 class="SectionHeader">Questions</h2>
+    <tr>
+      <th col="row">Quiz Time Window?</th>
+      <td class="text-right"><%= @quiz.time_window %></td>
+    </tr>
 
-<hr />
+    <%= if @quiz.time_window do %>
+      <tr>
+        <th col="row">
+          <i class="fas fa-angle-right"></i>
+          Quiz Open
+        </th>
+        <td class="text-right"><%= @quiz.time_open %></td>
+      </tr>
+      <tr>
+        <th col="row">
+          <i class="fas fa-angle-right"></i>
+          Quiz Closed
+        </th>
+        <td class="text-right"><%= @quiz.time_closed %></td>
+      </tr>
+    <% end %>
 
+    <tr>
+      <th col="row">Questions Per Page</th>
+      <td class="text-right"><%= @quiz.questions_per_page %></td>
+    </tr>
 
-<ul class="list-group">
-<%= for question <- @quiz.questions do %>
-    <li class="list-group-item">
-      <%=question.content%>
-      <ul class="list-group">
-        <%= for answer <- question.answers do %>
-        <li>
-          <%= answer.answer %>
-          <%= answer.weight %>
-        </li>
-        <% end %>
-      </ul>
-    </li>
-<% end %>
-</ul>
+  </tbody>
+</table>
+
+<h1 class="section-header">
+  <span class="float-left mb-3">Questions</span>
+  <span class="float-right mb-3">Answers (Weight)</span>
+</h1>
+
+<div class="clearfix"></div>
+
+<table class="table">
+  <tbody>
+    <%= for question <- @quiz.questions do %>
+      <tr>
+        <td><%= raw(question.content) %></td>
+        <!-- <td><%= question.points %></td> -->
+        <td class="text-right">
+          <%= for answer <- question.answers do %>
+              <%= answer.answer %> (<%= answer.weight %>)<br>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
