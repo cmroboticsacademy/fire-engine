@@ -9,11 +9,16 @@
   <div class="row">
     <%= for quiz <- @fe_quizzes do %>
       <div class="col-sm-12 col-md-6 col-lg-4">
-
         <div class="quiz-card card border-dark mb-3">
 
-          <div class="card-header">
-            <h6 class="quiz-name"><i class="fas fa-file-alt"></i> <%= quiz.name %></h6>
+          <div class="card-header p-0">
+            <h6 class="quiz-name">
+
+              <%= link to: quiz_path(@conn,:show, quiz), class: "btn btn-link btn-lg btn-block" do %>
+                <i class="fas fa-file-alt"></i> <%= quiz.name %>
+              <% end %>
+
+            </h6>
           </div>
 
           <div class="card-body">
