@@ -66,6 +66,24 @@
   border-radius: 0;
 }
 
+/* ====== Quiz Bank Table ====== */
+
+.quiz-table > thead > tr > th {
+  font-size: 14px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.quiz-table > tbody > tr > th,
+.quiz-table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+.quiz-table > tbody > tr > td {
+  text-align: center;
+}
+
+
 /* ====== Forms ====== */
 
 .form-group {
