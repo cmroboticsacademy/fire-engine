@@ -1888,8 +1888,8 @@ function removeAnswer(questionId, answerId) {
   var answerContainer = $(selector);
   var inputSelector = answerContainer.prev('input');
 
-  console.log(answerContainer);
-  console.log(inputSelector);
+  // console.log(answerContainer);
+  // console.log(inputSelector);
 
   answerContainer.remove();
   inputSelector.remove();

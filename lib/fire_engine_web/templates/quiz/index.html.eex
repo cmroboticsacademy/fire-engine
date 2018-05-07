@@ -1,37 +1,55 @@
-<div class="row">
-  <div class="col-12">
-    <h2 class="SectionHeader">
-       Quiz Bank <%= button to: quiz_path(@conn,:new), method: "get" ,class: "btn btn-primary btn-sm" do %>
-        <i class="fas fa-plus"></i> New Quiz
-      <% end %>
-    </h2>
-  </div>
+<div class="admin-quizzes-page">
+  <h1 class="section-header text-center">
+    Quiz Bank
+    <%= button to: quiz_path(@conn,:new), method: "get" ,class: "btn btn-primary" do %>
+     <i class="fas fa-plus"></i> New Quiz
+   <% end %>
+  </h1>
+
+  <div class="row">
     <%= for quiz <- @fe_quizzes do %>
-      <div class="col-sm-4">
-        <div class="card">
-          <div class="card-header"><h5><i class="fas fa-file-alt"></i> <%= link quiz.name, to: quiz_path(@conn,:show, quiz) %></h5></div>
-          <div class="card-body">
-            <p><%= quiz.description %></p>
+      <div class="col-sm-12 col-md-6 col-lg-4">
+
+        <div class="quiz-card card border-dark mb-3">
+
+          <div class="card-header">
+            <h6 class="quiz-name"><i class="fas fa-file-alt"></i> <%= quiz.name %></h6>
           </div>
+
+          <div class="card-body">
+            <p class="quiz-description"><%= quiz.description %></p>
+          </div>
+
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <p class="small">
-                <strong>Attempts allowed:</strong> <%= quiz.attempts_allowed %><br />
-                <strong>Randomize Questions:</strong> <%= quiz.randomize_questions %><br />
-                <strong>Questions Per Page:</strong> <%= quiz.questions_per_page %><br />
-                <strong>Auto Submit:</strong> <%= quiz.auto_submit %><br />
-              </p>
+              <p class="quiz-detail">Attempts Allowed <span class="detail"><%= quiz.attempts_allowed %></span></p>
+            </li>
+            <li class="list-group-item">
+              <p class="quiz-detail">Auto-Submissions<span class="detail"><%= quiz.auto_submit %></span></p>
+            </li>
+            <li class="list-group-item">
+              <p class="quiz-detail">Number of Questions<span class="detail"><%= Enum.count(quiz.questions)%></span></p>
+            </li>
+            <li class="list-group-item">
+              <p class="quiz-detail">Randomized Questions <span class="detail"><%= quiz.randomize_questions %></span></p>
+            </li>
+            <li class="list-group-item">
+              <p class="quiz-detail">Questions / Page<span class="detail"><%= quiz.questions_per_page %></span></p>
             </li>
           </ul>
-          <div class="card-footer">
-            <%=link to: quiz_path(@conn,:edit,quiz) do %>
+
+          <div class="card-footer btn-group">
+            <%= link to: quiz_path(@conn, :edit, quiz), class: "btn btn-primary btn-block m-0" do %>
               <i class="fas fa-edit"></i> Edit
             <% end %>
-            <%=link to: quiz_path(@conn,:delete,quiz), method: :delete do %>
-              <i class="fas fa-delete"></i> Delete
+
+            <%= link to: quiz_path(@conn, :delete, quiz), method: :delete, class: "btn btn-danger m-0" do %>
+              <i class="fas fa-trash"></i>
             <% end %>
           </div>
         </div>
+
       </div>
     <% end %>
+  </div>
 </div>

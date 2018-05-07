@@ -3,21 +3,18 @@
   <div class="quiz-form row">
     <div class="form-group col-sm-12">
       <div class="form-group-item">
-        <label>Name</label>
+        <label>Name <%= error_tag f, :name %></label>
         <%= text_input f, :name, placeholder: "Enter Quiz Name", class: "form-control"%>
-        <%= error_tag f, :name %>
       </div>
 
       <div class="form-group-item">
-        <label>Description</label>
+        <label>Description <%= error_tag f, :description %></label>
         <%= textarea f, :description, placeholder: "Enter Short Description", class: "form-control"%>
-        <%= error_tag f, :description %>
       </div>
 
       <div class="form-group-item">
-        <label>Attempts Allowed</label>
+        <label>Attempts Allowed <%= error_tag f, :attempts_allowed %></label>
         <%= number_input f, :attempts_allowed, placeholder: "i.e. 2", class: "form-control" %>
-        <%= error_tag f, :attempts_allowed %>
       </div>
     </div>
 
@@ -47,9 +44,9 @@
 
     <div class="form-group col-sm-12 col-md-8">
       <div class="form-group-item">
-        <%= label f, :questions_per_page, "Questions / Page"%>
+        <!-- <%= label f, :questions_per_page, "Questions / Page"%> -->
+        <label>Questions / Page <%= error_tag f, :questions_per_page %></label>
         <%= number_input f, :questions_per_page, placeholder: "i.e. 5", class: "form-control" %>
-        <%= error_tag f, :questions_per_page %>
       </div>
 
       <div class="time-limit form-group-item">
@@ -69,7 +66,7 @@
     </div>
 
     <div class="form-group col-sm-12">
-      <h1 class="text-center">
+      <h1 class="section-header text-center">
         Questions
         <button type="button" class="btn btn-primary add-question-btn">+ Add Question</button>
       </h1>

@@ -1,3 +1,3 @@
-<h2 class="SectionHeader">Quiz Edit</h2>
+<h1 class="section-header text-center">Quiz Edit</h1>
 
-<%=render FireEngineWeb.QuizView, "_form.html", changeset: @changeset, path: quiz_path(@conn, :update, @quiz) %>
+<%= render FireEngineWeb.QuizView, "_form.html", changeset: @changeset, path: quiz_path(@conn, :update, @quiz) %>

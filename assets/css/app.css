@@ -22,6 +22,11 @@
   text-align: center;
 }
 
+.section-header {
+  color: blue;
+  font-weight: lighter;
+}
+
 /* ====== Quiz Cards ====== */
 
 .quiz-card > .card-header > .quiz-name {
