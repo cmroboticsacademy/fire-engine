@@ -1,23 +1,65 @@
 <%= form_for @changeset, @path, fn f -> %>
-  <div class="form-group">
-    <label>Queston</label>
-    <%= text_input f, :content, placeholder: "What is the question?", class: "form-control"%>
-    <%= error_tag f, :content %>
+  <div class="question-form row">
+    <div class="form-group col-sm-12">
+
+      <div class="form-group-item">
+        <label>Question <%= error_tag f, :content %></label>
+        <%= text_input f, :content, placeholder: "What is the question?", class: "form-control"%>
+      </div>
+
+      <div class="form-group-item">
+        <label>Question Type <%= error_tag f, :type %></label>
+        <%= text_input f, :type, placeholder: "i.e. True/False, Multiple Choice", class: "form-control"%>
+      </div>
+
+      <div class="form-group-item">
+        <label>Points <%= error_tag f, :points %></label>
+        <%= number_input f, :points, value: "1.0", class: "form-control"%>
+      </div>
+
+      <div class="form-group-item">
+        <label>Question Category <%= error_tag f, :category_id %></label>
+        <%= select f, :category_id, list_categories(), class: "form-control"%>
+      </div>
+
+      <div class="form-group-item">
+        <label class="mb-1">Question Tags (<kbd>Shift</kbd> select for multiple tags)</label>
+        <%= multiple_select(f,:question_tags,Enum.map(@tags,&({&1.name, &1.id})), selected: Enum.map(@question.tags, &(&1.id)), class: "form-control")%>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label>Question Type</label>
-    <%= textarea f, :type, placeholder: "Type of Question", class: "form-control"%>
-    <%= error_tag f, :type %>
+
+  <div class="form-group col-sm-12">
+    <h1 class="section-header text-center">
+      Answer Text / Weight
+      <button type="button" class="btn btn-primary add-answer-simple-btn">+ Add Answer</button>
+    </h1>
   </div>
-  <div class="form-group">
-    <label>Category</label>
-    <%= select f, :category_id, list_categories(), class: "form-control"%>
-    <%= error_tag f, :points %>
+
+  <div class="answer-list pl-3 pr-3">
+    <%= inputs_for f, :answers, fn a -> %>
+
+      <div id="answer_<%= a.index %>" class="row mb-2">
+        <div class="col-9 pr-0">
+          <%= text_input a, :answer, class: "form-control", placeholder: "Answer" %>
+        </div>
+
+        <div class="col-2 pr-0">
+          <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "0", class: "form-control"%>
+        </div>
+
+        <div class="col-1">
+          <button class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="<%= a.index %>">
+            <i class="fas fa-times-circle"></i>
+          </button>
+        </div>
+      </div>
+
+    <% end %>
   </div>
-  <div class="form-group">
-    <label>Points</label>
-    <%= number_input f, :points, value: "1.0", class: "form-control"%>
-    <%= error_tag f, :points %>
+
+  <div class="form-group col-sm-12">
+    <%= submit "Save Question", class: "btn btn-primary btn-lg btn-block" %>
   </div>
 
   <!-- <ul class="list-group tags">
@@ -30,16 +72,10 @@
     <% end %>
   </ul> -->
 
-  <div class="form-group">
-    <label>Tags</label>
-    <%= multiple_select(f,:question_tags,Enum.map(@tags,&({&1.name, &1.id})), selected: Enum.map(@question.tags, &(&1.id)), class: "form-control")%>
+  <!-- <div class="form-group">
+
   </div>
-
-
-
   <br/>
-
-
   <ul class="list-group answers">
     <li class="list-group-item answer_0">
       <%= inputs_for f, :answers, fn a -> %>
@@ -47,18 +83,17 @@
           <div class="row">
             <div col="1"  style="padding-top:5px;"><a href="javascript:void(0);" onclick="deleteAnswer(this, 0, <%=a.index%>)"><i class="fas fa-times-circle"></a></i></div>
             <div class="col 9">
-            <%= text_input a, :answer, class: "form-control", placeholder: "Answer" %>
+
             </div>
             <div class="form-check col 2">
             <%= label a, :weight %>
-            <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "0"%>
+
             </div>
           </div>
       <% end %>
     </li>
 
     </ul>
-
 
     <a href="javascript:void(0);" class="btn btn-default btn-circle addAnswer" onclick="addAnswerQuestionForm(this)">
       <i class="fa fa-plus"></i>
@@ -69,12 +104,5 @@
     <span>
     <%=submit "Save Quiz",[class: "btn btn-primary btn-block"]%>
     </span>
-
-
-
-
-    </div>
-
-
-
+    </div> -->
 <% end %>

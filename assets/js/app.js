@@ -16,8 +16,8 @@ import "phoenix_html"
 
 $(".alert").alert()
 
-// ============ Quiz Forms Scripts ============ //
-// ============ Quiz Forms Scripts ============ //
+// ============ Quiz Form: Toggle Scripts ============ //
+// ============ Quiz Form: Toggle Scripts ============ //
 
 function toggleTimeLimit() {
   var timeLimitCheck = $('#quiz_time_limit');
@@ -60,8 +60,8 @@ function removeQuestion(questionId) {
 
 };
 
-// ============ Main Creating Questions ============ //
-// ============ Main Creating Questions ============ //
+// ============ Quiz Form: Creating Questions and Answers ============ //
+// ============ Quiz Form: Creating Questions and Answers ============ //
 
 function createQuestion() {
   var questionListContainer = $('.question-list');
@@ -258,20 +258,104 @@ function removeAnswer(questionId, answerId) {
   inputSelector.remove();
 };
 
+// ============ Quiz Form: Creating Answers ============ //
+// ============ Quiz Form: Creating Answers  ============ //
+
+// Answer simple are for question forms only...
+function createAnswerSimple() {
+  var answerListContainer = $('.answer-list');
+  var answerIndex = getAnswerSimpleCount();
+  var alreadyExist = checkExistingAnswerSimpleIndex(answerIndex);
+
+  if (alreadyExist) {
+    answerIndex = getNextAnswerSimpleIndex(answerIndex);
+  };
+
+  var newAnswerElemId = 'answer_' + answerIndex;
+  var newAnswerId = 'question_answers_' + answerIndex + '_answer';
+  var newAnswerName = 'question[answers][' + answerIndex + '][answer]';
+
+  var answerContainer = '<div id="' + newAnswerElemId + '" class="row mb-2"></div>';
+  var largeColumnContainer = '<div class="col-9 pr-0"></div>';
+  var smallColumnContainer = '<div class="col-2 pr-0"></div>';
+  var tinyColumnContainer = '<div class="col-1"></div>';
+
+  var answerTextInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" placeholder="Enter Answer" type="text">';
+  var answerWeightInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" max="1.0" min="-1.0" step="0.25" placeholder="0">';
+  var removeAnswerSimpleBtn = '<button class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
+
+  // Appends
+  answerListContainer.append(answerContainer);
+  $('.row').last().append(largeColumnContainer);
+  $('.col-9').last().append(answerTextInput);
+  $('.row').last().append(smallColumnContainer);
+  $('.col-2').last().append(answerWeightInput);
+  $('.row').last().append(tinyColumnContainer);
+  $('.col-1').last().append(removeAnswerSimpleBtn);
+};
+
+function getAnswerSimpleCount() {
+  var answerList = $('[id^=answer_]')
+  var answerCount = answerList.length;
+
+  console.log(answerCount);
+  return answerCount;
+};
+
+function checkExistingAnswerSimpleIndex(answerIndex) {
+  var selector = '#answer_' + answerIndex;
+  var found = $(selector);
+
+  // console.log(found);
+  if (found.length > 0) {
+    return true;
+  } else {
+    return false;
+  };
+};
+
+function getNextAnswerSimpleIndex(index) {
+  var nextIndex = index + 1;
+
+  // Recursively get the next index, what?
+  if (checkExistingAnswerSimpleIndex(nextIndex)) {
+    return getNextAnswerSimpleIndex(nextIndex);
+  } else {
+    return nextIndex;
+  };
+};
+
+function removeAnswerSimple(answerId) {
+  console.log('removing answer ' + answerId);
+
+  var selector = '#answer_' + answerId;
+  var answerContainer = $(selector);
+  var inputSelector = answerContainer.prev('input');
+
+  // console.log(answerContainer);
+  // console.log(inputSelector);
+
+  answerContainer.remove();
+  inputSelector.remove();
+};
+
 // ============ Main Init ============ //
 // ============ Main Init ============ //
 
 $(document).ready(function() {
   var isQuizForm = $('.quiz-form').length;
+  var isAnswerForm = $('.question-form').length;
 
   if (isQuizForm) {
     toggleTimeLimit();
     toggleTimeWindow();
-  };
+  } else if (isAnswerForm) {
+    console.log('question form');
+  }
 });
 
-// ============ Click Events ============ //
-// ============ Click Events ============ //
+// ============ Quiz Form: Click Events ============ //
+// ============ Quiz Form: Click Events ============ //
 
 $(document).on('click', '#quiz_time_limit', function() {
   toggleTimeLimit();
@@ -287,11 +371,13 @@ $(document).on('click', '.add-question-btn', function() {
 
 $(document).on('click', '.add-answer-btn', function() {
   var questionId = $(this).attr('questionId');
+
   createAnswers(questionId);
 });
 
 $(document).on('click', '.remove-question-btn', function() {
     var questionId = $(this).attr('questionId');
+
     removeQuestion(questionId);
 });
 
@@ -300,4 +386,17 @@ $(document).on('click', '.remove-answer-btn', function() {
   var answerId = $(this).attr('answerId');
 
   removeAnswer(questionId, answerId);
+})
+
+// ============ Question Form: Click Events ============ //
+// ============ Question Form: Click Events ============ //
+
+$(document).on('click', '.add-answer-simple-btn', function() {
+  createAnswerSimple();
+})
+
+$(document).on('click', '.remove-answer-simple-btn', function() {
+  var answerId = $(this).attr('answerId');
+
+  removeAnswerSimple(answerId);
 })
