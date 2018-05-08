@@ -1,4 +1,4 @@
-<h2 class="SectionHeader"><%= @question.content %></h2>
+<!-- <h2 class="SectionHeader"><%= @question.content %></h2>
 <p><%= link "< Return to Questions", to: question_path(@conn, :index) %> </p>
 
 <ul class="list-group">
@@ -23,4 +23,71 @@
         <% end %>
       </ul>
     </li>
-</ul>
+</ul> -->
+
+<h1 class="section-header text-center">
+  <%= link to: question_path(@conn, :index), class: "btn btn-primary float-left" do %>
+    <i class="fas fa-arrow-left"></i> Go Back
+  <% end %>
+  <%= link to: question_path(@conn, :edit, @question), class: "btn btn-outline-primary ml-1 float-left" do %>
+    <i class="fas fa-edit"></i> Edit Question
+  <% end %>
+
+  <%= link to: question_path(@conn, :delete, @question), method: :delete, class: "btn btn-outline-danger ml-1 float-left" do %>
+    <i class="fas fa-trash"></i> Delete Question
+  <% end %>
+  <span class="float-right mb-3">Question Details</span>
+</h1>
+
+<div class="clearfix"></div>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th col="row">Question</th>
+      <td class="text-right"><%= raw(@question.content) %></td>
+    </tr>
+
+    <tr>
+      <th col="row">Points</th>
+      <td class="text-right"><%= @question.points %></td>
+    </tr>
+
+    <tr>
+      <th col="row">Category</th>
+      <td class="text-right"><%= get_category @question.category_id %></td>
+    </tr>
+
+    <tr>
+      <th col="row">Type</th>
+      <td class="text-right"><%= @question.type %></td>
+    </tr>
+
+    <tr>
+      <th col="row">Tags</th>
+      <td class="text-right">
+        <%= for tag <- @question.tags do %>
+          <span class="badge badge-pill badge-secondary"><%= tag.name %></span>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 class="section-header">
+  <span class="float-left mb-3">Answer</span>
+  <span class="float-right mb-3">Weight</span>
+</h1>
+
+<div class="clearfix"></div>
+
+<table class="table">
+  <tbody>
+    <%= for answer <- @question.answers do %>
+    <tr>
+      <th col="row"><%= answer.answer %></th>
+      <td class="text-right"><%= answer.weight %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
