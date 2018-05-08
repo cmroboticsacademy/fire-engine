@@ -7,8 +7,8 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
 
   def create(conn, %{"data" => data} = params) do
 
-    quiz_id = Poison.decode!(data)["quiz_id"]
-    user_id = Poison.decode!(data)["user_id"]
+    quiz_id = decode_data(data, "quiz_id")
+    user_id = decode_data(data, "user_id")
     quiz = Assessments.get_quiz!(quiz_id)
     attempt_count = Assessments.quiz_total_user_attempts(quiz_id, user_id)
 
@@ -36,8 +36,8 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
   end
 
   def update(conn, %{"data" => data, "id" => attempt_id} = params) do
-    submitted_responses = Poison.decode!(data)["responses"]
-    page = Poison.decode!(data)["page"]
+    submitted_responses = decode_data(data, "responses")
+    page = decode_data(data, "page")
     attempt = Assessments.get_attempt_with_responses(attempt_id)
 
     next_page = turn_page(page)
@@ -86,9 +86,12 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
   end
 
 
-  defp turn_page(nil = page), do: 1
-  defp turn_page(page), do: page + 1
+  defp turn_page(page) when is_nil(page), do: 1
+  defp turn_page(page) when is_bitstring(page), do: String.to_integer(page) + 1
+  defp turn_page(page) when is_integer(page), do: page + 1
 
+  defp decode_data(data = %{},key), do: data[key]
+  defp decode_data(data, key), do: Poison.decode!(data)[key]
 
 
 

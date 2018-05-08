@@ -29,10 +29,10 @@ defmodule FireEngine.UserAttemptControllerTest do
         "total_pages" => 1,
         "questions" => [
           %{
-            "id" => question.id,
-            "content" => question.content,
+            "question_id" => question.id,
+            "question" => question.content,
             "answers"=> [%{
-              "id" => answer.id,
+              "answer_id" => answer.id,
                "answer" => answer.answer
               }]
           }
@@ -106,10 +106,10 @@ defmodule FireEngine.UserAttemptControllerTest do
         "total_pages" => 3,
         "questions" => [
           %{
-            "id" => next_question.id,
-            "content" => next_question.content,
+            "question_id" => next_question.id,
+            "question" => next_question.content,
             "answers"=> [%{
-              "id" => next_answer.id,
+              "answer_id" => next_answer.id,
                "answer" => next_answer.answer
               }]
           }
