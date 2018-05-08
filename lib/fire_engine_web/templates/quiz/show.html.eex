@@ -1,6 +1,6 @@
 <h1 class="section-header text-center">
   <%= link to: quiz_path(@conn, :index), class: "btn btn-primary float-left" do %>
-    <i class="fas fa-arrow-left"></i> Go Back
+    <i class="fas fa-arrow-left"></i> Back to List
   <% end %>
   <%= link to: quiz_path(@conn, :edit, @quiz), class: "btn btn-outline-primary ml-1 float-left" do %>
     <i class="fas fa-edit"></i> Edit Quiz

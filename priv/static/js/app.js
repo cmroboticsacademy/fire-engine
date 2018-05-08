@@ -1719,14 +1719,14 @@ function createQuestion() {
   var cardHeaderText = '<b class="float-left">' + newQuestionText + '</b>';
   var removeBtnContainer = '<div class="text-right"></div>';
   var removeButton = '<button class="btn btn-danger remove-question-btn" questionId="' + questionIndex + '"><i class="fas fa-times"></i> Remove Question</button>';
-  var questionEditor = '<textarea class="form-control" id="editorquiz_questions_' + questionIndex + '" name="quiz[questions][' + questionIndex + '][content]" placeholder="Enter Question Here"></textarea>';
+  var questionEditor = '<textarea class="form-control" id="editorquiz_questions_' + questionIndex + '" name="quiz[questions][' + questionIndex + '][content]" placeholder="Enter Question"></textarea>';
 
   var cardBodyContainer = '<div class="question-options card-body"></div>';
   var cardBodyText = '<b>Question Weight / Type</b>';
   var rowContainer = '<div class="row"></div>';
   var columnContainer = '<div class="col-4"></div>';
-  var questionWeightInput = '<input class="form-control" id="quiz_questions_' + questionIndex + '_points" name="quiz[questions][' + questionIndex + '][points]" placeholder="Points" type="number" value="1.0">';
-  var questionTypeInput = '<input class="form-control" id="quiz_questions_' + questionIndex + '_type" name="quiz[questions][' + questionIndex + '][type]" placeholder="Question Type" type="text">';
+  var questionWeightInput = '<input class="form-control" id="quiz_questions_' + questionIndex + '_points" name="quiz[questions][' + questionIndex + '][points]" placeholder="Enter Point Value" type="number" value="1.0">';
+  var questionTypeInput = '<input class="form-control" id="quiz_questions_' + questionIndex + '_type" name="quiz[questions][' + questionIndex + '][type]" placeholder="Enter Question Type (optional)" type="text">';
   var addAnswerButton = '<button class="btn btn-outline-primary btn-block add-answer-btn" questionId="' + questionIndex + '"><i class="fas fa-plus"></i> Add Answer</button>';
 
   var cardFooterContainer = '<div class="question-answer-list card-footer"><div>';
@@ -1822,7 +1822,7 @@ function createAnswers(questionId) {
   var weightInputId = 'quiz_questions_' + questionId + '_answers_' + answerIndex + '_weight';
   var weightInputName = 'quiz[questions][' + questionId + '][answers][' + answerIndex + '][weight]';
   var answerTextInput = '<input class="form-control" id="' + textInputId + '" name="' + textInputName + '" placeholder="Enter Answer" type="text">';
-  var answerWeightInput = '<input id="' + weightInputId + '" max="1.0" min="-1.0" name="' + weightInputName + '" placeholder="0" step="0.25" type="number" value="1.0" class="form-control">';
+  var answerWeightInput = '<input id="' + weightInputId + '" max="1.0" min="-1.0" name="' + weightInputName + '" placeholder="Enter Value" step="0.25" type="number" value="1.0" class="form-control">';
 
   var removeAnswerBtn = '<button class="btn btn-outline-danger btn-block remove-answer-btn" questionId="' + questionId + '" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
 
@@ -1918,7 +1918,7 @@ function createAnswerSimple() {
   var tinyColumnContainer = '<div class="col-1"></div>';
 
   var answerTextInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" placeholder="Enter Answer" type="text">';
-  var answerWeightInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" max="1.0" min="-1.0" step="0.25" placeholder="0">';
+  var answerWeightInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" max="1.0" min="-1.0" step="0.25" placeholder="Enter Value">';
   var removeAnswerSimpleBtn = '<button class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
 
   // Appends

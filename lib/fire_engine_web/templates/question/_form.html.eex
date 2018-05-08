@@ -9,7 +9,7 @@
 
       <div class="form-group-item">
         <label>Question Type <%= error_tag f, :type %></label>
-        <%= text_input f, :type, placeholder: "i.e. True/False, Multiple Choice", class: "form-control"%>
+        <%= text_input f, :type, placeholder: "i.e. True/False, Multiple Choice (optional)", class: "form-control"%>
       </div>
 
       <div class="form-group-item">
@@ -46,11 +46,11 @@
 
       <div id="answer_<%= a.index %>" class="row mb-2">
         <div class="col-9 pr-0">
-          <%= text_input a, :answer, class: "form-control", placeholder: "Answer" %>
+          <%= text_input a, :answer, class: "form-control", placeholder: "Enter Answer" %>
         </div>
 
         <div class="col-2 pr-0">
-          <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "0", class: "form-control"%>
+          <%= number_input a, :weight, step: "0.25", min: "-1.0", max: "1.0", placeholder: "Enter Value", class: "form-control"%>
         </div>
 
         <div class="col-1">
@@ -67,47 +67,4 @@
     <%= submit "Save Question", class: "btn btn-primary btn-lg btn-block" %>
   </div>
 
-  <!-- <ul class="list-group tags">
-    <p> Add Tags </p>
-    <%= inputs_for f, :tags, fn t -> %>
-      <li class="list-group-item">
-        <%= checkbox t, :tag_id, value: t.id %>
-        <%= label t, t.data.name %>
-      </li>
-    <% end %>
-  </ul> -->
-
-  <!-- <div class="form-group">
-
-  </div>
-  <br/>
-  <ul class="list-group answers">
-    <li class="list-group-item answer_0">
-      <%= inputs_for f, :answers, fn a -> %>
-        <div id="question_0_answer_<%=a.index%>">
-          <div class="row">
-            <div col="1"  style="padding-top:5px;"><a href="javascript:void(0);" onclick="deleteAnswer(this, 0, <%=a.index%>)"><i class="fas fa-times-circle"></a></i></div>
-            <div class="col 9">
-
-            </div>
-            <div class="form-check col 2">
-            <%= label a, :weight %>
-
-            </div>
-          </div>
-      <% end %>
-    </li>
-
-    </ul>
-
-    <a href="javascript:void(0);" class="btn btn-default btn-circle addAnswer" onclick="addAnswerQuestionForm(this)">
-      <i class="fa fa-plus"></i>
-      Add Answer
-    </a>
-
-
-    <span>
-    <%=submit "Save Quiz",[class: "btn btn-primary btn-block"]%>
-    </span>
-    </div> -->
 <% end %>

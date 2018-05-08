@@ -1,33 +1,6 @@
-<!-- <h2 class="SectionHeader"><%= @question.content %></h2>
-<p><%= link "< Return to Questions", to: question_path(@conn, :index) %> </p>
-
-<ul class="list-group">
-    <li class="list-group-item">
-      <b>Question: </b><%=@question.content%>
-      <br >
-      <b>Category: </b><%=get_category @question.category_id%>
-      <ul class="list-group">
-        <%= for answer <- @question.answers do %>
-        <li>
-          <%= answer.answer %>
-          <%= answer.weight %>
-        </li>
-        <% end %>
-      </ul>
-      <ul class="list-group">
-        <%= for tag <- @question.tags do %>
-        <div class="col">
-          <span class="badge badge-pill badge-secondary"> <%= tag.name %></span>
-        </div>
-        <br />
-        <% end %>
-      </ul>
-    </li>
-</ul> -->
-
 <h1 class="section-header text-center">
   <%= link to: question_path(@conn, :index), class: "btn btn-primary float-left" do %>
-    <i class="fas fa-arrow-left"></i> Go Back
+    <i class="fas fa-arrow-left"></i> Back to List
   <% end %>
   <%= link to: question_path(@conn, :edit, @question), class: "btn btn-outline-primary ml-1 float-left" do %>
     <i class="fas fa-edit"></i> Edit Question
