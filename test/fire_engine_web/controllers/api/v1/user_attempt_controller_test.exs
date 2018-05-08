@@ -7,6 +7,8 @@ defmodule FireEngine.UserAttemptControllerTest do
 
   use FireEngineWeb.ConnCase
 
+
+
   test "#create generates an attempt with responses for each quiz question" do
     conn = build_conn()
     question = insert(:question)
@@ -52,7 +54,7 @@ defmodule FireEngine.UserAttemptControllerTest do
     {:ok, attempt} = Assessments.create_attempt(%{user_id: user.id, quiz_id: quiz.id})
     response = attempt.responses |> List.first
 
-    json_data = Poison.encode! %{responses: [%{answer_id: answer.id, question_id: question.id}], page: 1 }
+    json_data = Poison.encode! %{responses: [%{answer_id: answer.id, question_id: question.id}], page: 1, user_id: user.id, quiz_id: quiz.id }
 
     conn = put conn, "api/v1/user_attempts/#{attempt.id}", [data: json_data]
 
@@ -92,7 +94,7 @@ defmodule FireEngine.UserAttemptControllerTest do
 
     question = List.first(questions)
     answer = question.answers |> List.first
-    json_data = Poison.encode! %{responses: [%{answer_id: answer.id, question_id: question.id}], page: 1}
+    json_data = Poison.encode! %{responses: [%{answer_id: answer.id, question_id: question.id}], page: 1, user_id: user.id, quiz_id: quiz.id}
 
     conn = put conn, "api/v1/user_attempts/#{attempt.id}", [data: json_data]
 
@@ -117,7 +119,7 @@ defmodule FireEngine.UserAttemptControllerTest do
       }
     }
 
-
   end
+
 
 end

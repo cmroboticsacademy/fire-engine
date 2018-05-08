@@ -14,16 +14,14 @@ defmodule FireEngine.Plugs.CheckQuizWindow do
 
   def call(conn,_params) do
     user_id = conn.assigns.user.id
-
-    %{"quiz_id" => quiz_id} = conn.query_params
-    quiz = Assessments.get_quiz!(quiz_id)
+    quiz = get_quiz(conn)
 
     unless quiz.time_window == false do
       case quiz_open?(quiz) do
         true ->
           conn
         false ->
-          FireEngineWeb.Plug.Helpers.close_attempt(user_id,quiz_id)
+          FireEngineWeb.Plug.Helpers.close_attempt(user_id,quiz.id)
           conn
           |> put_flash(:info,"This quiz is only open between #{quiz.time_open} and #{quiz.time_closed}")
           |> redirect(to: Helpers.user_quiz_path(conn,:index))
@@ -39,6 +37,20 @@ defmodule FireEngine.Plugs.CheckQuizWindow do
     interval = Timex.Interval.new(from: quiz.time_open, until: quiz.time_closed)
     Timex.today in interval
   end
+
+  defp get_quiz(%{query_params: params} = conn) when params != %{} do
+    Assessments.get_quiz!(params["quiz_id"])
+  end
+
+  defp get_quiz(%{params: params} = conn) do
+    quiz_id = decode_data(params["data"], "quiz_id")
+    Assessments.get_quiz!(quiz_id)
+  end
+
+
+  defp decode_data(data = %{},key), do: data[key]
+  defp decode_data(data, key), do: Poison.decode!(data)[key]
+
 
 
 end

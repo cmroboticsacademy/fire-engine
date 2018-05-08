@@ -13,8 +13,7 @@ defmodule FireEngine.Plugs.CheckQuizTime do
 
   def call(conn,_params) do
     user_id = conn.assigns.user.id
-    %{"quiz_id" => quiz_id} = conn.query_params
-    quiz = Assessments.get_quiz!(quiz_id)
+    quiz = get_quiz(conn)
 
     unless quiz.time_limit == false do
       user = Accounts.get_user!(user_id)
@@ -22,7 +21,7 @@ defmodule FireEngine.Plugs.CheckQuizTime do
         true ->
           conn
         false ->
-          FireEngineWeb.Plug.Helpers.close_attempt(user_id,quiz_id)
+          FireEngineWeb.Plug.Helpers.close_attempt(user_id,quiz.id)
           conn
           |> put_flash(:info, "This quiz has a #{quiz.time_limit_minutes} minutes limit. Your current attempt has expired")
           |> redirect(to: Helpers.user_quiz_path(conn,:index))
@@ -49,5 +48,20 @@ defmodule FireEngine.Plugs.CheckQuizTime do
         true
     end
   end
+
+
+  defp get_quiz(%{query_params: params} = conn) when params != %{} do
+    Assessments.get_quiz!(params["quiz_id"])
+  end
+
+  defp get_quiz(%{params: params} = conn) do
+    quiz_id = decode_data(params["data"], "quiz_id")
+    Assessments.get_quiz!(quiz_id)
+  end
+
+
+  defp decode_data(data = %{},key), do: data[key]
+  defp decode_data(data, key), do: Poison.decode!(data)[key]
+
 
 end

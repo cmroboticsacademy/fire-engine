@@ -6,7 +6,6 @@ defmodule FireEngineWeb.UserAttemptController do
   alias FireEngine.Assessments.Response
 
   plug FireEngine.Plugs.RequireCasAuth
-  plug FireEngine.Plugs.CheckRequestType
   plug FireEngine.Plugs.CheckQuizWindow  when action in [:create, :edit]
   plug FireEngine.Plugs.CheckQuizTime when action in [:create, :edit]
 
