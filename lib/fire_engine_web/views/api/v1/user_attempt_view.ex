@@ -23,5 +23,20 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
     }
   end
 
+  def render("attempt_submitted.json", %{attempt: attempt}) do
+    %{data:
+      %{attempt_id: attempt.id,
+        quiz_id: attempt.quiz_id,
+        point_percent: attempt.point_percent,
+        point_total: attempt.point_total,
+        points_available: attempt.points_available,
+        closed: attempt.closed,
+        date_completed: NaiveDateTime.to_string(attempt.updated_at)
+    }
+
+  }
+
+  end
+
 
 end

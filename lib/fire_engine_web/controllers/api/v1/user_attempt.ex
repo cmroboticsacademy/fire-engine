@@ -64,6 +64,33 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
 
   end
 
+  def show(conn, %{"id" => id, "page" => page} = params) do
+    page = String.to_integer(page)
+    attempt_id = String.to_integer(id)
+    attempt = Assessments.get_attempt_with_responses(attempt_id)
+
+    IO.inspect attempt
+    quiz = Assessments.get_quiz!(attempt.quiz_id)
+    {quiz,questions} = Assessments.get_quiz_with_questions(attempt.quiz_id, page)
+
+    conn
+    |> render("attempt.json", attempt: attempt, questions: questions, page: questions.page_number, quiz: quiz)
+
+  end
+
+
+  def save(conn, %{"id" => attempt_id}) do
+    attempt = Assessments.get_attempt!(attempt_id)
+
+    case Assessments.update_attempt(attempt, %{closed: true}) do
+      {:ok, attempt} ->
+        conn
+        |> calculate_grade(attempt)
+        |> render("attempt_submitted.json",attempt: Assessments.get_attempt!(attempt.id))
+    end
+
+  end
+
 
   defp update_response(attempt,responses) do
     #Update all attempt.responses with json responses, return :ok or :error
@@ -88,6 +115,20 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
         false
     end
   end
+
+
+  defp calculate_grade(conn, %{id: attempt_id, quiz_id: quiz_id} = attempt) do
+    total_points = Assessments.quiz_total_points(quiz_id)
+    earned_points = Assessments.attempt_earned_points(attempt_id)
+    score = (earned_points / total_points) * 100.0
+
+    Assessments.update_attempt(attempt, %{point_percent: score, point_total: earned_points, points_available: total_points})
+    conn
+  end
+
+
+
+
 
 
   defp turn_page(page) when is_nil(page), do: 1

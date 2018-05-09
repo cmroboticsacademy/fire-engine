@@ -122,4 +122,68 @@ defmodule FireEngine.UserAttemptControllerTest do
   end
 
 
+  test "#show displays requested attempt and questions for the page requested" do
+    conn = build_conn()
+    questions = insert_list(3,:question)
+    quiz_questions = for q <- questions do
+      %{question_id: q.id}
+    end
+    quiz_params = %{questions_per_page: 1,quiz_questions: quiz_questions}
+    quiz = insert(:quiz, quiz_params)
+    user = insert(:user)
+
+    {:ok, attempt} = Assessments.create_attempt(%{user_id: user.id, quiz_id: quiz.id})
+
+    question = List.first(questions)
+    answer = question.answers |> List.first
+
+    conn = get conn, "api/v1/user_attempts/#{attempt.id}?page=1"
+
+    assert json_response(conn, 200) == %{"data" =>
+      %{"attempt_id" => attempt.id,
+        "quiz_name" => quiz.name,
+        "page_number" => 1,
+        "total_pages" => 3,
+        "questions" => [
+          %{
+            "question_id" => question.id,
+            "question" => question.content,
+            "answers"=> [%{
+              "answer_id" => answer.id,
+               "answer" => answer.answer
+              }]
+          }
+        ]
+      }
+    }
+
+
+
+  end
+
+  test "#save closes attempt and generates a score" do
+    conn = build_conn()
+    question = insert(:question)
+    quiz_params = %{quiz_questions: [%{question_id: question.id}]}
+    quiz = insert(:quiz, quiz_params)
+    user = insert(:user)
+
+    {:ok, attempt} = Assessments.create_attempt(%{user_id: user.id, quiz_id: quiz.id})
+    answer = question.answers |> List.first
+
+    conn = post conn, "api/v1/user_attempts/save/#{attempt.id}"
+
+    assert json_response(conn, 200) == %{"data" => %{
+      "attempt_id" => attempt.id,
+      "quiz_id" => quiz.id,
+      "point_percent" =>  0.0,
+      "point_total" => 0.0,
+      "points_available" => 1.0,
+      "closed" => true,
+      "date_completed" => NaiveDateTime.to_string(attempt.updated_at)
+      }}
+
+  end
+
+
 end
