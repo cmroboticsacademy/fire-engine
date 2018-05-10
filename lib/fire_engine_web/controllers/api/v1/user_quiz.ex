@@ -12,5 +12,10 @@ defmodule FireEngineWeb.Api.V1.UserQuizController do
     render(conn, "index.json", fe_quizzes: fe_quizzes)
   end
 
+  def show(conn, %{"id" => quiz_id, "user_id" => user_id} = params) do
+    fe_quiz_attempts = Assessments.get_quiz_with_attempts(quiz_id, user_id)
+    render(conn, "show.json", attempts: fe_quiz_attempts)
+  end
+
 
 end

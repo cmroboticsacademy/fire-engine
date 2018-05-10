@@ -2,6 +2,7 @@
 defmodule FireEngine.UserQuizControllerTest do
   import Plug.Test
   import FireEngine.Factory
+  alias FireEngine.Assessments
 
   use FireEngineWeb.ConnCase
 
@@ -24,5 +25,32 @@ defmodule FireEngine.UserQuizControllerTest do
         "questions_per_page" => quiz.questions_per_page
         }]
     }
+  end
+
+  test "#show returns a user quiz with a summary of attempts" do
+    conn = build_conn()
+    quiz = insert(:quiz)
+    user = insert(:user)
+
+    {:ok, attempt} = Assessments.create_attempt(%{quiz_id: quiz.id, user_id: user.id})
+
+    conn = get conn, "api/v1/quizzes/#{quiz.id}?user_id=#{user.id}"
+
+    assert json_response(conn, 200) == %{
+      "data" => %{
+        "id" => quiz.id,
+        "name" => quiz.name,
+        "description" => quiz.description,
+        "attempts" => [%{
+            "start_time" => NaiveDateTime.to_string(attempt.start_time),
+            "point_total" => attempt.point_total,
+            "point_percent" => attempt.point_percent,
+            "points_available" => attempt.points_available,
+            "closes" => attempt.closes,
+            "closed" => attempt.closed
+          }]
+        }
+    }
+
   end
 end

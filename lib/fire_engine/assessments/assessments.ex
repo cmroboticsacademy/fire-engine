@@ -28,6 +28,15 @@ defmodule FireEngine.Assessments do
     {quiz, questions}
   end
 
+  def get_quiz_with_attempts(quiz_id, user_id) do
+    query = from qz in Quiz,
+    join: a in assoc(qz, :attempts),
+    where: qz.id == ^quiz_id and a.user_id == ^user_id,
+    select: %{quiz_id: qz.id, name: qz.name, description: qz.description, closed: a.closed, closes: a.closes, point_percent: a.point_percent, point_total: a.point_total, points_available: a.points_available, start_time: a.start_time}
+
+    query |> Repo.all
+  end
+
 
   @doc """
   Returns quiz with questions and user responses included.
