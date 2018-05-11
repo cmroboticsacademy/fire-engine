@@ -1,13 +1,26 @@
-<h2>Show Tag</h2>
+<h1 class="section-header text-center">
+  <%= link to: tag_path(@conn, :index), class: "btn btn-primary float-left" do %>
+    <i class="fas fa-arrow-left"></i> Back to List
+  <% end %>
+  <%= link to: tag_path(@conn, :edit, @tag), class: "btn btn-outline-primary ml-1 float-left" do %>
+    <i class="fas fa-edit"></i> Edit Tag
+  <% end %>
 
-<ul>
+  <%= link to: tag_path(@conn, :delete, @tag), method: :delete, class: "btn btn-outline-danger ml-1 float-left" do %>
+    <i class="fas fa-trash"></i> Delete Tag
+  <% end %>
+  <span class="float-right mb-3">Tag Details</span>
+</h1>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @tag.name %>
-  </li>
+<div class="clearfix"></div>
 
-</ul>
+<table class="table">
+ <tbody>
 
-<span><%= link "Edit", to: tag_path(@conn, :edit, @tag) %></span>
-<span><%= link "Back", to: tag_path(@conn, :index) %></span>
+   <tr col="row">
+     <th>Tag Name</th>
+     <td class="text-right"><%= @tag.name %></td>
+   </tr>
+
+ </tbody>
+</table>
