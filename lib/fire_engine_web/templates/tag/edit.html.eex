@@ -1,5 +1,7 @@
-<h2 class="SectionHeader">Edit Tag</h2>
+<div class="admin-tags-page">
+  <h1 class="section-header text-center">
+    Edit Tag
+  </h1>
+</div>
 
 <%= render "form.html", Map.put(assigns, :action, tag_path(@conn, :update, @tag)) %>
-
-<span><%= link "Back", to: tag_path(@conn, :index) %></span>
