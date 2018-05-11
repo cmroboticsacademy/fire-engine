@@ -1,26 +1,38 @@
-<h2 class="SectionHeader">Tags</h2>
+<div class="admin-tags-page">
+  <h1 class="section-header text-center">
+    Question Tags
+    <%= button to: tag_path(@conn, :new), class: "btn btn-primary" do %>
+      <i class="fas fa-plus"></i> New Tags
+    <% end %>
+  </h1>
+</div>
 
-<table class="table">
-  <thead>
+<table class="tag-table table mt-4">
+  <thead class="thead-light">
     <tr>
-      <th>Name</th>
-
-      <th></th>
+      <th scope="col">Tag Name</th>
+      <th scope="col" class="text-right">Action</th>
     </tr>
   </thead>
-  <tbody>
-<%= for tag <- @fe_tag do %>
-    <tr>
-      <td><%= tag.name %></td>
 
-      <td class="text-right">
-        <span><%= link "Show", to: tag_path(@conn, :show, tag), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: tag_path(@conn, :edit, tag), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: tag_path(@conn, :delete, tag), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
+  <tbody>
+    
+    <%= for tag <- @fe_tag do %>
+      <tr>
+        <td><%= link tag.name, to: tag_path(@conn, :show, tag) %></td>
+        <td class="text-right">
+          <div class="btn-group">
+            <%= link to: tag_path(@conn, :edit, tag), class: "btn btn-primary btn-block m-0" do %>
+              <i class="fas fa-edit"></i> Edit
+            <% end %>
+
+            <%= link to: tag_path(@conn, :delete, tag), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger m-0" do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    
   </tbody>
 </table>
-
-<span><%= link "New Tag", to: tag_path(@conn, :new), class: "btn btn-primary btn-block" %></span>

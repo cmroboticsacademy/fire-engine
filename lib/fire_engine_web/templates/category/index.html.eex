@@ -1,28 +1,41 @@
-<h2 class="SectionHeader">Question Categories</h2>
+<div class="admin-categories-page">
+  <h1 class="section-header text-center">
+    Categories
+    <%= link to: category_path(@conn, :new), class: "btn btn-primary" do %>
+      <i class="fas fa-plus"></i> New Category
+    <% end %>
+  </h1>
+</div>
 
-<table class="table">
-  <thead>
+<table class="category-table table mt-4">
+  <thead class="thead-light">
     <tr>
-      <th>Name</th>
-      <th>Parent</th>
-
-      <th></th>
+      <th scope="col">Category Name</th>
+      <th scope="col">Parent Category</th>
+      <th scope="col" class="text-right">Action</th>
     </tr>
   </thead>
-  <tbody>
-<%= for category <- @fe_categories do %>
-    <tr>
-      <td><%= category.name %></td>
-      <td><%= get_parent category.parent_id %></td>
 
-      <td class="text-right">
-        <span><%= link "Show", to: category_path(@conn, :show, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: category_path(@conn, :edit, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
+  <tbody>
+    <%= for category <- @fe_categories do %>
+
+      <tr>
+        <td><%= link category.name, to: category_path(@conn, :show, category) %></td>
+        <td><%= get_parent category.parent_id %></td>
+
+        <td class="text-right">
+          <div class="btn-group">
+            <%= link to: category_path(@conn, :show, category), class:  "btn btn-primary btn-block m-0" do %>
+              <i class="fas fa-edit"></i> Edit
+            <% end %>
+
+            <%= link to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger m-0" do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+
+    <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Category", to: category_path(@conn, :new), class: "btn btn-primary btn-block" %></span>

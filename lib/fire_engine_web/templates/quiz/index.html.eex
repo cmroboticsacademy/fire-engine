@@ -1,7 +1,7 @@
 <div class="admin-quizzes-page">
   <h1 class="section-header text-center">
     Quiz Bank
-    <%= button to: quiz_path(@conn,:new), method: "get" ,class: "btn btn-primary" do %>
+    <%= button to: quiz_path(@conn,:new), method: "get" , class: "btn btn-primary" do %>
      <i class="fas fa-plus"></i> New Quiz
    <% end %>
   </h1>
@@ -12,7 +12,6 @@
         <th scope="col" class="text-left">Quiz Name</th>
         <th scope="col"># of Attempts Allowed</th>
         <th scope="col"># of Questions</th>
-
         <th scope="col">Attempt Time Limit</th>
         <th scope="col">Auto Submissions</th>
         <th scope="col">Randomized Questions</th>
@@ -31,7 +30,7 @@
             <%= if quiz.time_limit do %>
               <i class="fas fa-circle"></i>
             <% else %>
-              <i class="far fa-circle"></i>
+              <i class="far fa-circle text-muted"></i>
             <% end %>
           </td>
 
@@ -39,7 +38,7 @@
             <%= if quiz.auto_submit do %>
               <i class="fas fa-circle"></i>
             <% else %>
-              <i class="far fa-circle"></i>
+              <i class="far fa-circle text-muted"></i>
             <% end %>
           </td>
 
@@ -47,7 +46,7 @@
             <%= if quiz.randomize_questions do %>
               <i class="fas fa-circle"></i>
             <% else %>
-              <i class="far fa-circle"></i>
+              <i class="far fa-circle text-muted"></i>
             <% end %>
           </td>
 
@@ -55,7 +54,7 @@
             <%= if quiz.time_window do %>
               <i class="fas fa-circle"></i>
             <% else %>
-              <i class="far fa-circle"></i>
+              <i class="far fa-circle text-muted"></i>
             <% end %>
           </td>
 
@@ -65,7 +64,7 @@
                 <i class="fas fa-edit"></i> Edit
               <% end %>
 
-              <%= link to: quiz_path(@conn, :delete, quiz), method: :delete, class: "btn btn-outline-danger m-0" do %>
+              <%= link to: quiz_path(@conn, :delete, quiz), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger m-0" do %>
                 <i class="fas fa-trash"></i>
               <% end %>
             </div>
