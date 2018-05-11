@@ -18,7 +18,7 @@
   <tbody>
     <tr>
       <th col="row">Question</th>
-      <td class="text-right"><%= raw(@question.content) %></td>
+      <td><%= raw(@question.content) %></td>
     </tr>
 
     <tr>

@@ -94,10 +94,12 @@
       <tr>
         <td><%= raw(question.content) %></td>
         <!-- <td><%= question.points %></td> -->
-        <td class="text-right">
-          <%= for answer <- question.answers do %>
-              <%= answer.answer %> (<%= answer.weight %>)<br>
-          <% end %>
+        <td class="">
+          <ol type="A">
+            <%= for answer <- question.answers do %>
+              <li><%= answer.answer %> (<%= answer.weight %>)</li>
+            <% end %>
+          </ol>
         </td>
       </tr>
     <% end %>
