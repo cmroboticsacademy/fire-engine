@@ -25,7 +25,7 @@
 
         <td class="text-right">
           <div class="btn-group">
-            <%= link to: category_path(@conn, :show, category), class:  "btn btn-primary btn-block m-0" do %>
+            <%= link to: category_path(@conn, :edit, category), class: "btn btn-primary btn-block m-0" do %>
               <i class="fas fa-edit"></i> Edit
             <% end %>
 

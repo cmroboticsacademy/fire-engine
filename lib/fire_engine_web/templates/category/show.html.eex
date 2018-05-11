@@ -1,18 +1,31 @@
-<h2>Show Category</h2>
+ <h1 class="section-header text-center">
+   <%= link to: category_path(@conn, :index), class: "btn btn-primary float-left" do %>
+     <i class="fas fa-arrow-left"></i> Back to List
+   <% end %>
+   <%= link to: category_path(@conn, :edit, @category), class: "btn btn-outline-primary ml-1 float-left" do %>
+     <i class="fas fa-edit"></i> Edit Category
+   <% end %>
 
-<ul>
+   <%= link to: category_path(@conn, :delete, @category), method: :delete, class: "btn btn-outline-danger ml-1 float-left" do %>
+     <i class="fas fa-trash"></i> Delete Category
+   <% end %>
+   <span class="float-right mb-3">Category Details</span>
+ </h1>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @category.name %>
-  </li>
+<div class="clearfix"></div>
 
-  <li>
-    <strong>Parent:</strong>
-    <%= get_parent @category.parent_id %>
-  </li>
+<table class="table">
+  <tbody>
 
-</ul>
+    <tr col="row">
+      <th>Category Name</th>
+      <td class="text-right"><%= @category.name %></td>
+    </tr>
 
-<span><%= link "Edit", to: category_path(@conn, :edit, @category) %></span>
-<span><%= link "Back", to: category_path(@conn, :index) %></span>
+    <tr col="row">
+      <th>Parent Category</th>
+      <td class="text-right"><%= get_parent @category.parent_id %></td>
+    </tr>
+
+  </tbody>
+</table>

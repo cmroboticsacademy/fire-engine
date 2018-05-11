@@ -1,5 +1,7 @@
-<h2>Edit Category</h2>
+<div class="admin-categories-page">
+  <h1 class="section-header text-center">
+    Edit Category
+  </h1>
+</div>
 
 <%= render "form.html", Map.put(assigns, :action, category_path(@conn, :update, @category)) %>
-
-<span><%= link "Back", to: category_path(@conn, :index) %></span>
