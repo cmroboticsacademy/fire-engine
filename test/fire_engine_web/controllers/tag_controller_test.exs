@@ -34,7 +34,7 @@ defmodule FireEngineWeb.TagControllerTest do
       assert redirected_to(conn) == tag_path(conn, :show, id)
 
       conn = get conn, tag_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Tag"
+      assert html_response(conn, 200) =~ "Tag Details"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
