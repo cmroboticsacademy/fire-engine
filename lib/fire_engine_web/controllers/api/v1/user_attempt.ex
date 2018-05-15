@@ -69,7 +69,6 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
     attempt_id = String.to_integer(id)
     attempt = Assessments.get_attempt_with_responses(attempt_id)
 
-    IO.inspect attempt
     quiz = Assessments.get_quiz!(attempt.quiz_id)
     {quiz,questions} = Assessments.get_quiz_with_questions(attempt.quiz_id, page)
 
