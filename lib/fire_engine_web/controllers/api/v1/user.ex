@@ -9,7 +9,7 @@ defmodule FireEngineWeb.Api.V1.UserController do
   end
 
   def create(conn,%{"data" => data} = params) do
-    %{"email" => email, "username" => username} = Poison.decode! data
+    [email, username] = [decode_data(data,"email"), decode_data(data,"username")]
     case Accounts.create_user(%{username: username, email: email}) do
       {:ok, user} ->
         render(conn, "show.json", user: user)
@@ -19,4 +19,6 @@ defmodule FireEngineWeb.Api.V1.UserController do
     end
   end
 
+  defp decode_data(data = %{},key), do: data[key]
+  defp decode_data(data, key), do: Poison.decode!(data)[key]
 end
