@@ -18,7 +18,7 @@ defmodule FireEngine.Accounts do
 
   """
   def list_fe_users do
-    Repo.all(User) 
+    Repo.all(User)
   end
 
   @doc """
@@ -36,6 +36,8 @@ defmodule FireEngine.Accounts do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  def get_user_by_email!(email), do: Repo.get_by!(User,email: email)
 
   @doc """
   Creates a user.

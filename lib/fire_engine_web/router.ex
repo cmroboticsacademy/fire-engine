@@ -40,6 +40,7 @@ defmodule FireEngineWeb.Router do
 
       resources "user_attempts", Api.V1.UserAttemptController
       resources "quizzes", Api.V1.UserQuizController
+      resources "users", Api.V1.UserController
       post "/user_attempts/save/:id", Api.V1.UserAttemptController, :save
       get "/not_authorized", PageController, :notauthorized
       get "/authenticate", AuthController, :authenticate
