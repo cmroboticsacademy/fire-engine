@@ -12,12 +12,16 @@ defmodule FireEngineWeb.Api.V1.UserQuizView do
   def render("show.json", %{attempts: attempts}) do
     quiz = List.first(attempts)
     %{data:
-      %{
-        id: quiz.quiz_id,
-        name: quiz.name,
-        description: quiz.description,
-        attempts: render_many(attempts, FireEngineWeb.Api.V1.UserAttemptView, "attempt-simple.json")
-      }
+      if quiz do
+        %{
+          id: quiz.quiz_id,
+          name: quiz.name,
+          description: quiz.description,
+          attempts: render_many(attempts, FireEngineWeb.Api.V1.UserAttemptView, "attempt-simple.json")
+        }
+      else
+        []
+      end
     }
   end
 
