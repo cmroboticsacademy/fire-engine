@@ -35,7 +35,8 @@ defmodule FireEngine.UserAttemptControllerTest do
             "question" => question.content,
             "answers"=> [%{
               "answer_id" => answer.id,
-               "answer" => answer.answer
+               "answer" => answer.answer,
+               "selected" => false
               }]
           }
         ]
@@ -112,7 +113,8 @@ defmodule FireEngine.UserAttemptControllerTest do
             "question" => next_question.content,
             "answers"=> [%{
               "answer_id" => next_answer.id,
-               "answer" => next_answer.answer
+               "answer" => next_answer.answer,
+               "selected" => false
               }]
           }
         ]
@@ -122,7 +124,7 @@ defmodule FireEngine.UserAttemptControllerTest do
   end
 
 
-  test "#show displays requested attempt and questions for the page requested" do
+  test "#show displays requested attempt and questions for the page requested and responses are included" do
     conn = build_conn()
     questions = insert_list(3,:question)
     quiz_questions = for q <- questions do
@@ -134,8 +136,16 @@ defmodule FireEngine.UserAttemptControllerTest do
 
     {:ok, attempt} = Assessments.create_attempt(%{user_id: user.id, quiz_id: quiz.id})
 
+
     question = List.first(questions)
     answer = question.answers |> List.first
+
+    #Answer all questions
+    for response <- attempt.responses do
+      q = Assessments.get_question!(response.question_id)
+      a = q.answers |> List.first
+      Assessments.update_response(response,%{answer_id: a.id})
+    end
 
     conn = get conn, "api/v1/user_attempts/#{attempt.id}?page=1"
 
@@ -150,16 +160,59 @@ defmodule FireEngine.UserAttemptControllerTest do
             "question" => question.content,
             "answers"=> [%{
               "answer_id" => answer.id,
-               "answer" => answer.answer
+               "answer" => answer.answer,
+               "selected" => true
               }]
           }
         ]
       }
     }
 
+  end
 
+
+
+  test "#show displays requested attempt and questions for the page requested" do
+    conn = build_conn()
+    questions = insert_list(3,:question)
+    quiz_questions = for q <- questions do
+      %{question_id: q.id}
+    end
+    quiz_params = %{questions_per_page: 1,quiz_questions: quiz_questions}
+    quiz = insert(:quiz, quiz_params)
+    user = insert(:user)
+
+    {:ok, attempt} = Assessments.create_attempt(%{user_id: user.id, quiz_id: quiz.id})
+
+
+    question = List.first(questions)
+    answer = question.answers |> List.first
+
+
+    conn = get conn, "api/v1/user_attempts/#{attempt.id}?page=1"
+
+    assert json_response(conn, 200) == %{"data" =>
+      %{"attempt_id" => attempt.id,
+        "quiz_name" => quiz.name,
+        "page_number" => 1,
+        "total_pages" => 3,
+        "questions" => [
+          %{
+            "question_id" => question.id,
+            "question" => question.content,
+            "answers"=> [%{
+              "answer_id" => answer.id,
+               "answer" => answer.answer,
+               "selected" => false
+              }]
+          }
+        ]
+      }
+    }
 
   end
+
+
 
   test "#save closes attempt and generates a score" do
     conn = build_conn()

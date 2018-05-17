@@ -1,7 +1,7 @@
 <div class="admin-tags-page">
   <h1 class="section-header text-center">
     Question Tags
-    <%= button to: tag_path(@conn, :new), class: "btn btn-primary" do %>
+    <%= link to: tag_path(@conn, :new), class: "btn btn-primary" do %>
       <i class="fas fa-plus"></i> New Tags
     <% end %>
   </h1>
@@ -16,7 +16,7 @@
   </thead>
 
   <tbody>
-    
+
     <%= for tag <- @fe_tag do %>
       <tr>
         <td><%= link tag.name, to: tag_path(@conn, :show, tag) %></td>
@@ -33,6 +33,6 @@
         </td>
       </tr>
     <% end %>
-    
+
   </tbody>
 </table>

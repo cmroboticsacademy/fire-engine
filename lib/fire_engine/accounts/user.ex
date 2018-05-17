@@ -32,5 +32,6 @@ defmodule FireEngine.Accounts.User do
     |> cast(attrs, [:username, :email])
     |> validate_required([:username, :email])
     |> cast_assoc(:roles)
+    |> unique_constraint(:username,name: :fe_users_email_username_index)
   end
 end

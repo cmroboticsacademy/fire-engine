@@ -7,7 +7,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         page_number: questions.page_number,
         total_pages: questions.total_pages,
         quiz_name: quiz.name,
-        questions: render_many(questions.entries, FireEngineWeb.Api.V1.QuestionView, "question.json")
+        questions: render_many(questions.entries, FireEngineWeb.Api.V1.QuestionView, "question.json", responses: attempt.responses)
       }
     }
   end
