@@ -81,7 +81,7 @@ function createQuestion() {
   var cardHeaderContainer = '<div class="card-header"></div>';
   var cardHeaderText = '<b class="float-left">' + newQuestionText + '</b>';
   var removeBtnContainer = '<div class="text-right"></div>';
-  var removeButton = '<button class="btn btn-danger remove-question-btn" questionId="' + questionIndex + '"><i class="fas fa-times"></i> Remove Question</button>';
+  var removeButton = '<button type="button" class="btn btn-danger remove-question-btn" questionId="' + questionIndex + '"><i class="fas fa-times"></i> Remove Question</button>';
   var questionEditor = '<textarea class="form-control" id="editorquiz_questions_' + questionIndex + '" name="quiz[questions][' + questionIndex + '][content]" placeholder="Enter Question"></textarea>';
 
   var cardBodyContainer = '<div class="question-options card-body"></div>';
@@ -187,7 +187,7 @@ function createAnswers(questionId) {
   var answerTextInput = '<input class="form-control" id="' + textInputId + '" name="' + textInputName + '" placeholder="Enter Answer" type="text">';
   var answerWeightInput = '<input id="' + weightInputId + '" max="1.0" min="-1.0" name="' + weightInputName + '" placeholder="Enter Value" step="0.25" type="number" value="1.0" class="form-control">';
 
-  var removeAnswerBtn = '<button class="btn btn-outline-danger btn-block remove-answer-btn" questionId="' + questionId + '" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
+  var removeAnswerBtn = '<button type="button" class="btn btn-outline-danger btn-block remove-answer-btn" questionId="' + questionId + '" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
 
   // Appends
   answerListContainer.last().append(newAnswerContainer);
@@ -282,7 +282,7 @@ function createAnswerSimple() {
 
   var answerTextInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" placeholder="Enter Answer" type="text">';
   var answerWeightInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" max="1.0" min="-1.0" step="0.25" placeholder="Enter Value">';
-  var removeAnswerSimpleBtn = '<button class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
+  var removeAnswerSimpleBtn = '<button type="button" class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
 
   // Appends
   answerListContainer.append(answerContainer);
@@ -366,22 +366,26 @@ $(document).on('click', '#quiz_time_window', function() {
 });
 
 $(document).on('click', '.add-question-btn', function() {
+  event.preventDefault();
   createQuestion();
 });
 
 $(document).on('click', '.add-answer-btn', function() {
+  event.preventDefault();
   var questionId = $(this).attr('questionId');
 
   createAnswers(questionId);
 });
 
 $(document).on('click', '.remove-question-btn', function() {
+  event.preventDefault();
     var questionId = $(this).attr('questionId');
 
     removeQuestion(questionId);
 });
 
 $(document).on('click', '.remove-answer-btn', function() {
+  event.preventDefault();
   var questionId = $(this).attr('questionId');
   var answerId = $(this).attr('answerId');
 
@@ -392,10 +396,12 @@ $(document).on('click', '.remove-answer-btn', function() {
 // ============ Question Form: Click Events ============ //
 
 $(document).on('click', '.add-answer-simple-btn', function() {
+  event.preventDefault();
   createAnswerSimple();
 })
 
 $(document).on('click', '.remove-answer-simple-btn', function() {
+  event.preventDefault();
   var answerId = $(this).attr('answerId');
 
   removeAnswerSimple(answerId);

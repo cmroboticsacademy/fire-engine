@@ -40,8 +40,8 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="admin-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                 <div class="dropdown-menu" aria-labelledby="admin-dropdown">
-                  <%=link "Question Bank", to: question_path(@conn, :index),class: "dropdown-item" %>
                   <%=link "Quiz Bank", to: quiz_path(@conn, :index), class: "dropdown-item" %>
+                  <%=link "Question Bank", to: question_path(@conn, :index),class: "dropdown-item" %>
                   <%=link "Question Categories", to: category_path(@conn, :index), class: "dropdown-item" %>
                   <%=link "Question Tag", to: tag_path(@conn, :index),
                   class: "dropdown-item" %>

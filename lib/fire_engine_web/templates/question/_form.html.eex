@@ -55,7 +55,7 @@
         </div>
 
         <div class="col-1">
-          <button class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="<%= a.index %>">
+          <button type="button" class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="<%= a.index %>">
             <i class="fas fa-times-circle"></i>
           </button>
         </div>
