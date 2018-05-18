@@ -216,7 +216,7 @@ defmodule FireEngine.Assessments do
 
   """
   def create_question(attrs \\ %{}) do
-    %Question{}
+    %Question{} |> Repo.preload([:answers, :question_tags, :tags])
     |> Question.changeset(attrs)
     |> Repo.insert()
   end
@@ -266,7 +266,7 @@ defmodule FireEngine.Assessments do
   """
   def change_question(%Question{} = question) do
     question
-    |> Repo.preload(:answers)
+    |> Repo.preload([:answers,:question_tags, :tags])
     |> Question.changeset(%{})
   end
 

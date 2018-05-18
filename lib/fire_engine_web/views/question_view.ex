@@ -12,5 +12,8 @@ defmodule FireEngineWeb.QuestionView do
   def get_category(category = %Category{}), do: category.name
   def get_category(id), do: get_category Repo.get(Assessments.Category,id)
 
+  def question_tags(form,tags,selectedTags), do: multiple_select(form,:question_tags,tags,selected: selectedTags,  class: "form-control")
+  def question_tags(form,tags,nil), do: multiple_select(form, :question_tags, tags, class: "form-control")
+
 
 end

@@ -1911,6 +1911,8 @@ function createAnswerSimple() {
   var newAnswerElemId = 'answer_' + answerIndex;
   var newAnswerId = 'question_answers_' + answerIndex + '_answer';
   var newAnswerName = 'question[answers][' + answerIndex + '][answer]';
+  var newWeightId = 'question_answers_' + answerIndex + '_weight';
+  var newWeightName = 'question[answers][' + answerIndex + '][weight]';
 
   var answerContainer = '<div id="' + newAnswerElemId + '" class="row mb-2"></div>';
   var largeColumnContainer = '<div class="col-9 pr-0"></div>';
@@ -1918,7 +1920,7 @@ function createAnswerSimple() {
   var tinyColumnContainer = '<div class="col-1"></div>';
 
   var answerTextInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" placeholder="Enter Answer" type="text">';
-  var answerWeightInput = '<input class="form-control" name="' + newAnswerName + '" id="' + newAnswerId + '" max="1.0" min="-1.0" step="0.25" placeholder="Enter Value">';
+  var answerWeightInput = '<input class="form-control" name="' + newWeightName + '" id="' + newWeightId + '" max="1.0" min="-1.0" step="0.25" placeholder="Enter Value">';
   var removeAnswerSimpleBtn = '<button type="button" class="btn btn-outline-danger btn-block remove-answer-simple-btn" answerId="' + answerIndex + '"><i class="fas fa-times-circle"></i></button>';
 
   // Appends

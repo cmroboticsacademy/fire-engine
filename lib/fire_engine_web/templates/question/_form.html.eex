@@ -25,7 +25,7 @@
 
       <div class="form-group-item">
         <label class="mb-1">Question Tags ( <kbd>Shift</kbd> select for multiple tags )</label>
-        <%= multiple_select(f,:question_tags,Enum.map(@tags,&({&1.name, &1.id})), selected: Enum.map(@question.tags, &(&1.id)), class: "form-control")%>
+        <%= question_tags(f,Enum.map(@tags,&({&1.name, &1.id})),@questionTags) %>
       </div>
     </div>
   </div>

@@ -20,22 +20,27 @@ defmodule FireEngineWeb.QuestionController do
 
   def new(conn, _params) do
     changeset = Assessments.change_question(%Question{})
-    render conn, "new.html", changeset: changeset
+    questionTags = nil
+    tags = Assessments.list_fe_tags
+    render conn, "new.html", changeset: changeset, tags: tags, questionTags: questionTags
   end
 
   def edit(conn, %{"id" => question_id}) do
     question = Assessments.get_question!(question_id)
+    questionTags = question.tags |> Enum.map(&(&1.id))
     changeset = Assessments.change_question(question)
     tags = Assessments.list_fe_tags()
-    render conn, "edit.html", changeset: changeset, question: question, tags: tags
+    render conn, "edit.html", changeset: changeset, questionTags: questionTags, tags: tags, question: question
   end
 
   def create(conn, %{"question" => question_params}) do
+    question_params = question_params
+    |> Map.put("question_tags", question_params["question_tags"] |> Enum.map(&(%{"tag_id" => &1})))
+
     with {:ok, %Question{} = question} <- Assessments.create_question(question_params) do
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", question_path(conn, :show, question))
-      |> render("show.html", question: question)
+      |> put_flash(:info, "Question Added!")
+      |> redirect(to: question_path(conn,:show,question))
     end
   end
 

@@ -1,3 +1,3 @@
 <h2 class="SectionHeader">Question Edit</h2>
 
-<%=render FireEngineWeb.QuestionView, "_form.html", changeset: @changeset,question: @question, tags: @tags, path: question_path(@conn, :update, @question) %>
+<%=render FireEngineWeb.QuestionView, "_form.html", changeset: @changeset,questionTags: @questionTags, tags: @tags, path: question_path(@conn, :update, @question) %>
