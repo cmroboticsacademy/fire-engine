@@ -65,7 +65,7 @@ defmodule FireEngine.Assessments do
   def quiz_total_user_attempts(quiz_id, user_id) do
     query = from qz in Quiz,
     join: a in assoc(qz, :attempts),
-    where: qz.id == ^quiz_id and a.user_id == ^user_id and a.closed == false
+    where: qz.id == ^quiz_id and a.user_id == ^user_id and a.closed == true
 
     query |> Repo.all |> Enum.count
   end
