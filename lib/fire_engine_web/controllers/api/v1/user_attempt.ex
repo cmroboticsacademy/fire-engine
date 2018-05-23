@@ -16,7 +16,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
     quiz = Assessments.get_quiz!(quiz_id)
     attempt_count = Assessments.quiz_total_user_attempts(quiz_id, user_id)
 
-    if attempt_count < quiz.attempts_allowed do
+    if attempt_count < quiz.attempts_allowed || quiz.attempts_allowed == -1 do
       attrs = %{quiz_id: quiz_id, user_id: user_id, open: quiz.time_open, closes: quiz.time_closed}
       open_attempt = Assessments.has_open_attempt?(user_id,quiz_id)
 
@@ -35,7 +35,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
       end
     else
       conn
-      |> render(FireEngineWeb.Api.V1.UserQuizView, "index.json")
+      |> render(FireEngineWeb.Api.V1.UserAttemptView, "attempts-exceeded.json")
     end
   end
 
