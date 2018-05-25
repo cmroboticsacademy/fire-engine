@@ -31,11 +31,31 @@ defmodule FireEngine.Assessments do
   def get_quiz_with_attempts(quiz_id, user_id) do
     query = from qz in Quiz,
     join: a in assoc(qz, :attempts),
+    join: r in assoc(a, :responses),
     where: qz.id == ^quiz_id and a.user_id == ^user_id,
-    select: %{quiz_id: qz.id, name: qz.name, description: qz.description, closed: a.closed, closes: a.closes, point_percent: a.point_percent, point_total: a.point_total, points_available: a.points_available, start_time: a.start_time}
-
+    group_by: [qz.id,qz.name, qz.description, a.closed, a.closes, a.point_percent, a.point_total,a.points_available, a.start_time],
+    select: %{quiz_id: qz.id, number_of_questions: count(r.id),estimated_duration: 15,name: qz.name, description: qz.description, closed: a.closed, closes: a.closes, point_percent: a.point_percent, point_total: a.point_total, points_available: a.points_available, start_time: a.start_time}
     query |> Repo.all
   end
+
+  def get_quiz_duration(quiz_id) do
+    query = from qz in Quiz,
+    join: a in assoc(qz, :attempts),
+    where: qz.id == ^quiz_id and a.closed == true,
+    select: %{start_time: a.start_time,end_time: a.updated_at}
+
+    dur = query
+    |> Repo.all
+    |> Enum.map(&(NaiveDateTime.diff(&1.end_time, &1.start_time, :second) / 60))
+    |> Statistics.median
+
+    if dur < 1.0 || dur == nil do
+      1
+    else
+      Float.round(dur) |> trunc
+    end
+  end
+
 
 
   @doc """

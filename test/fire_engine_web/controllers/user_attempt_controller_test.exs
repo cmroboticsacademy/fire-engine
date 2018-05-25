@@ -264,8 +264,8 @@ defmodule FireEngineWeb.UserAttemptControllerTest do
     test "does not open a user attempt when the attempt count exceeds the the attempt limit", %{conn: conn} do
       user = fixture(:admin_user)
       quiz = fixture(:quiz)
-      #Create 2 attempts
-      for _ <- 1..2, do: Assessments.create_attempt %{quiz_id: quiz.id, user_id: user.id}
+      #Create 2 closed attempts
+      for _ <- 1..2, do: Assessments.create_attempt %{quiz_id: quiz.id, user_id: user.id, closed: true}
 
       conn = authenticate!(conn, user)
       |> post(user_attempt_path(conn, :create, quiz_id: quiz.id, user_id: user.id))

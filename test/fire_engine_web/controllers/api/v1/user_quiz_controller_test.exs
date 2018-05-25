@@ -29,7 +29,10 @@ defmodule FireEngine.UserQuizControllerTest do
 
   test "#show returns a user quiz with a summary of attempts" do
     conn = build_conn()
-    quiz = insert(:quiz)
+
+    question = insert(:question)
+    quiz_question = %{quiz_questions: [%{question_id: question.id}]}
+    quiz = insert(:quiz,quiz_question)
     user = insert(:user)
 
     {:ok, attempt} = Assessments.create_attempt(%{quiz_id: quiz.id, user_id: user.id})
@@ -41,6 +44,8 @@ defmodule FireEngine.UserQuizControllerTest do
         "id" => quiz.id,
         "name" => quiz.name,
         "description" => quiz.description,
+        "questions" => 1,
+        "estimated_duration_minutes" => 1,
         "attempts" => [%{
             "start_time" => NaiveDateTime.to_string(attempt.start_time),
             "point_total" => attempt.point_total,
