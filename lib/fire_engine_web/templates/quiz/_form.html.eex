@@ -4,16 +4,19 @@
     <div class="form-group col-sm-12">
       <div class="form-group-item">
         <label>Name <%= error_tag f, :name %></label>
+        <%= render "_tooltip.html", direction: "right", text: "The name of the quiz. This is a string." %>
         <%= text_input f, :name, placeholder: "Enter Quiz Name", class: "form-control"%>
       </div>
 
       <div class="form-group-item">
         <label>Description <%= error_tag f, :description %></label>
+        <%= render "_tooltip.html", direction: "right", text: "A description of the quiz." %>
         <%= textarea f, :description, placeholder: "Enter Short Description", class: "form-control"%>
       </div>
 
       <div class="form-group-item">
         <label>Attempts Allowed <%= error_tag f, :attempts_allowed %></label>
+        <%= render "_tooltip.html", direction: "right", text: "The total number of attempts that a user is allowed for the quiz. A value of -1 allows for an infinite number of attempts." %>
         <%= number_input f, :attempts_allowed, placeholder: "i.e. 2", class: "form-control" %>
       </div>
     </div>
@@ -23,21 +26,25 @@
       <div class="form-group-item">
         <%= checkbox f, :time_limit %>
         <%= label f, :time_limit, "Attempt Time Limit"%>
+        <%= render "_tooltip.html", direction: "right", text: "Enabling this setting will look at the time limit minutes and will only allow the user to have that amount of time to take the quiz attempt." %>
       </div>
 
       <div class="form-group-item">
         <%= checkbox f, :auto_submit %>
         <%= label f, :auto_submit, "Auto-Submissions"%>
+        <%= render "_tooltip.html", direction: "right", text: "If this setting is enabled, the quiz attempt will automatically submit the quiz attempt once the time limit has been exceeded." %>
       </div>
 
       <div class="form-group-item">
         <%= checkbox f, :randomize_questions %>
         <%= label f, :randomize_questions, "Randomize Questions"%>
+        <%= render "_tooltip.html", direction: "right", text: "Randomize the question order that the student sees in the quiz." %>
       </div>
 
       <div class="form-group-item">
         <%= checkbox f, :time_window %>
         <%= label f, :time_window, "Quiz Time Window"%>
+        <%= render "_tooltip.html", direction: "right", text: "The dates that the quiz is available. You can set a time open and a time close" %>
       </div>
     </div>
 
@@ -46,16 +53,20 @@
       <div class="form-group-item">
         <!-- <%= label f, :questions_per_page, "Questions / Page"%> -->
         <label>Questions / Page <%= error_tag f, :questions_per_page %></label>
+        <%= render "_tooltip.html", direction: "right", text: "The number of questions that will be listed per page in the quiz." %>
         <%= number_input f, :questions_per_page, placeholder: "i.e. 5", class: "form-control" %>
       </div>
 
       <div class="time-limit form-group-item">
         <%= label f, :time_limit_minutes, "Time Limit (mins) / Attempt" %>
+        <%= render "_tooltip.html", direction: "right", text: "The number of minutes a user has to make a quiz attempt. This is used only if the Time Limit setting is enabled." %>
         <%= number_input f, :time_limit_minutes, placeholder: "i.e. 10", class: "form-control" %>
       </div>
 
       <div class="time-window-item form-group-item">
-        <%= label f, :time_open, "Quiz Time Open (Year / Month / Day - Hour : Minute)" %><br>
+        <%= label f, :time_open, "Quiz Time Open (Year / Month / Day - Hour : Minute)" %>
+
+        <br>
         <%= datetime_select f, :time_open %>
       </div>
 
@@ -70,6 +81,9 @@
         Questions
         <button type="button" class="btn btn-primary add-question-btn">+ Add Question</button>
       </h1>
+      <div class="text-center">
+        <%= render "_tooltip.html", direction: "right", text: "Text for Questions and Answers. Points denote the number points a question is worth. This can be any real number. The weight of the question compared to the other questions in a quiz. This can be any real number. For each question, we multiply the weight by the points and then sum the total earned points." %>
+      </div>
     </div>
 
 

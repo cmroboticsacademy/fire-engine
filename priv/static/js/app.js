@@ -1643,8 +1643,7 @@ require("phoenix_html");
 
 $(".alert").alert();
 
-// ============ Quiz Form: Toggle Scripts ============ //
-// ============ Quiz Form: Toggle Scripts ============ //
+// =========== Enable Tooltips ============= //
 
 // Brunch automatically concatenates all files in your
 // watched paths. Those paths can be configured at
@@ -1659,6 +1658,13 @@ $(".alert").alert();
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+// ============ Quiz Form: Toggle Scripts ============ //
+// ============ Quiz Form: Toggle Scripts ============ //
 
 function toggleTimeLimit() {
   var timeLimitCheck = $('#quiz_time_limit');

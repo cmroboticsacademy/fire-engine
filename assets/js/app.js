@@ -16,6 +16,12 @@ import "phoenix_html"
 
 $(".alert").alert()
 
+// =========== Enable Tooltips ============= //
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
 // ============ Quiz Form: Toggle Scripts ============ //
 // ============ Quiz Form: Toggle Scripts ============ //
 

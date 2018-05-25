@@ -4,27 +4,32 @@
 
       <div class="form-group-item mb-3">
         <label>Question <%= error_tag f, :content %></label>
+        <%= render "_tooltip.html", direction: "right", text: "The question that you are asking. This is a string." %>
         <%= textarea f, :content, id: "editor1", class: "form-control"%>
         <script>CKEDITOR.replace( "editor1" )</script>
       </div>
 
       <div class="form-group-item">
         <label>Question Type <%= error_tag f, :type %></label>
+        <%= render "_tooltip.html", direction: "right", text: "The type of question you are asking. The choices are available in the dropdown." %>
         <%= text_input f, :type, placeholder: "i.e. True/False, Multiple Choice (optional)", class: "form-control"%>
       </div>
 
       <div class="form-group-item">
         <label>Points <%= error_tag f, :points %></label>
+        <%= render "_tooltip.html", direction: "right", text: "The number of points that the question is worth. This can be any real number. The number of points for all questions in a quiz is accumulated to give a percentage score." %>
         <%= number_input f, :points, value: "1.0", class: "form-control"%>
       </div>
 
       <div class="form-group-item">
         <label>Question Category <%= error_tag f, :category_id %></label>
+        <%= render "_tooltip.html", direction: "right", text: "Searchable question category. The choices are available in the dropdown." %>
         <%= select f, :category_id, list_categories(), class: "form-control"%>
       </div>
 
       <div class="form-group-item">
         <label class="mb-1">Question Tags ( <kbd>Shift</kbd> select for multiple tags )</label>
+        <%= render "_tooltip.html", direction: "right", text: "Searchable question tags. The choices are available in the multiselect." %>
         <%= question_tags(f,Enum.map(@tags,&({&1.name, &1.id})),@questionTags) %>
       </div>
     </div>
@@ -35,6 +40,10 @@
       Answer Text / Weight
       <button type="button" class="btn btn-primary add-answer-simple-btn">+ Add Answer</button>
     </h1>
+    <div class="text-center">
+    <%= render "_tooltip.html", direction: "right", text: "An answer to the question. This is a string. The weight of the question compared to the other questions in a quiz. This can be any real number. For each question, we multiply the weight by the points and then sum the total earned points." %>
+    </div>
+
   </div>
 
   <div class="answer-list pl-3 pr-3">

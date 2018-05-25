@@ -1,0 +1,4 @@
+    <button data-toggle="tooltip" type="button" data-placement="<%=@direction%>" title="<%=@text%>">
+      <i class="fas fa-question" style="font-size: 10px"></i>
+    </button>
+    </br>
