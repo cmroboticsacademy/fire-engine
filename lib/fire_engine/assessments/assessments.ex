@@ -45,7 +45,7 @@ defmodule FireEngine.Assessments do
     |> Enum.map(&(NaiveDateTime.diff(&1.end_time, &1.start_time, :second) / 60))
     |> Statistics.median
 
-    if dur == nil do
+    if dur == nil || dur < 1.0 do
       #default to about 45 seconds per question.
       quiz = Repo.get(Quiz,quiz_id) |> Repo.preload(:questions)
       ((quiz.questions |> Enum.count) * 0.75) |> Float.round |> trunc
