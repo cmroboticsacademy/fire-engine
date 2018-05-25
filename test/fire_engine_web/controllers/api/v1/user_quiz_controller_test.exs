@@ -58,4 +58,29 @@ defmodule FireEngine.UserQuizControllerTest do
     }
 
   end
+
+
+  test "#show returns a user quiz without attempts" do
+    conn = build_conn()
+
+    question = insert(:question)
+    quiz_question = %{quiz_questions: [%{question_id: question.id}]}
+    quiz = insert(:quiz,quiz_question)
+    user = insert(:user)
+
+
+    conn = get conn, "api/v1/quizzes/#{quiz.id}?user_id=#{user.id}"
+
+    assert json_response(conn, 200) == %{
+      "data" => %{
+        "id" => quiz.id,
+        "name" => quiz.name,
+        "description" => quiz.description,
+        "questions" => 1,
+        "estimated_duration_minutes" => 1,
+        "attempts" => []
+        }
+    }
+
+  end
 end

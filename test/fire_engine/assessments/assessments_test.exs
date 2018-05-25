@@ -20,17 +20,6 @@ defmodule FireEngine.AssessmentsTest do
       quiz
     end
 
-    test "get_quiz_with_attempts returns number of questions for quiz" do
-      question = question_fixture()
-      quiz = quiz_fixture()
-      user = insert(:user)
-
-      Assessments.create_quiz_question(%{question_id: question.id, quiz_id: quiz.id})
-      Assessments.create_attempt(%{quiz_id: quiz.id, user_id: user.id})
-      %{number_of_questions: questions} = Assessments.get_quiz_with_attempts(quiz.id,user.id) |> List.first
-      assert questions == 1
-    end
-
     test "quiz_total_points returns total available points for quiz" do
       question = question_fixture()
       quiz = quiz_fixture()

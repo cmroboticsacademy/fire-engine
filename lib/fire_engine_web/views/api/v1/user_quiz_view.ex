@@ -10,21 +10,16 @@ defmodule FireEngineWeb.Api.V1.UserQuizView do
     user_quiz
   end
 
-  def render("show.json", %{attempts: attempts}) do
-    quiz = List.first(attempts)
+  def render("show.json", %{quiz: quiz}) do
     %{data:
-      if quiz do
         %{
-          id: quiz.quiz_id,
+          id: quiz.id,
           name: quiz.name,
           description: quiz.description,
-          questions: quiz.number_of_questions,
-          estimated_duration_minutes: Assessments.get_quiz_duration(quiz.quiz_id),
-          attempts: render_many(attempts, FireEngineWeb.Api.V1.UserAttemptView, "attempt-simple.json")
+          questions: quiz.questions |> Enum.count,
+          estimated_duration_minutes: Assessments.get_quiz_duration(quiz.id),
+          attempts: render_many(quiz.attempts, FireEngineWeb.Api.V1.UserAttemptView, "attempt-simple.json")
         }
-      else
-        []
-      end
     }
   end
 

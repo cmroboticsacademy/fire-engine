@@ -29,13 +29,9 @@ defmodule FireEngine.Assessments do
   end
 
   def get_quiz_with_attempts(quiz_id, user_id) do
-    query = from qz in Quiz,
-    join: a in assoc(qz, :attempts),
-    join: r in assoc(a, :responses),
-    where: qz.id == ^quiz_id and a.user_id == ^user_id,
-    group_by: [qz.id,qz.name, qz.description, a.closed, a.closes, a.point_percent, a.point_total,a.points_available, a.start_time],
-    select: %{quiz_id: qz.id, number_of_questions: count(r.id),estimated_duration: 15,name: qz.name, description: qz.description, closed: a.closed, closes: a.closes, point_percent: a.point_percent, point_total: a.point_total, points_available: a.points_available, start_time: a.start_time}
-    query |> Repo.all
+    user_attempts = from a in FireEngine.Assessments.Attempt, where: a.user_id == ^user_id
+    questions = from q in FireEngine.Assessments.Question
+    Repo.get(Quiz,quiz_id) |> Repo.preload([attempts: user_attempts,questions: questions])
   end
 
   def get_quiz_duration(quiz_id) do
