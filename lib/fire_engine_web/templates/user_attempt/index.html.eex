@@ -1,0 +1,56 @@
+<h2 class="SectionHeader">
+  <%="User Attempts for #{@quiz.name}" %>
+</h2>
+
+<br>
+  <%= form_for @conn, user_attempt_path(@conn, :index), [method: :get], fn f -> %>
+  <%= hidden_input f, :quiz_id, [value: 129] %>
+  <%= hidden_input f, :page, [page: 1] %>
+  <%= search_input f, :user, class: "form-control", placeholder: "Search for User or User Id" %>
+  <% end %>
+<br>
+
+
+<table class="table">
+  <th>User ID</th>
+  <th>Username</th>
+  <th>AttemptId</th>
+  <th>Points Available</th>
+  <th>Points Earned</th>
+  <th>Score</th>
+  <th>Action</th>
+
+  <%=for qa <- @quiz_attempts.entries do %>
+  <tr>
+    <td>
+      <%=qa.user_id %>
+    </td>
+    <td>
+      <%=qa.username %>
+    </td>
+    <td>
+      <%=qa.attempt %>
+    </td>
+    <td>
+      <%=qa.points_available %>
+    </td>
+    <td>
+      <%=qa.point_total %>
+    </td>
+    <td>
+      <%= if qa.point_percent do %>
+      <%=qa.point_percent |> Float.round(2) |> trunc %>%
+      <% end %>
+    </td>
+    <td>
+      <%= link to: user_attempt_path(@conn, :delete, qa.attempt), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger m-0" do %>
+        <i class="fas fa-trash"></i>
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<div class="text-center">
+  <%= @quiz_attempts.page_number..@quiz_attempts.total_pages |> Enum.map(fn(x) -> link(x,to: user_attempt_path(@conn, :index, quiz_id: @quiz.id, page: x)) end) %>
+</div>

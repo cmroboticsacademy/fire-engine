@@ -63,7 +63,9 @@
               <%= link to: quiz_path(@conn, :edit, quiz), class: "btn btn-primary btn-block m-0" do %>
                 <i class="fas fa-edit"></i> Edit
               <% end %>
-
+              <%= link to: user_attempt_path(@conn, :index, quiz_id: quiz.id, page: 1), class: "btn btn-primary btn-block m-0" do %>
+                <i class="fas fa-edit"></i>Attempts
+              <% end %>
               <%= link to: quiz_path(@conn, :delete, quiz), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-outline-danger m-0" do %>
                 <i class="fas fa-trash"></i>
               <% end %>

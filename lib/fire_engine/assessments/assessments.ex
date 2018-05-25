@@ -28,6 +28,28 @@ defmodule FireEngine.Assessments do
     {quiz, questions}
   end
 
+  def list_quiz_attempts(quiz_id,page) do
+    query = from qz in Quiz,
+    join: a in assoc(qz, :attempts),
+    join: u in FireEngine.Accounts.User, on: u.id == a.user_id,
+    where: qz.id == ^quiz_id,
+    select: %{quiz_name: qz.name, user_id: u.id,username: u.username, attempt: a.id, point_percent: a.point_percent, point_total: a.point_total, points_available: a.points_available, closed: a.closed},
+    order_by: [u.id, a.id]
+    query  |> Repo.all |> Scrivener.paginate(%Scrivener.Config{page_number: page,page_size: 50})
+
+  end
+
+  def list_quiz_attempts(quiz_id,page,user) do
+    wildcard = "%#{user}%"
+    query = from qz in Quiz,
+    join: a in assoc(qz, :attempts),
+    join: u in FireEngine.Accounts.User, on: u.id == a.user_id,
+    where: qz.id == ^quiz_id and like(u.username, ^wildcard),
+    select: %{quiz_name: qz.name, user_id: u.id,username: u.username, attempt: a.id, point_percent: a.point_percent, point_total: a.point_total, points_available: a.points_available, closed: a.closed},
+    order_by: [u.id, a.id]
+    query  |> Repo.all |> Scrivener.paginate(%Scrivener.Config{page_number: page,page_size: 50})
+  end
+
   def get_quiz_with_attempts(quiz_id, user_id) do
     user_attempts = from a in FireEngine.Assessments.Attempt, where: a.user_id == ^user_id
     questions = from q in FireEngine.Assessments.Question

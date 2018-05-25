@@ -32,6 +32,8 @@ defmodule FireEngineWeb.Router do
     resources "/admin/questions", QuestionController
     resources "/admin/categories", CategoryController
     resources "/admin/tags", TagController
+    get "/admin/attempts", UserAttemptController, :index
+    delete "/admin/attempts/:id", UserAttemptController, :delete
   end
 
   # Other scopes may use custom stacks.

@@ -11,6 +11,28 @@ defmodule FireEngineWeb.UserAttemptController do
 
   action_fallback FireEngineWeb.FallbackController
 
+  def index(conn, %{"quiz_id" => quiz_id, "page" => page} = params ) do
+
+    if Map.has_key?(params,"user") do
+      %{"user" => user} = params
+      quiz_attempts = Assessments.list_quiz_attempts(quiz_id, 1, user)
+    else
+      quiz_attempts= Assessments.list_quiz_attempts(quiz_id, 1)
+    end
+
+    quiz = Assessments.get_quiz!(quiz_id)
+    render(conn, "index.html", quiz_attempts: quiz_attempts, quiz: quiz)
+  end
+
+  def delete(conn, %{"id" => attempt_id}) do
+    attempt = Assessments.get_attempt!(attempt_id)
+    Assessments.delete_attempt(attempt)
+
+    conn
+    |> put_flash(:info, "Attempt deleted for user")
+    |> redirect(to: user_attempt_path(conn,:index, quiz_id: attempt.quiz_id, page: 1 ))
+  end
+
   def create(conn, %{"quiz_id" => quiz_id, "user_id" => user_id} = params) do
     quiz = Assessments.get_quiz!(quiz_id)
     attempt_count = Assessments.quiz_total_user_attempts(quiz_id, user_id)
