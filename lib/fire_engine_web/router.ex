@@ -32,6 +32,8 @@ defmodule FireEngineWeb.Router do
     resources "/admin/questions", QuestionController
     resources "/admin/categories", CategoryController
     resources "/admin/tags", TagController
+    resources "/admin/quizzes/:quiz_id/questions", Quiz.QuestionsController
+    post "/admin/quizzes/:quiz_id/questions/import", Quiz.QuestionsController, :import, as: "questions_import"
     get "/admin/attempts", UserAttemptController, :index
     delete "/admin/attempts/:id", UserAttemptController, :delete
   end

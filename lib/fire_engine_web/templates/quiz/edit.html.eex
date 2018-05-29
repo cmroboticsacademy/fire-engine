@@ -1,3 +1,5 @@
 <h1 class="section-header text-center">Quiz Edit</h1>
 
+<%= link "Import Questions From Question Bank", to: questions_path(@conn,:index,@changeset.data.id), class: "btn btn-primary btn-block" %>
+
 <%= render FireEngineWeb.QuizView, "_form.html", changeset: @changeset, path: quiz_path(@conn, :update, @quiz) %>

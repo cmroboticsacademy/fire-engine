@@ -81,6 +81,8 @@
         Questions
         <button type="button" class="btn btn-primary add-question-btn">+ Add Question</button>
       </h1>
+
+
       <div class="text-center">
         <%= render "_tooltip.html", direction: "right", text: "Text for Questions and Answers. Points denote the number points a question is worth. This can be any real number. The weight of the question compared to the other questions in a quiz. This can be any real number. For each question, we multiply the weight by the points and then sum the total earned points." %>
       </div>
