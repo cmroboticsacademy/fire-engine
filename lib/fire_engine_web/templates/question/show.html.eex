@@ -44,11 +44,21 @@
         <% end %>
       </td>
     </tr>
+    <tr>
+      <th col="row">Associated Quizzes</th>
+      <td class="text-right">
+        <%= for quiz <- @question.quizzes |> Enum.uniq do %>
+          <span class="badge badge-pill badge-secondary">
+            <%= quiz.name %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
   </tbody>
 </table>
 
 <h1 class="section-header">
-  <span class="float-left mb-3">Answer</span>
+  <span class="float-left mb-3">Answers</span>
   <span class="float-right mb-3">Weight</span>
 </h1>
 

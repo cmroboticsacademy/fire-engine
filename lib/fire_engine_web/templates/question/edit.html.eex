@@ -1,3 +1,11 @@
 <h2 class="SectionHeader">Question Edit</h2>
+<b>
+Associated Quizzes:
+<%= for quiz <- @question.quizzes |> Enum.uniq do %>
+  <span class="badge badge-pill badge-secondary">
+    <%= quiz.name %>
+  </span>
+<% end %>
+</b>
 
 <%=render FireEngineWeb.QuestionView, "_form.html", changeset: @changeset,questionTags: @questionTags, tags: @tags, path: question_path(@conn, :update, @question) %>

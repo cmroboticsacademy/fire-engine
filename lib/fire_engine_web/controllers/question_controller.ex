@@ -3,6 +3,7 @@ defmodule FireEngineWeb.QuestionController do
 
   alias FireEngine.Assessments
   alias FireEngine.Assessments.Quiz
+  alias FireEngine.Repo
   alias FireEngine.Assessments.Question
 
 
@@ -26,7 +27,7 @@ defmodule FireEngineWeb.QuestionController do
   end
 
   def edit(conn, %{"id" => question_id}) do
-    question = Assessments.get_question!(question_id)
+    question = Assessments.get_question!(question_id) |> Repo.preload(:quizzes)
     questionTags = question.tags |> Enum.map(&(&1.id))
     changeset = Assessments.change_question(question)
     tags = Assessments.list_fe_tags()
@@ -45,7 +46,7 @@ defmodule FireEngineWeb.QuestionController do
   end
 
   def show(conn, %{"id" => id}) do
-    question = Assessments.get_question!(id)
+    question = Assessments.get_question!(id) |> Repo.preload(:quizzes)
     render(conn, "show.html", question: question)
   end
 
