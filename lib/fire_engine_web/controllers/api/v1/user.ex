@@ -3,6 +3,8 @@ defmodule FireEngineWeb.Api.V1.UserController do
   alias FireEngine.Accounts
   action_fallback FireEngineWeb.FallbackController
 
+  plug FireEngine.Plugs.RequireAuth
+
   def show(conn,%{"id" => user_id} = params) do
     user = Accounts.get_user!(user_id)
     render(conn, "show.json",user: user)

@@ -6,6 +6,9 @@ defmodule FireEngineWeb.Api.V1.UserQuizController do
 
   action_fallback FireEngineWeb.FallbackController
 
+
+  plug FireEngine.Plugs.RequireAuth
+
   def index(conn, _params) do
     user_id = conn.params["user_id"]
     fe_quizzes = Assessments.list_quizzes_with_attempts(user_id)
