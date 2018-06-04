@@ -12,6 +12,11 @@
         <label>Name <%= error_tag f, :name %></label>
         <%= text_input f, :name, class: "form-control" %>
       </div>
+
+      <div class="form-group-item">
+        <label>Color Index <%= error_tag f, :color_index %></label>
+        <%= select f, :color_index, ["Grey": "badge-secondary", "Red": "badge-danger", "Green": "badge-success", "Teal": "badge-info", "Blue": "badge-primary", "Yellow": "badge-warning"], class: "form-control" %>
+      </div>
     </div>
   </div>
 

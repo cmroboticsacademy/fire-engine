@@ -2,23 +2,48 @@
   <%= "Import questions for #{@quiz.name}" %>
 </h2>
 
+<div class="container">
+  <div class="mb-3">
+    <%= form_for @conn, questions_path(@conn, :index, @quiz.id), [method: :get], fn f -> %>
+      <%= hidden_input f, :quiz_id, [value: @quiz.id] %>
+      <%= search_input f, :tag, class: "form-control", placeholder: "Search By Tag" %>
+    <% end %>
+  </div>
 
-<%= form_for @conn, questions_import_path(@conn,:import, @quiz.id), [as: :import], fn f -> %>
 
-  <%= submit "Import Questions", class: "btn btn-primary btn-block" %>
-  <br />
 
-  <%= for question <- @questions do %>
-    <div class="row">
-      <div class="col-1">
-        <%= checkbox f, String.to_atom("#{question.id}"), checked_value: question.id %>
+  <%= form_for @conn, questions_import_path(@conn,:import, @quiz.id), [as: :import], fn f -> %>
+
+
+    <%= submit "Import Questions", class: "btn btn-primary btn-block" %>
+    <br />
+    <%= for question <- @questions do %>
+      <div class="row">
+        <div class="col-1">
+          <%= if question.category do %>
+            <%= question.category.name%>
+          <%= else %>
+            Not Categorized
+          <% end %>
+        </div>
+        <div class="col-1">
+          <%= checkbox f, String.to_atom("#{question.id}"), checked_value: question.id %>
+        </div>
+        <div class="col-9">
+          <%= raw question.content %>
+        </div>
+        <div class="col-1">
+          <%= for tag <- question.tags do %>
+            <span class="badge badge-pil <%=tag.color_index%>">
+            <%= tag.name %>
+            </span>
+          <% end %>
+        </div>
       </div>
-      <div class="col-11">
-        <%= raw question.content %>
-      </div>
-    </div>
-    <hr />
+      <hr />
+    <% end %>
+
+
   <% end %>
 
-
-<% end %>
+<div>

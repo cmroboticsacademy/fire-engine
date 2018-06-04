@@ -19,7 +19,11 @@
 
    <tr col="row">
      <th>Tag Name</th>
-     <td class="text-right"><%= @tag.name %></td>
+     <td class="text-right">
+       <span class="badge badge-pill <%=@tag.color_index%>">
+         <%= @tag.name %>
+       </span>
+     </td>
    </tr>
 
  </tbody>

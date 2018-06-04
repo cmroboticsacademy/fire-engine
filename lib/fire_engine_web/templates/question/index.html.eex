@@ -31,7 +31,7 @@
           <td><%= get_category question.category_id %></td>
           <td>
             <%= for t <- question.tags do %>
-                <span class="badge badge-pill badge-secondary"><%= t.name %></span>
+                <span class="badge badge-pill <%=t.color_index%>"><%= t.name %></span>
             <% end %>
           </td>
 

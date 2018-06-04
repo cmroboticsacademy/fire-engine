@@ -11,6 +11,7 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">Tag Name</th>
+      <th scope="col">Badge</th>
       <th scope="col" class="text-right">Action</th>
     </tr>
   </thead>
@@ -20,6 +21,8 @@
     <%= for tag <- @fe_tag do %>
       <tr>
         <td><%= link tag.name, to: tag_path(@conn, :show, tag) %></td>
+        <td><span class="badge badge-pill <%=tag.color_index%>"><%=tag.name%></span>
+        </td>
         <td class="text-right">
           <div class="btn-group">
             <%= link to: tag_path(@conn, :edit, tag), class: "btn btn-primary btn-block m-0" do %>

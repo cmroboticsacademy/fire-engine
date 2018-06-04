@@ -224,7 +224,20 @@ defmodule FireEngine.Assessments do
 
   """
   def list_fe_questions do
-    Repo.all(Question) |> Repo.preload([:answers,:tags, :question_tags])
+    Repo.all(Question) |> Repo.preload([:answers,:tags, :question_tags, :category])
+  end
+
+  def list_fe_questions(questions) do
+    Repo.all(Question)
+    |> Repo.preload([:answers,:tags, :question_tags, :category])
+    |> Enum.reject(&(Enum.member?(questions, &1.content) == true))
+  end
+
+  def list_fe_questions(questions, tag) do
+    query = from q in Question,
+    left_join: t in assoc(q, :tags),
+    where: q.content not in ^questions and like(t.name, ^tag)
+    query |> Repo.all |> Repo.preload([:answers, :tags, :question_tags, :category])
   end
 
   @doc """

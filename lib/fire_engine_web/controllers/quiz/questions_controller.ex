@@ -10,8 +10,13 @@ defmodule FireEngineWeb.Quiz.QuestionsController do
 
   def index(conn,%{"quiz_id" => quiz_id} = params) do
     quiz = Assessments.get_quiz_with_questions(quiz_id)
+
     current_questions = quiz.questions |> Enum.map(&(&1.content))
-    questions = Assessments.list_fe_questions |> Enum.reject(&(Enum.member?(current_questions,&1.content) == true))
+    if Map.has_key?(params,"tag") && params["tag"] != "" do
+      questions = Assessments.list_fe_questions(current_questions, "%#{params["tag"]}%")
+    else
+      questions = Assessments.list_fe_questions(current_questions)
+    end
     render(conn,:index,quiz: quiz, questions: questions)
   end
 
