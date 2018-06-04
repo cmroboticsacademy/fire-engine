@@ -254,7 +254,7 @@ defmodule FireEngine.Assessments do
       ** (Ecto.NoResultsError)
 
   """
-  def get_question!(id), do: Repo.get!(Question, id) |> Repo.preload([:answers,:tags, :question_tags])
+  def get_question!(id), do: Repo.get!(Question, id) |> Repo.preload([:answers,:tags, :question_tags, :quizzes])
 
   @doc """
   Creates a question.

@@ -46,11 +46,12 @@ defmodule FireEngineWeb.QuestionController do
   end
 
   def show(conn, %{"id" => id}) do
-    question = Assessments.get_question!(id) |> Repo.preload(:quizzes)
+    question = Assessments.get_question!(id) 
     render(conn, "show.html", question: question)
   end
 
   def update(conn, %{"id" => id, "question" => question_params}) do
+
     question_params = question_params
     |> Map.put("question_tags", question_params["question_tags"] |> Enum.map(&(%{"tag_id" => &1})))
 
