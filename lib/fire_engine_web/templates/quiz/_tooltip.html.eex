@@ -1,3 +1,3 @@
-    <button data-toggle="tooltip" type="button" data-placement="<%=@direction%>" title="<%=@text%>">
-      <i class="fas fa-question" style="font-size: 10px"></i>
-    </button>
+<a data-toggle="tooltip" data-placement="<%=@direction%>" title="<%=@text%>">
+  <i class="fas fa-question-circle text-primary"></i>
+</a>
