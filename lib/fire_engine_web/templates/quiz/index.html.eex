@@ -9,6 +9,7 @@
   <table class="quiz-table table mt-4">
     <thead class="thead-light">
       <tr>
+        <th scope="col">ID</th>
         <th scope="col" class="text-left">Quiz Name</th>
         <th scope="col"># of Attempts Allowed</th>
         <th scope="col"># of Questions</th>
@@ -23,6 +24,7 @@
     <tbody>
       <%= for quiz <- @fe_quizzes do %>
         <tr>
+          <td><%= quiz.id %></td>
           <th scope="row"><%= link quiz.name, to: quiz_path(@conn,:show, quiz) %></th>
           <td><%= quiz.attempts_allowed %></td>
           <td><%= Enum.count(quiz.questions)%></td>

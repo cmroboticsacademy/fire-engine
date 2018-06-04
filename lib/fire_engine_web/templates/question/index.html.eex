@@ -9,6 +9,7 @@
   <table class="question-table table mt-4">
     <thead class="thead-light">
       <tr>
+        <th scope="col">ID</th>
         <th scope="col" class="text-left">Question</th>
         <th scope="col">Points</th>
         <th scope="col"># of Answers</th>
@@ -21,6 +22,7 @@
     <tbody>
       <%= for question <- @fe_questions do %>
         <tr>
+          <td><%= question.id %></td>
           <td scope="row" class="text-left">
             <%= link raw(question.content), to: question_path(@conn,:show, question) %>
           </td>
@@ -32,6 +34,7 @@
                 <span class="badge badge-pill badge-secondary"><%= t.name %></span>
             <% end %>
           </td>
+
           <td>
             <div class="btn-group">
               <%= link to: question_path(@conn, :edit, question), class: "btn btn-primary btn-block m-0" do %>
@@ -46,5 +49,6 @@
         </tr>
       <% end %>
     </tbody>
+
   </table>
 </div>
