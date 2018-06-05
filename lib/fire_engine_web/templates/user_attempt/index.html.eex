@@ -9,14 +9,9 @@
 <div class="clearfix"></div>
 
 <div class="mb-3">
-  <%= form_for @conn, user_attempt_path(@conn, :index), [method: :get], fn f -> %>
-    <%= hidden_input f, :quiz_id, [value: @quiz.id] %>
-    <%= hidden_input f, :page, [page: 1] %>
-    <%= search_input f, :user, class: "form-control", placeholder: "Search Usernames" %>
-  <% end %>
-</div>
 
-<table class="table">
+</div>
+<table class="table mb-0 sticky-top">
   <thead class="thead-light">
     <tr>
       <th scope="col">User ID</th>
@@ -26,8 +21,19 @@
       <th class="text-center" scope="col">Score %</th>
       <th class="text-right" scope="col">Action</th>
     </tr>
+    <tr>
+      <th colspan="6">
+        <%= form_for @conn, user_attempt_path(@conn, :index), [method: :get], fn f -> %>
+          <%= hidden_input f, :quiz_id, [value: @quiz.id] %>
+          <%= hidden_input f, :page, [page: 1] %>
+          <%= search_input f, :user, class: "form-control", placeholder: "Search Usernames" %>
+        <% end %>
+      </th>
+    </tr>
   </thead>
+</table>
 
+<table class="table">
   <tbody>
     <%= for qa <- @quiz_attempts.entries do %>
       <tr>

@@ -63,7 +63,7 @@
 
           <td>
             <%= link to: user_attempt_path(@conn, :index, quiz_id: quiz.id, page: 1), class: "btn btn-outline-primary btn-block m-0" do %>
-              <i class="fas fa-list-ul"></i> View All Attempts
+              <i class="fas fa-list-ul"></i> View <%= Enum.count(quiz.attempts)%> Attempts
             <% end %>
           </td>
 

@@ -123,10 +123,8 @@ defmodule FireEngine.Assessments do
 
   """
   def list_fe_quizzes do
-    Repo.all(Quiz) |> Repo.preload(:questions)
+    Repo.all(Quiz) |> Repo.preload([:questions, :attempts])
   end
-
-
 
   @doc """
   Gets a single quiz.
