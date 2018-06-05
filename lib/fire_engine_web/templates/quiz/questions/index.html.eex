@@ -39,6 +39,7 @@
         <div class="list-group sticky-top pt-2">
           <div class="list-group-item list-group-item-header text-center">
             <h5>Import Questions</h5>
+            <p>Select at least one question from the table import into the quiz.</p>
             <%= submit "", class: "import-btn btn btn-block btn-outline-primary mt-3", count: 0, disabled: true %>
           </div>
         </div>
