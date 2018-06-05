@@ -1,4 +1,5 @@
 <h1 class="section-header text-center">
+  <%= link to: quiz_path(@conn, :edit, @quiz), class: "btn btn-primary float-left" do %>
     <i class="fas fa-arrow-left"></i> Back to <%= @quiz.name %> Form
   <% end %>
   <span class="float-right mb-3">Import Questions</span>
@@ -37,7 +38,7 @@
       <div class="col-sm-3">
         <div class="list-group sticky-top pt-2">
           <div class="list-group-item list-group-item-header text-center">
-            <h5>Question Bank</h5>
+            <h5>Import Questions</h5>
             <%= submit "", class: "import-btn btn btn-block btn-outline-primary mt-3", count: 0, disabled: true %>
           </div>
         </div>
