@@ -7,7 +7,6 @@
 
 <div class="clearfix"></div>
 
-
 <div class="row question-import-form justify-content-end">
   <div class="col-sm-9  sticky-top">
     <table class="table mb-0">
@@ -27,12 +26,9 @@
         </tr>
       </thead>
     </table>
-
   </div>
 
-
   <div class="col-sm-12">
-
     <%= form_for @conn, questions_import_path(@conn,:import, @quiz.id), [as: :import], fn f -> %>
     <div class="row">
       <div class="col-sm-3">
@@ -75,12 +71,7 @@
           </tbody>
         </table>
       </div>
-
-
     </div>
     <%= end %>
   </div>
-
-
-
 </div>
