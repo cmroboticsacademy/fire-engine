@@ -1,49 +1,84 @@
-<h2 class="SectionHeader">
-  <%= "Import questions for #{@quiz.name}" %>
-</h2>
+<h1 class="section-header text-center">
+    <i class="fas fa-arrow-left"></i> Back to <%= @quiz.name %> Form
+  <% end %>
+  <span class="float-right mb-3">Import Questions</span>
+</h1>
 
-<div class="container">
-  <div class="mb-3">
-    <%= form_for @conn, questions_path(@conn, :index, @quiz.id), [method: :get], fn f -> %>
-      <%= hidden_input f, :quiz_id, [value: @quiz.id] %>
-      <%= search_input f, :tag, class: "form-control", placeholder: "Search By Tag" %>
-    <% end %>
+<div class="clearfix"></div>
+
+
+<div class="row question-import-form justify-content-end">
+  <div class="col-sm-9  sticky-top">
+    <table class="table mb-0">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col" class="text-left">Question</th>
+          <th scope="col" class="text-right">Tags</th>
+        </tr>
+        <tr>
+          <th colspan="3" class="p-12 ">
+            <%= form_for @conn, questions_path(@conn, :index, @quiz.id), [method: :get], fn f -> %>
+              <%= hidden_input f, :quiz_id, [value: @quiz.id] %>
+              <%= search_input f, :tag, class: "form-control", placeholder: "Search Questions By Tag" %>
+            <% end %>
+          </th>
+        </tr>
+      </thead>
+    </table>
+
+  </div>
+
+
+  <div class="col-sm-12">
+
+    <%= form_for @conn, questions_import_path(@conn,:import, @quiz.id), [as: :import], fn f -> %>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="list-group sticky-top pt-2">
+          <div class="list-group-item list-group-item-header text-center">
+            <h5>Question Bank</h5>
+            <%= submit "", class: "import-btn btn btn-block btn-outline-primary mt-3", count: 0, disabled: true %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-9">
+        <table class="table">
+          <tbody>
+            <%= for question <- @questions do %>
+              <tr class="selectable-row" id="question_<%= question.id %>" questionId="<%= question.id %>">
+                <td>
+                  <%= if question.category do %>
+                    <%= question.category.name %>
+                  <%= else %>
+                    Not Categorized
+                  <% end %>
+                </td>
+                <td>
+
+                  <%= checkbox f, String.to_atom("#{question.id}"), checked_value: question.id, id: "checkbox_#{question.id}", class: "d-none"%>
+                  <label for="<%= question.id %>"><%= raw question.content %></label>
+
+                </td>
+                <td class="text-right">
+                  <%= for tag <- question.tags do %>
+                    <span class="badge badge-pill badge-primary">
+                      <%= tag.name %>
+                    </span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+    <%= end %>
   </div>
 
 
 
-  <%= form_for @conn, questions_import_path(@conn,:import, @quiz.id), [as: :import], fn f -> %>
-
-
-    <%= submit "Import Questions", class: "btn btn-primary btn-block" %>
-    <br />
-    <%= for question <- @questions do %>
-      <div class="row">
-        <div class="col-1">
-          <%= if question.category do %>
-            <%= question.category.name%>
-          <%= else %>
-            Not Categorized
-          <% end %>
-        </div>
-        <div class="col-1">
-          <%= checkbox f, String.to_atom("#{question.id}"), checked_value: question.id %>
-        </div>
-        <div class="col-9">
-          <%= raw question.content %>
-        </div>
-        <div class="col-1">
-          <%= for tag <- question.tags do %>
-            <span class="badge badge-pil <%=tag.color_index%>">
-            <%= tag.name %>
-            </span>
-          <% end %>
-        </div>
-      </div>
-      <hr />
-    <% end %>
-
-
-  <% end %>
-
-<div>
+</div>

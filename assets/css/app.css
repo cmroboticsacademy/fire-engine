@@ -14,14 +14,6 @@
   word-wrap: break-word;
 }
 
-.SectionHeader {
-  color: blue;
-  font-weight: 100;
-  font-stretch: semi-expanded;
-  font-size: 40px;
-  text-align: center;
-}
-
 .section-header {
   color: blue;
   font-weight: lighter;
@@ -111,6 +103,7 @@
 .selectable-row.active,
 .selectable-row.active:hover {
   transition: all 0.05s linear;
+  cursor: pointer
 }
 
 .selectable-row:hover,

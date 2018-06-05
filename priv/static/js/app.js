@@ -1984,14 +1984,45 @@ function removeAnswerSimple(answerId) {
   inputSelector.remove();
 };
 
-function toggleImportQuestion(questionId) {
+function selectionToggleImportQuestion(questionId) {
   var selector = '#checkbox_' + questionId;
   var checkbox = $(selector);
+  var importBtn = $('.import-btn');
+  var count = parseInt(importBtn.attr('count'));
 
   if (checkbox.is(':checked')) {
     checkbox.prop('checked', false);
+    count -= 1;
   } else {
     checkbox.prop('checked', true);
+    count += 1;
+  };
+
+  importBtn.attr('count', count);
+  updateSelectedCount();
+};
+
+function updateSelectedCount() {
+  var importBtn = $('.import-btn');
+  var count = importBtn.attr('count');
+
+  // console.log(count);
+
+  if (count < 1) {
+    importBtn.text('Select Questions');
+    importBtn.attr('disabled', true);
+
+    if (importBtn.hasClass('btn-primary')) {
+      importBtn.removeClass('btn-primary').addClass('btn-outline-primary');
+    };
+  } else {
+    var text = 'Import ' + count + ' Question(s)';
+    importBtn.text(text);
+    importBtn.attr('disabled', false);
+
+    if (importBtn.hasClass('btn-outline-primary')) {
+      importBtn.removeClass('btn-outline-primary').addClass('btn-primary');
+    };
   };
 };
 
@@ -2000,14 +2031,17 @@ function toggleImportQuestion(questionId) {
 
 $(document).ready(function () {
   var isQuizForm = $('.quiz-form').length;
-  var isAnswerForm = $('.question-form').length;
+  var isQuestionForm = $('.question-form').length;
+  var isQuestionImportForm = $('.question-import-form').length;
 
   if (isQuizForm) {
     toggleTimeLimit();
     toggleTimeWindow();
-  } else if (isAnswerForm) {
-    console.log('');
-  }
+  } else if (isQuestionForm) {
+    console.log('Question Form');
+  } else if (isQuestionImportForm) {
+    updateSelectedCount();
+  };
 });
 
 // ============ Quiz Form: Click Events ============ //
@@ -2056,7 +2090,8 @@ $(document).on('click', '[id^="question_"]', function () {
   var questionId = $(this).attr('questionId');
 
   $(this).toggleClass('active');
-  toggleImportQuestion(questionId);
+
+  selectionToggleImportQuestion(questionId);
 });
 
 // ============ Question Form: Click Events ============ //
