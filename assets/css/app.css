@@ -104,6 +104,26 @@
   margin-bottom: 15px;
 }
 
+/* ====== Selectable Tables Rows ====== */
+
+
+.selectable-row:hover,
+.selectable-row.active,
+.selectable-row.active:hover {
+  transition: all 0.05s linear;
+}
+
+.selectable-row:hover,
+.selectable-row.active:hover {
+  background: #cee5ff;
+
+}
+
+.selectable-row.active {
+  background: #89c0ff;
+
+}
+
 /* ====== Quiz Question Cards ====== */
 
 #question-scrollspy-nav {

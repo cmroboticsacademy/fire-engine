@@ -1984,6 +1984,17 @@ function removeAnswerSimple(answerId) {
   inputSelector.remove();
 };
 
+function toggleImportQuestion(questionId) {
+  var selector = '#checkbox_' + questionId;
+  var checkbox = $(selector);
+
+  if (checkbox.is(':checked')) {
+    checkbox.prop('checked', false);
+  } else {
+    checkbox.prop('checked', true);
+  };
+};
+
 // ============ Main Init ============ //
 // ============ Main Init ============ //
 
@@ -1995,7 +2006,7 @@ $(document).ready(function () {
     toggleTimeLimit();
     toggleTimeWindow();
   } else if (isAnswerForm) {
-    console.log('question form');
+    console.log('');
   }
 });
 
@@ -2035,6 +2046,17 @@ $(document).on('click', '.remove-answer-btn', function () {
   var answerId = $(this).attr('answerId');
 
   removeAnswer(questionId, answerId);
+});
+
+// ============ Quiz Form / Import Question: Click Events ============ //
+// ============ Quiz Form / Import Question: Click Events ============ //
+
+$(document).on('click', '[id^="question_"]', function () {
+  event.preventDefault();
+  var questionId = $(this).attr('questionId');
+
+  $(this).toggleClass('active');
+  toggleImportQuestion(questionId);
 });
 
 // ============ Question Form: Click Events ============ //
