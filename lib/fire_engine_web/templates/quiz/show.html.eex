@@ -97,7 +97,7 @@
         <td class="">
           <ol type="A">
             <%= for answer <- question.answers do %>
-              <li><%= answer.answer %> (<%= answer.weight %>)</li>
+              <li><%= raw(answer.answer) %> (<%= answer.weight %>)</li>
             <% end %>
           </ol>
         </td>

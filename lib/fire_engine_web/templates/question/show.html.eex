@@ -68,7 +68,7 @@
   <tbody>
     <%= for answer <- @question.answers do %>
     <tr>
-      <th col="row"><%= answer.answer %></th>
+      <th col="row"><%= raw(answer.answer) %></th>
       <td class="text-right"><%= answer.weight %></td>
     </tr>
     <% end %>
