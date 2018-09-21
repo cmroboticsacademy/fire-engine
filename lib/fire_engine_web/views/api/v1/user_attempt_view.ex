@@ -39,7 +39,9 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         point_total: attempt.point_total,
         points_available: attempt.points_available,
         closed: attempt.closed,
-        date_completed: NaiveDateTime.to_string(attempt.updated_at)
+        date_completed: NaiveDateTime.to_string(attempt.updated_at),
+        responses:
+        render_many(attempt.responses, FireEngineWeb.Api.V1.ResponseView,"response-answer.json")
     }
 
   }

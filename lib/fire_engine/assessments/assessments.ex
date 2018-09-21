@@ -352,6 +352,10 @@ defmodule FireEngine.Assessments do
   """
   def get_answer!(id), do: Repo.get!(Answer, id)
 
+  def get_correct_answer(question_id) do
+    Repo.get_by(Answer, question_id: question_id, weight: 1.0).answer
+  end
+
   @doc """
   Creates a answer.
 
@@ -480,8 +484,6 @@ defmodule FireEngine.Assessments do
 
   """
   def get_attempt!(id), do: Repo.get!(Attempt, id) |> Repo.preload(:responses)
-
-
 
     @doc """
     Gets an attempt with responses.
