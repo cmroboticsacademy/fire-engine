@@ -13,6 +13,7 @@ defmodule FireEngine.Assessments.Quiz do
     field :time_closed, :naive_datetime
     field :time_open, :naive_datetime
     field :color_index, :string
+    field :show_answers, :boolean, default: true
     field :auto_submit, :boolean, default: true
     field :time_window, :boolean, default: false
     field :time_limit, :boolean, default: false
@@ -28,7 +29,7 @@ defmodule FireEngine.Assessments.Quiz do
   @doc false
   def changeset(%Quiz{} = quiz, attrs) do
     quiz
-    |> cast(attrs, [:name, :description, :attempts_allowed, :randomize_questions, :questions_per_page, :time_open, :time_closed, :color_index, :auto_submit, :time_window, :time_limit, :time_limit_minutes])
+    |> cast(attrs, [:name, :description, :attempts_allowed, :randomize_questions, :questions_per_page, :time_open, :time_closed, :color_index, :auto_submit, :time_window, :time_limit, :time_limit_minutes, :show_answers])
     |> validate_required([:name, :description, :attempts_allowed, :randomize_questions, :questions_per_page])
     |> cast_assoc(:questions)
   end

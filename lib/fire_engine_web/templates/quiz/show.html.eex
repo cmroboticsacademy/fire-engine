@@ -56,6 +56,12 @@
       <td class="text-right"><%= @quiz.time_window %></td>
     </tr>
 
+    <tr>
+      <th col="row">Show Answers</th>
+      <td class="text-right"><%= @quiz.show_answers %></td>
+    </tr>
+
+
     <%= if @quiz.time_window do %>
       <tr>
         <th col="row">

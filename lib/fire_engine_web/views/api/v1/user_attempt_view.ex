@@ -1,6 +1,8 @@
 defmodule FireEngineWeb.Api.V1.UserAttemptView do
   use FireEngineWeb, :view
 
+  alias FireEngine.Assessments
+
   def render("attempt.json", %{attempt: attempt, quiz: quiz, questions: questions, page: page}) do
     %{data:
       %{attempt_id: attempt.id,
@@ -41,11 +43,20 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         closed: attempt.closed,
         date_completed: NaiveDateTime.to_string(attempt.updated_at),
         responses:
-        render_many(attempt.responses, FireEngineWeb.Api.V1.ResponseView,"response-answer.json")
+        render_many(attempt.responses, FireEngineWeb.Api.V1.ResponseView,response_template(attempt.quiz_id))
     }
 
   }
 
+  end
+
+  defp response_template(quiz_id) do
+    case Assessments.get_quiz!(quiz_id) do
+      %Assessments.Quiz{show_answers: true} ->
+        "response-answer.json"
+      _ ->
+        "response.json"
+    end
   end
 
 

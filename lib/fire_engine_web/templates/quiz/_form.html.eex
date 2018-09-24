@@ -46,6 +46,12 @@
         <%= label f, :time_window, "Quiz Time Window"%>
         <%= render "_tooltip.html", direction: "right", text: "The dates that the quiz is available. You can set a time open and a time close" %>
       </div>
+
+      <div class="form-group-item">
+        <%= checkbox f, :show_answers %>
+        <%= label f, :time_window, "Show Correct Answers"%>
+        <%= render "_tooltip.html", direction: "right", text: "Enabling this setting will show the correct answers after a quiz is submitted." %>
+      </div>
     </div>
 
 
