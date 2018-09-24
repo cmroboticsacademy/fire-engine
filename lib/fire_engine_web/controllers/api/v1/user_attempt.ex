@@ -9,6 +9,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
   plug FireEngine.Plugs.SetUserApi when action in [:create, :edit]
   plug FireEngine.Plugs.CheckQuizWindow  when action in [:create, :edit]
   plug FireEngine.Plugs.CheckQuizTime when action in [:create, :edit]
+  plug FireEngine.Plugs.RequireAuth
 
   def create(conn, %{"data" => data} = params) do
 
