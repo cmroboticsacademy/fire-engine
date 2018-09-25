@@ -5,11 +5,10 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
   alias FireEngine.Assessments.Attempt
   alias FireEngine.Assessments.Response
 
-  # plug FireEngine.Plugs.RequireAuth
+  plug FireEngine.Plugs.RequireAuth
   plug FireEngine.Plugs.SetUserApi when action in [:create, :edit]
   plug FireEngine.Plugs.CheckQuizWindow  when action in [:create, :edit]
   plug FireEngine.Plugs.CheckQuizTime when action in [:create, :edit]
-  plug FireEngine.Plugs.RequireAuth
 
   def create(conn, %{"data" => data} = params) do
 
