@@ -1,5 +1,6 @@
 defmodule FireEngineWeb.Api.V1.UserAttemptView do
   use FireEngineWeb, :view
+  use Timex
 
   alias FireEngine.Assessments
 
@@ -9,6 +10,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         page_number: questions.page_number,
         total_pages: questions.total_pages,
         quiz_name: quiz.name,
+        time_left_seconds: time_left(attempt.start_time,quiz.time_limit_minutes),
         questions: render_many(questions.entries, FireEngineWeb.Api.V1.QuestionView, "question.json", responses: attempt.responses)
       }
     }
@@ -57,6 +59,14 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
       _ ->
         "response.json"
     end
+  end
+
+  defp time_left(start_time,quiz_length=nil), do: nil
+
+  defp time_left(start_time,quiz_length) do
+    start_time
+    |> Timex.add(Duration.from_minutes(quiz_length))
+    |> Timex.diff(Timex.now,:seconds)
   end
 
 
