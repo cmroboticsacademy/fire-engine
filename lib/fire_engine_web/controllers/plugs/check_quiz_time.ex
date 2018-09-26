@@ -23,7 +23,7 @@ defmodule FireEngine.Plugs.CheckQuizTime do
         false ->
           FireEngineWeb.Plug.Helpers.close_attempt(user_id,quiz.id)
           conn
-          |> put_flash(:info, "This quiz has a #{quiz.time_limit_minutes} minutes limit. Your current attempt has expired")
+          |> put_flash(:info, "Your current attempt has expired")
           |> redirect(to: Helpers.user_quiz_path(conn,:index))
           |> halt()
       end
