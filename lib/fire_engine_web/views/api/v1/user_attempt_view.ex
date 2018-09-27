@@ -20,6 +20,10 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
      %{data: %{message: "attempts exceeded"}}
   end
 
+  def render("attempt-expired.json", _params) do
+    %{data: %{message: "attempt expired"}}
+  end
+
   def render("attempt-simple.json", %{user_attempt: user_attempt}) do
     %{closed: user_attempt.closed, closes: user_attempt.closes, point_percent: user_attempt.point_percent, point_total: user_attempt.point_total, points_available: user_attempt.points_available, start_time: NaiveDateTime.to_string(user_attempt.start_time)}
   end
@@ -61,9 +65,9 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
     end
   end
 
-  defp time_left(start_time,quiz_length=nil), do: nil
+  def time_left(start_time,quiz_length=nil), do: nil
 
-  defp time_left(start_time,quiz_length) do
+  def time_left(start_time,quiz_length) do
     start_time
     |> Timex.add(Duration.from_minutes(quiz_length))
     |> Timex.diff(Timex.now,:seconds)

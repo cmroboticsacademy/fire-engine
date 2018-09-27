@@ -7,8 +7,8 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
 
   plug FireEngine.Plugs.RequireAuth
   plug FireEngine.Plugs.SetUserApi when action in [:create, :edit]
-  plug FireEngine.Plugs.CheckQuizWindow  when action in [:create, :edit]
-  plug FireEngine.Plugs.CheckQuizTime when action in [:create, :edit]
+  # plug FireEngine.Plugs.CheckQuizWindow  when action in [:create, :show]
+  plug FireEngine.Plugs.CheckQuizTime when action in [:show, :update, :save]
 
   def create(conn, %{"data" => data} = params) do
 
@@ -125,9 +125,6 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
     Assessments.update_attempt(attempt, %{point_percent: score, point_total: earned_points, points_available: total_points})
     conn
   end
-
-
-
 
 
 
