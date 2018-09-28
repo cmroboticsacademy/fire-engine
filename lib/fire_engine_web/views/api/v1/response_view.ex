@@ -8,7 +8,8 @@ defmodule FireEngineWeb.Api.V1.ResponseView do
       answer: get_answer(response.answer_id,:answer),
       correct: get_answer(response.answer_id,:weight),
       question_id: response.question_id,
-      question: Assessments.get_question!(response.question_id).content
+      question: Assessments.get_question!(response.question_id).content,
+      page: response.page
     }
   end
 
@@ -18,7 +19,8 @@ defmodule FireEngineWeb.Api.V1.ResponseView do
       correct: get_answer(response.answer_id,:weight),
       correct_answer: Assessments.get_correct_answer(response.question_id),
       question_id: response.question_id,
-      question: Assessments.get_question!(response.question_id).content
+      question: Assessments.get_question!(response.question_id).content,
+      page: response.page
     }
   end
 

@@ -11,7 +11,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         total_pages: questions.total_pages,
         quiz_name: quiz.name,
         time_left_seconds: time_left(attempt.start_time,quiz.time_limit_minutes),
-        questions: render_many(questions.entries, FireEngineWeb.Api.V1.QuestionView, "question.json", responses: attempt.responses)
+        questions: render_many(questions.entries, FireEngineWeb.Api.V1.QuestionView, "question.json", responses: add_page_numbers(attempt.responses,quiz))
       }
     }
   end
@@ -34,7 +34,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         quiz_id: quiz.id,
         quiz: quiz.name,
         page_number: :review_attempt,
-        responses: render_many(attempt.responses,FireEngineWeb.Api.V1.ResponseView,"response.json")
+        responses: render_many(add_page_numbers(attempt.responses,quiz),FireEngineWeb.Api.V1.ResponseView,"response.json")
       }
     }
   end
@@ -49,7 +49,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         closed: attempt.closed,
         date_completed: NaiveDateTime.to_string(attempt.updated_at),
         responses:
-        render_many(attempt.responses, FireEngineWeb.Api.V1.ResponseView,response_template(attempt.quiz_id))
+        render_many(add_page_numbers(attempt.responses), FireEngineWeb.Api.V1.ResponseView,response_template(attempt.quiz_id))
     }
 
   }
@@ -71,6 +71,23 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
     start_time
     |> Timex.add(Duration.from_minutes(quiz_length))
     |> Timex.diff(Timex.now,:seconds)
+  end
+
+  def add_page_numbers(responses,quiz) do
+    qpp = quiz.questions_per_page
+    pages = paginate(responses,1,qpp).total_pages
+
+    pages = for p <- (1..pages) do
+      paginate(responses,p,qpp).entries
+      |> Enum.map(fn x -> Map.put(x, :page, p) end)
+    end
+
+    pages |> List.flatten
+
+  end
+
+  def paginate(responses,page,qpp) do
+    Scrivener.paginate(responses, %Scrivener.Config{page_number: page, page_size: qpp})
   end
 
 
