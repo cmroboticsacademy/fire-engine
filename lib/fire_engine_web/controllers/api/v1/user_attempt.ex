@@ -78,6 +78,13 @@ defmodule FireEngineWeb.Api.V1.UserAttemptController do
 
   end
 
+  def review(conn, %{"id" => id} = params) do
+    attempt = Assessments.get_attempt_with_responses(id)
+    quiz = Assessments.get_quiz!(attempt.quiz_id)
+    conn
+    |> render("review_attempt.json", attempt: attempt, quiz: quiz)
+  end
+
 
   def save(conn, %{"id" => attempt_id}) do
     attempt = Assessments.get_attempt!(attempt_id)

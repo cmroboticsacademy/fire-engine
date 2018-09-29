@@ -49,7 +49,7 @@ defmodule FireEngineWeb.Api.V1.UserAttemptView do
         closed: attempt.closed,
         date_completed: NaiveDateTime.to_string(attempt.updated_at),
         responses:
-        render_many(add_page_numbers(attempt.responses), FireEngineWeb.Api.V1.ResponseView,response_template(attempt.quiz_id))
+        render_many(add_page_numbers(attempt.responses,Assessments.get_quiz!(attempt.quiz_id)), FireEngineWeb.Api.V1.ResponseView,response_template(attempt.quiz_id))
     }
 
   }
