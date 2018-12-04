@@ -3,7 +3,6 @@ defmodule FireEngine.Assessments.Question do
   import Ecto.Changeset
   alias FireEngine.Assessments.Question
 
-
   schema "fe_questions" do
     field :content, :string
     field :points, :float
@@ -27,5 +26,28 @@ defmodule FireEngine.Assessments.Question do
     |> validate_required([:content])
     |> cast_assoc(:answers)
     |> cast_assoc(:question_tags)
+    |> check_weights()
   end
+
+  defp check_weights(%{changes: %{answers: answers}} = changeset) do
+    IO.inspect changeset
+
+    question = changeset.data
+    mapped_answers = answers |> Enum.map(fn a -> Map.merge(a.data,a.changes) end)
+
+    if sum_weights(mapped_answers) > 1.0 do
+      add_error(changeset,:answers, "Cannot have answer weights that exceed the total points for a question.")
+    else
+      changeset
+    end
+  end
+
+  defp check_weights(changeset), do: changeset  
+
+  defp sum_weights(answers) do
+    answers
+    |> Enum.map(fn a -> a.weight end)
+    |> Enum.sum
+  end
+
 end

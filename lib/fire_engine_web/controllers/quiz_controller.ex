@@ -34,7 +34,7 @@ defmodule FireEngineWeb.QuizController do
         |> redirect(to: quiz_path(conn,:show,quiz))
       {:error, changeset} ->
         conn
-        |> put_flash(:error, "Correct Your Submission")
+        |> put_flash(:error,  error_parser(changeset))
         |> render("new.html", changeset: changeset)
     end
   end
@@ -59,9 +59,8 @@ defmodule FireEngineWeb.QuizController do
         |> put_flash(:info, "Updated #{quiz.name}")
         |> redirect(to: quiz_path(conn,:show, quiz))
       {:error, changeset} ->
-        
         conn
-        |> put_flash(:error, "Correct Your Submission")
+        |> put_flash(:error, error_parser(changeset))
         |> render("edit.html", changeset: changeset, quiz: quiz)
 
     end
@@ -75,6 +74,18 @@ defmodule FireEngineWeb.QuizController do
       |> redirect(to: quiz_path(conn, :index))
     end
   end
+
+
+  #Workaround for JS generated forms. 
+  def error_parser(%{changes: %{questions: questions}} = changeset) do
+    if questions |> Enum.any?(fn q -> List.keymember?(q.errors,:answers,0) end) do
+      "Answer weights cannot exceed total question points"
+    else
+      "Check your submission"
+    end
+  end
+
+  def error_parser(changeset), do: "Check your submission"
 
 
 
