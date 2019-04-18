@@ -15,9 +15,10 @@ use Mix.Config
 # which you typically run after static files are built.
 
 config :fire_engine, FireEngineWeb.Endpoint,
-  url: [host: "cs2n_fire-engine", port: 4000],
-  secret_key_base: System.get_env("SECRET_KEY_BASE_PROD"),
-  load_from_system_env: true,
+  http: [port: System.get_env("PORT")],
+  url: [scheme: "https",host: "evening-stream-77822", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  secret_key_base: Map.fetch!(System.get_env(),"SECRET_KEY_BASE_PROD"),
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
