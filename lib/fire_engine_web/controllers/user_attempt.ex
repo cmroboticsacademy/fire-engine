@@ -12,16 +12,16 @@ defmodule FireEngineWeb.UserAttemptController do
   action_fallback FireEngineWeb.FallbackController
 
   def index(conn, %{"quiz_id" => quiz_id, "page" => page} = params ) do
+    quiz = Assessments.get_quiz!(quiz_id)
 
     if Map.has_key?(params,"user") do
       %{"user" => user} = params
       quiz_attempts = Assessments.list_quiz_attempts(quiz_id, 1, user)
+      render(conn, "index.html", quiz_attempts: quiz_attempts, quiz: quiz)
     else
       quiz_attempts= Assessments.list_quiz_attempts(quiz_id, 1)
+      render(conn, "index.html", quiz_attempts: quiz_attempts, quiz: quiz)
     end
-
-    quiz = Assessments.get_quiz!(quiz_id)
-    render(conn, "index.html", quiz_attempts: quiz_attempts, quiz: quiz)
   end
 
   def delete(conn, %{"id" => attempt_id}) do

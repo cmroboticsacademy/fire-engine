@@ -14,10 +14,11 @@ defmodule FireEngineWeb.Quiz.QuestionsController do
     current_questions = quiz.questions |> Enum.map(&(&1.content))
     if Map.has_key?(params,"tag") && params["tag"] != "" do
       questions = Assessments.list_fe_questions(current_questions, "%#{params["tag"]}%")
+      render(conn,:index,quiz: quiz, questions: questions)
     else
       questions = Assessments.list_fe_questions(current_questions)
+      render(conn,:index,quiz: quiz, questions: questions)
     end
-    render(conn,:index,quiz: quiz, questions: questions)
   end
 
   def import(conn,%{"import" => imported, "quiz_id" => quiz_id} = params) do
