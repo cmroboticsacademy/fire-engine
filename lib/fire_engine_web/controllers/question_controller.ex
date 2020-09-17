@@ -14,9 +14,10 @@ defmodule FireEngineWeb.QuestionController do
 
   action_fallback FireEngineWeb.FallbackController
 
-  def index(conn, _params) do
-    fe_questions = Assessments.list_fe_questions()
-    render(conn, "index.html", fe_questions: fe_questions)
+  def index(conn, params) do
+    page = Assessments.list_fe_questions()
+                   |> Repo.paginate(params)
+    render(conn, "index.html", fe_questions: page.entries, page: page)
   end
 
   def new(conn, _params) do

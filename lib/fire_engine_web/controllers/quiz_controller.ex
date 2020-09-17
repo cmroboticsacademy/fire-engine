@@ -3,15 +3,17 @@ defmodule FireEngineWeb.QuizController do
 
   alias FireEngine.Assessments
   alias FireEngine.Assessments.Quiz
+  alias FireEngine.Repo
 
   plug FireEngine.Plugs.RequireCasAuth
   plug FireEngine.Plugs.VerifyAdmin
 
   action_fallback FireEngineWeb.FallbackController
 
-  def index(conn, _params) do
-    fe_quizzes = Assessments.list_fe_quizzes()
-    render(conn, "index.html", fe_quizzes: fe_quizzes)
+  def index(conn, params) do
+    page = Assessments.list_fe_quizzes
+                 |> Repo.paginate(params)
+    render(conn, "index.html", fe_quizzes: page.entries, page: page)
   end
 
   def new(conn, _params) do

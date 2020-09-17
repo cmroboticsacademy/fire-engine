@@ -20,7 +20,7 @@ defmodule FireEngine.Mixfile do
   def application do
     [
       mod: {FireEngine.Application, []},
-      extra_applications: [:ueberauth_cas,:logger, :runtime_tools]
+      extra_applications: [:ueberauth_cas, :scrivener_ecto, :logger, :runtime_tools]
     ]
   end
 
@@ -39,6 +39,8 @@ defmodule FireEngine.Mixfile do
       {:statistics, "~> 0.5.1"},
       {:ex_machina, "~> 2.2", only: :test},
       {:scrivener_list, "~> 1.0"},
+      {:scrivener_ecto, "~> 1.3.0"},
+      {:scrivener_html, "~> 1.8"},
       {:phoenix_ecto, "~> 3.2"},
       {:mariaex, ">= 0.0.0"},
       {:ueberauth, "~> 0.2"},

@@ -1,5 +1,6 @@
 defmodule FireEngineWeb.CategoryView do
   use FireEngineWeb, :view
+  use Scrivener.HTML
   alias FireEngine.Assessments
   alias FireEngine.Assessments.Category
   alias FireEngine.Repo

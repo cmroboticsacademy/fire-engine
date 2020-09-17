@@ -83,4 +83,5 @@
     </tbody>
 
   </table>
+  <%= pagination_links @page %>
 </div>

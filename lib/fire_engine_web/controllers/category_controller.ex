@@ -3,10 +3,12 @@ defmodule FireEngineWeb.CategoryController do
 
   alias FireEngine.Assessments
   alias FireEngine.Assessments.Category
+  alias FireEngine.Repo
 
-  def index(conn, _params) do
-    fe_categories = Assessments.list_fe_categories()
-    render(conn, "index.html", fe_categories: fe_categories)
+  def index(conn, params) do
+    page = Assessments.list_fe_categories()
+           |> Repo.paginate(params)
+    render(conn, "index.html", fe_categories: page.entries, page: page)
   end
 
   def new(conn, _params) do

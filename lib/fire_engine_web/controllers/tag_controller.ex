@@ -3,10 +3,12 @@ defmodule FireEngineWeb.TagController do
 
   alias FireEngine.Assessments
   alias FireEngine.Assessments.Tag
+  alias FireEngine.Repo
 
-  def index(conn, _params) do
-    fe_tag = Assessments.list_fe_tags()
-    render(conn, "index.html", fe_tag: fe_tag)
+  def index(conn, params) do
+    page = Assessments.list_fe_tags()
+           |> Repo.paginate(params)
+    render(conn, "index.html", fe_tag: page.entries, page: page)
   end
 
   def new(conn, _params) do
