@@ -22,15 +22,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Ueberauth CAS Settings
-config :ueberauth, Ueberauth,
-  providers: [cas: {Ueberauth.Strategy.CAS, [
-    base_url: "https://cs2n-casino.herokuapp.com",
-    request_path: "/login",
-    callback_path: "/auth/cas/callback",
-  ]}]
-
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

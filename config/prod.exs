@@ -61,6 +61,14 @@ config :logger, level: :info
 #     config :fire_engine, FireEngineWeb.Endpoint, server: true
 #
 
+# Ueberauth CAS Settings
+config :ueberauth, Ueberauth,
+  providers: [cas: {Ueberauth.Strategy.CAS, [
+    base_url: "https://cs2n-casino.herokuapp.com",
+    request_path: "/login",
+    callback_path: "/auth/cas/callback",
+  ]}]
+
 
 # Configure your database
 config :fire_engine, FireEngine.Repo,

@@ -48,4 +48,14 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
+# Ueberauth CAS Settings
+config :ueberauth, Ueberauth,
+  providers: [cas: {Ueberauth.Strategy.CAS, [
+    base_url: "http://cs2n-casino.herokuapp.com",
+    request_path: "/login",
+    callback_path: "/auth/cas/callback",
+  ]}]
+
+
+
 import_config "dev.secret.exs"
