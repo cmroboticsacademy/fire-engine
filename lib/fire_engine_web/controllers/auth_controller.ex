@@ -9,9 +9,15 @@ defmodule FireEngineWeb.AuthController do
   alias FireEngine.Repo
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn,_params) do
-    user_params = %{username: auth.info.name, email: auth.info.email, roles: wrap_roles(auth.credentials.other)}
-    changeset = User.changeset(%User{}, user_params)
-    signin(conn,changeset)
+    if User.admin?(auth.info.name) do
+      user_params = %{username: auth.info.name, email: auth.info.email, roles: wrap_roles(auth.credentials.other)}
+      changeset = User.changeset(%User{}, user_params)
+      signin(conn,changeset)
+    else
+      conn
+      |> put_flash(:error, "Not Authorized")
+      |> redirect(to: page_path(conn, :index))
+    end
   end
 
   def login(conn, _params) do
