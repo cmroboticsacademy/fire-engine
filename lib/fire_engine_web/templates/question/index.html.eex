@@ -5,7 +5,9 @@
       <i class="fas fa-plus"></i> New Question
     <% end %>
   </h1>
-
+  <%= form_for @conn, question_path(@conn, :index), [method: :get], fn f -> %>
+    <%= search_input f, :content, class: "form-control", placeholder: "Search Questions By Text" %>
+  <% end %>
   <table class="question-table table mt-4">
     <thead class="thead-light">
       <tr>

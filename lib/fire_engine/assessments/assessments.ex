@@ -241,6 +241,13 @@ defmodule FireEngine.Assessments do
       [%Question{}, ...]
 
   """
+  def list_fe_questions_by_content(content) do
+    like_content = "%#{content}%"
+    query = from q in Question,
+    where: like(q.content, ^like_content)
+    Repo.all(query) |> Repo.preload([:answers,:tags, :question_tags, :category])
+  end
+
   def list_fe_questions do
     Repo.all(Question) |> Repo.preload([:answers,:tags, :question_tags, :category])
   end
