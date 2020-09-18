@@ -127,6 +127,26 @@ defmodule FireEngine.Assessments do
   end
 
   @doc """
+  Returns the list of fe_quizzes.
+
+  ## Examples
+
+      iex> list_fe_quizzes_name()
+      [%Quiz{}, ...]
+
+  """
+  def list_fe_quizzes_by_name("") do
+    Repo.all(Quiz) |> Repo.preload([:questions, :attempts])
+  end
+
+  def list_fe_quizzes_by_name(name) do
+    like_name = "%#{name}%"
+    query = from q in Quiz,
+    where: like(q.name, ^like_name)
+    Repo.all(query) |> Repo.preload([:questions, :attempts])
+  end
+
+  @doc """
   Gets a single quiz.
 
   Raises `Ecto.NoResultsError` if the Quiz does not exist.

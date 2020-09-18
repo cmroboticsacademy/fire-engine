@@ -10,6 +10,12 @@ defmodule FireEngineWeb.QuizController do
 
   action_fallback FireEngineWeb.FallbackController
 
+  def index(conn, %{"name" => name} = params) do
+    page = Assessments.list_fe_quizzes_by_name(name)
+                 |> Repo.paginate(params)
+    render(conn, "index.html", fe_quizzes: page.entries, page: page)
+  end
+
   def index(conn, params) do
     page = Assessments.list_fe_quizzes
                  |> Repo.paginate(params)

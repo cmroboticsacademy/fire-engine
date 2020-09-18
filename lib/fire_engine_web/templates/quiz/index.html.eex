@@ -6,6 +6,10 @@
    <% end %>
   </h1>
 
+  <%= form_for @conn, quiz_path(@conn, :index), [method: :get], fn f -> %>
+    <%= search_input f, :name, class: "form-control", placeholder: "Search Questions By Name" %>
+  <% end %>
+
   <table class="quiz-table table mt-4">
     <thead class="thead-light">
       <tr>
